@@ -1,6 +1,6 @@
 import { BellIcon } from '@heroicons/react/24/outline'
 
-import Feed from './Feed'
+import GameFeed from './GameFeed'
 
 export default function Example() {
   return (
@@ -35,11 +35,17 @@ export default function Example() {
           {/* Left sidebar & main wrapper */}
           <div className="flex-1 xl:flex">
             <div className="border-b border-gray-200 px-4 py-6 sm:px-6 lg:pl-8 xl:w-64 xl:shrink-0 xl:border-b-0 xl:border-r xl:pl-6">
-              hi1
+              <button
+                type="submit"
+                className="rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-700"
+                onClick = {() => localStorage.clear()}
+              >
+                Clear LocalStorage
+              </button>
             </div>
 
             <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
-              <Feed/>
+              <GameFeed />
             </div>
           </div>
 
