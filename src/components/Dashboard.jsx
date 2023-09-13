@@ -2,11 +2,11 @@ import { BellIcon } from '@heroicons/react/24/outline'
 
 import GameFeed from './GameFeed'
 
-export default function Example() {
+export default function Dashboard() {
   return (
     <>
-      <div className="flex min-h-full flex-col">
-        <header className="shrink-0 bg-gray-900">
+      <div className="flex flex-col">
+      <header className="shrink-0 bg-gray-900">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
             <img
               className="h-8 w-auto"
@@ -34,7 +34,7 @@ export default function Example() {
         <div className="mx-auto w-full max-w-7xl grow lg:flex xl:px-2">
           {/* Left sidebar & main wrapper */}
           <div className="flex-1 xl:flex">
-            <div className="border-b border-gray-200 px-4 py-6 sm:px-6 lg:pl-8 xl:w-64 xl:shrink-0 xl:border-b-0 xl:border-r xl:pl-6">
+            <div className="border-b border-gray-200 px-4 py-6 sm:px-6 xl:w-64 xl:shrink-0 xl:border-b-0 xl:border-r xl:pl-6">
               <button
                 type="submit"
                 className="rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-700"
@@ -44,9 +44,8 @@ export default function Example() {
               </button>
             </div>
 
-            <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
-              <GameFeed />
-            </div>
+            {/* Main Feed Area*/}
+            <GameFeed />
           </div>
 
           <div className="shrink-0 border-t border-gray-200 px-4 py-6 sm:px-6 lg:w-96 lg:border-l lg:border-t-0 lg:pr-8 xl:pr-6">
