@@ -10,7 +10,7 @@ export default function CommandInputBox(props) {
   }  
 
   return (
-    <form className="flex-auto" onSubmit={(e) => submitCommand(e)}>
+    <form className="m-2 flex-auto bg-white" onSubmit={(e) => submitCommand(e)}>
       <div className="overflow-hidden rounded-lg pb-12 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
         <label htmlFor="comment" className="sr-only">
           What happens next?
@@ -29,7 +29,7 @@ export default function CommandInputBox(props) {
         />
         <button
           type="submit"
-          className="absolute bottom-10 right-10 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          className="bottom-10 float-right mx-2 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         >
           Enter
         </button>

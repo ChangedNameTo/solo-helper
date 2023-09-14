@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import CommandInputBox from "./CommandInputBox";
 
 import MessageListItem from "./MessageListItem";
@@ -16,8 +16,41 @@ export default function GameFeed() {
     return initialValue || [];
   });
 
+  const messageListRef = useRef(null);
+
   useEffect(() => {
     localStorage.setItem("messages", JSON.stringify(messages));
+  }, [messages]);
+
+    // Calculate the maximum height based on the viewport size
+  const calculateMaxHeight = () => {
+    const viewportHeight = window.innerHeight;
+    const headerHeight = 64; // Adjust this value based on your header size
+    const footerHeight = 156; // Adjust this value based on your header size
+    return viewportHeight - headerHeight - footerHeight; 
+  };
+
+  useEffect(() => {
+    // Update the maximum height when the viewport is resized
+    const handleResize = () => {
+      const maxHeight = calculateMaxHeight();
+      messageListRef.current.style.maxHeight = `${maxHeight}px`;
+    };
+
+    window.addEventListener('resize', handleResize);
+    // Initial calculation and set
+    const initialMaxHeight = calculateMaxHeight();
+    messageListRef.current.style.maxHeight = `${initialMaxHeight}px`;
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // Scroll to the bottom of the message list when new messages are added.
+  useEffect(() => {
+    messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
   }, [messages]);
 
   const newMessage = (messageText) => {
@@ -31,21 +64,19 @@ export default function GameFeed() {
   };
 
   return (
-    <div className="divide-y divide-gray-200 flex-col h-full">
-      <ul role="list" className="space-y-6 overflow-auto">
-        {messages.map((activityItem, activityItemIdx) => (
-          <MessageListItem 
-            props={activityItem}
-            index={activityItemIdx}
-            length={messages.length}
-          />
-        ))}
-      </ul>
-      <div className="absolute bottom-0">
-        {/* New comment form */}
-        <div className="flex gap-x-3">
-          <CommandInputBox onClick={(i) => newMessage(i)} />
-        </div>
+    <div className="flex flex-col h-full">
+        <ul role="list" className="flex-grow space-y-6 overflow-scroll" ref={messageListRef}>
+          {messages.map((activityItem, activityItemIdx) => (
+            <MessageListItem 
+              props={activityItem}
+              index={activityItemIdx}
+              length={messages.length}
+            />
+          ))}
+        </ul>
+      {/* New comment form */}
+      <div className="gap-x-3 bg-indigo-500 min-h-0 flex-shrink-0">
+        <CommandInputBox onClick={(i) => newMessage(i)}/>
       </div>
     </div>
   );
