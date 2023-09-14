@@ -17,7 +17,7 @@ export default function MessageListItem(props) {
           "absolute left-1 top-0 flex w-6 justify-center"
         )}
       >
-        <div className="w-px bg-gray-200" />
+        <div className="w-px bg-gray-300" />
       </div>
       <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
         {props.type === "paid" ? (
