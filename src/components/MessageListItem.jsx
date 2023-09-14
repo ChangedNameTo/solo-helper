@@ -10,10 +10,10 @@ const timeAgo = new TimeAgo("en-US");
 
 export default function MessageListItem(props) {
   return (
-    <li key={props.props.index} className="relative flex gap-x-4">
+    <li key={props.props.index} className="relative flex gap-x-4 pr-4">
       <div
         className={classNames(
-          props.index === length - 1 ? "h-6" : "-bottom-6",
+          props.index === props.length - 1 ? "h-6" : "-bottom-6",
           "absolute left-0 top-0 flex w-6 justify-center"
         )}
       >

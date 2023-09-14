@@ -75,7 +75,7 @@ export default function GameFeed() {
           ))}
         </ul>
       {/* New comment form */}
-      <div className="gap-x-3 bg-indigo-500 min-h-0 flex-shrink-0">
+      <div className="bg-indigo-500 min-h-0">
         <CommandInputBox onClick={(i) => newMessage(i)}/>
       </div>
     </div>
