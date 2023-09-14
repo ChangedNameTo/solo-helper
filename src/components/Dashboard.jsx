@@ -1,12 +1,13 @@
-import { BellIcon } from '@heroicons/react/24/outline'
+import { BellIcon } from "@heroicons/react/24/outline";
 
-import GameFeed from './GameFeed'
+import GameFeed from "./GameFeed";
+import ExaminerColumn from "./ExaminerColumn";
 
 export default function Dashboard() {
   return (
     <>
-      <div className="flex flex-col">
-      <header className="shrink-0 bg-gray-900">
+      <div className="flex flex-col h-screen grow">
+        <div className="shrink-0 bg-gray-900">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
             <img
               className="h-8 w-auto"
@@ -14,10 +15,6 @@ export default function Dashboard() {
               alt="Your Company"
             />
             <div className="flex items-center gap-x-8">
-              <button type="button" className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-300">
-                <span className="sr-only">View notifications</span>
-                <BellIcon className="h-6 w-6" aria-hidden="true" />
-              </button>
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your profile</span>
                 <img
@@ -28,31 +25,27 @@ export default function Dashboard() {
               </a>
             </div>
           </div>
-        </header>
+        </div>
 
         {/* 3 column wrapper */}
-        <div className="mx-auto w-full max-w-7xl grow lg:flex xl:px-2">
-          {/* Left sidebar & main wrapper */}
-          <div className="flex-1 xl:flex">
-            <div className="border-b border-gray-200 px-4 py-6 sm:px-6 xl:w-64 xl:shrink-0 xl:border-b-0 xl:border-r xl:pl-6">
-              <button
-                type="submit"
-                className="rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-700"
-                onClick = {() => localStorage.clear()}
-              >
-                Clear LocalStorage
-              </button>
-            </div>
-
-            {/* Main Feed Area*/}
+        <div className="flex flex-row grow">
+          <div className="basis-1/3">
+            <button
+              type="submit"
+              className="rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              onClick={() => localStorage.clear()}
+            >
+              Clear LocalStorage
+            </button>
+          </div>
+          <div className="basis-1/3">
             <GameFeed />
           </div>
-
-          <div className="shrink-0 border-t border-gray-200 px-4 py-6 sm:px-6 lg:w-96 lg:border-l lg:border-t-0 lg:pr-8 xl:pr-6">
-              hi3
+          <div className="basis-1/3">
+            <ExaminerColumn />
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
