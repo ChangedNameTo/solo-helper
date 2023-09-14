@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dice-roller/rpg-dice-roller": "^5.4.1",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "javascript-time-ago": "^2.5.9",

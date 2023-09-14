@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 export default function CommandInputBox(props) {
-  const [commandText, setCommandText] = useState('blah');
+  const [commandText, setCommandText] = useState('/roll 2d6');
 
   const submitCommand = (e) => {
     e.preventDefault()

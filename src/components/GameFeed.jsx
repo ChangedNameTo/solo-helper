@@ -18,7 +18,7 @@ export default function GameFeed() {
 
   const messageListRef = useRef(null);
 
-    // Calculate the maximum height based on the viewport size
+  // Calculate the maximum height based on the viewport size
   const calculateMaxHeight = () => {
     const viewportHeight = window.innerHeight;
     const headerHeight = 64; // Adjust this value based on your header size
@@ -55,7 +55,7 @@ export default function GameFeed() {
       <ul role="list" className="m-2 flex-grow space-y-2 overflow-scroll" ref={messageListRef}>
         {messages.map((activityItem, activityItemIdx) => (
           <MessageListItem 
-            props={activityItem}
+            message={activityItem}
             index={activityItemIdx}
             length={messages.length}
           />
@@ -64,7 +64,14 @@ export default function GameFeed() {
       
       {/* New Messages */}
       <div className="bg-indigo-500 min-h-0">
-        <CommandInputBox onClick={(i) => dispatch({type:'added', id:messages.length + 1, text:i, date:Date.now()})}/>
+        <CommandInputBox onClick={(i) => dispatch(
+          {
+            type: 'added',
+            id: messages.length + 1,
+            text: i,
+            date: Date.now()
+          }
+        )} />
       </div>
     </div>
   );
