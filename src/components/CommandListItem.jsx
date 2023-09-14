@@ -1,5 +1,4 @@
 export default function CommandListItem(props) {
-  console.log(props)
   return (
     <li key={props.commandText.id}>
       <button

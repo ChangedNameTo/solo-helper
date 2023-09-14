@@ -10,7 +10,7 @@ const timeAgo = new TimeAgo("en-US");
 
 export default function MessageListItem(props) {
   return (
-    <li key={props.props.index} className="bg-white relative flex pl-1 pr-2 rounded-lg">
+    <li key={props.props.id} className="bg-white relative flex pl-1 pr-2 rounded-lg">
       <div
         className={classNames(
           props.index === props.length - 1 ? "h-6" : "-bottom-6",
@@ -30,7 +30,7 @@ export default function MessageListItem(props) {
         )}
       </div>
       <p className="flex-auto py-0.5 text-xs leading-5 text-gray-500">
-        {props.props.payload}
+        {props.props.text}
       </p>
       <time
         dateTime={props.props.dateTime}

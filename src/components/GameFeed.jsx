@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import CommandInputBox from "./CommandInputBox";
 
 import MessageListItem from "./MessageListItem";
@@ -9,18 +9,14 @@ import en from "javascript-time-ago/locale/en";
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
+// Set up the slash command parser
+import { MessagesContext, MessagesDispatchContext } from "./MessagesContext";
+
 export default function GameFeed() {
-  const [messages, setMessages] = useState(() => {
-    const saved = localStorage.getItem("messages");
-    const initialValue = JSON.parse(saved);
-    return initialValue || [];
-  });
+  const messages = useContext(MessagesContext)
+  const dispatch = useContext(MessagesDispatchContext)
 
   const messageListRef = useRef(null);
-
-  useEffect(() => {
-    localStorage.setItem("messages", JSON.stringify(messages));
-  }, [messages]);
 
     // Calculate the maximum height based on the viewport size
   const calculateMaxHeight = () => {
@@ -53,30 +49,22 @@ export default function GameFeed() {
     messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
   }, [messages]);
 
-  const newMessage = (messageText) => {
-    const draftMessage = {
-      id: messages.length + 1,
-      type: "text",
-      payload: messageText,
-      date: Date.now(),
-    };
-    setMessages([...messages, draftMessage]);
-  };
-
   return (
     <div className="flex flex-col h-full bg-gray-100">
-        <ul role="list" className="m-2 flex-grow space-y-2 overflow-scroll" ref={messageListRef}>
-          {messages.map((activityItem, activityItemIdx) => (
-            <MessageListItem 
-              props={activityItem}
-              index={activityItemIdx}
-              length={messages.length}
-            />
-          ))}
-        </ul>
-      {/* New comment form */}
+      {/* List of current messages */}
+      <ul role="list" className="m-2 flex-grow space-y-2 overflow-scroll" ref={messageListRef}>
+        {messages.map((activityItem, activityItemIdx) => (
+          <MessageListItem 
+            props={activityItem}
+            index={activityItemIdx}
+            length={messages.length}
+          />
+        ))}
+      </ul>
+      
+      {/* New Messages */}
       <div className="bg-indigo-500 min-h-0">
-        <CommandInputBox onClick={(i) => newMessage(i)}/>
+        <CommandInputBox onClick={(i) => dispatch({type:'added', id:messages.length + 1, text:i, date:Date.now()})}/>
       </div>
     </div>
   );
