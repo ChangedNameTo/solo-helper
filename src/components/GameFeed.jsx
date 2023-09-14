@@ -64,8 +64,8 @@ export default function GameFeed() {
   };
 
   return (
-    <div className="flex flex-col h-full">
-        <ul role="list" className="flex-grow space-y-6 overflow-scroll" ref={messageListRef}>
+    <div className="flex flex-col h-full bg-gray-100">
+        <ul role="list" className="m-2 flex-grow space-y-2 overflow-scroll" ref={messageListRef}>
           {messages.map((activityItem, activityItemIdx) => (
             <MessageListItem 
               props={activityItem}
