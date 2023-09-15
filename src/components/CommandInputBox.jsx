@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { DraftMessageContext } from "./MessagesContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function CommandInputBox(props) {
-  const [commandText, setCommandText] = useState("");
+  const {draftText, setDraftText} = useContext(DraftMessageContext)
 
-  const isCommand = () => commandText[0] === "/";
+  const isCommand = () => draftText[0] === "/";
 
   const submitCommand = (e) => {
     e.preventDefault();
-    props.onClick(commandText);
-    setCommandText("");
+    props.onClick(draftText);
+    setDraftText("");
   };
 
   return (
@@ -32,11 +33,11 @@ export default function CommandInputBox(props) {
           id="entry"
           className="block w-full rounded-none rounded-l-md border-0 py-2.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text:sm sm:leading-6 bg-gray-100"
           placeholder="What happens next?"
-          onChange={(e) => setCommandText(e.target.value)}
+          onChange={(e) => setDraftText(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") submitCommand(e);
           }}
-          value={commandText}
+          value={draftText}
         />
         <button
           type="submit"
