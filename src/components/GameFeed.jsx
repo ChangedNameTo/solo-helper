@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useContext } from "react";
+import { useEffect, useRef, useContext } from "react";
 import CommandInputBox from "./CommandInputBox";
 
 import MessageListItem from "./MessageListItem";

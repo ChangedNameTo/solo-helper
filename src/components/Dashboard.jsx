@@ -5,6 +5,7 @@ import { useState, useReducer } from "react";
 
 import messagesReducer from "../Reducers/MessagesReducer";
 import { DraftMessageContext, MessagesContext, MessagesDispatchContext } from "./MessagesContext";
+import CharacterSheet from "./CharacterSheet";
 
 export default function Dashboard() {
   const [messages, dispatch] = useReducer(
@@ -23,19 +24,13 @@ export default function Dashboard() {
 
             {/* 3 column wrapper */}
             <div className="flex flex-row grow">
-              <div className="basis-1/3 border-grey-900 border">
-                <button
-                  type="submit"
-                  className="rounded bg-indigo-600 px-2 py-1 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  onClick={() => localStorage.clear()}
-                >
-                  Clear LocalStorage
-                </button>
+              <div className="w-1/3 border-grey-900 border">
+                <CharacterSheet />
               </div>
-              <div className="basis-1/3 border-grey-900 border">
+              <div className="w-1/3 border-grey-900 border">
                 <GameFeed />
               </div>
-              <div className="basis-1/3 border-grey-900 border">
+              <div className="w-1/3 border-grey-900 border">
                 <ExaminerColumn />
               </div>
             </div>

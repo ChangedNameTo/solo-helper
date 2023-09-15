@@ -14,8 +14,8 @@ export default function CommandList() {
       <ul role="list" className="p-1 space-y-2 border">
         {commands.map((command, commandIdx) => (
           <CommandListItem
+            key={commandIdx}
             commandText={command}
-            index={commandIdx}
           />
         ))}
       </ul>

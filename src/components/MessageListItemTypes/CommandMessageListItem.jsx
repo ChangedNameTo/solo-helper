@@ -4,10 +4,7 @@ import en from "javascript-time-ago/locale/en";
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+import { classNames } from "../../assets/Helpers";
 
 export default function CommandMessageListItem(props) {
   return (

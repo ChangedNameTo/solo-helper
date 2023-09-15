@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
 import { DraftMessageContext } from "./MessagesContext";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { classNames } from "../assets/Helpers";
 
 export default function CommandInputBox(props) {
   const {draftText, setDraftText} = useContext(DraftMessageContext)
