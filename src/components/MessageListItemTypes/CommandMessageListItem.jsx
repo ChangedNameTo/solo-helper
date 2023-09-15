@@ -23,12 +23,12 @@ export default function CommandMessageListItem(props) {
       <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
           <div className="h-1.5 w-1.5 rounded-full bg-gray-100 ring-1 ring-gray-300" />
       </div>
-      <p className="flex-auto py-0.5 text-s leading-5 text-gray-500">
+      <div className="flex-auto py-0.5 text-s leading-5 text-gray-500">
         {props.message.command}
         <p className="pl-1 inline font-bold">
           {props.message.roll}
         </p>
-      </p>
+      </div>
       <time
         dateTime={props.message.dateTime}
         className="flex-none py-0.5 text-s leading-5 text-gray-500"

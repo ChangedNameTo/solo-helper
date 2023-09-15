@@ -17,12 +17,13 @@ export default function GameFeed() {
   const dispatch = useContext(MessagesDispatchContext)
 
   const messageListRef = useRef(null);
+  const commandInputBoxRef = useRef(null);
 
   // Calculate the maximum height based on the viewport size
   const calculateMaxHeight = () => {
     const viewportHeight = window.innerHeight;
     const headerHeight = 64; // Adjust this value based on your header size
-    const footerHeight = 156; // Adjust this value based on your header size
+    const footerHeight = commandInputBoxRef.innerHeight; // Adjust this value based on your header size
     return viewportHeight - headerHeight - footerHeight; 
   };
 
@@ -63,7 +64,7 @@ export default function GameFeed() {
       </ul>
       
       {/* New Messages */}
-      <div className="bg-indigo-500 min-h-0">
+      <div className="bg-indigo-500 min-h-0" ref={commandInputBoxRef}>
         <CommandInputBox onClick={(i) => dispatch(
           {
             type: 'added',
