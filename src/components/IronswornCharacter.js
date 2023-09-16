@@ -59,7 +59,6 @@ export const IronswornCharacter = {
       value: 3,
       href: "#",
       description: "Quickness, agility, and prowess in ranged combat",
-      bgColor: "bg-pink-600",
     },
     {
       name: "Heart",
@@ -67,7 +66,6 @@ export const IronswornCharacter = {
       value: 2,
       href: "#",
       description: "Courage, willpower, empathy, sociability, and loyalty",
-      bgColor: "bg-purple-600",
     },
     {
       name: "Iron",
@@ -75,7 +73,6 @@ export const IronswornCharacter = {
       value: 2,
       href: "#",
       description: "Strength, endurance, aggressiveness, and martial prowess",
-      bgColor: "bg-yellow-500",
     },
     {
       name: "Shadow",
@@ -83,7 +80,6 @@ export const IronswornCharacter = {
       value: 1,
       href: "#",
       description: "Sneakiness, guile, deceptiveness, and cunning",
-      bgColor: "bg-indigo-500",
     },
     {
       name: "Wit",
@@ -91,7 +87,6 @@ export const IronswornCharacter = {
       value: 1,
       href: "#",
       description: "Expertise, versatility, knowledge, and observation",
-      bgColor: "bg-green-500",
     },
   ],
   vows: [
@@ -243,7 +238,7 @@ export const IronswornCharacter = {
           active: false,
         },
         {
-          name: "Perform",
+          name: "Gossip",
           description:
             "When you Sojourn within a community with which you share a bond, add +2 (instead of +1).",
           starting: false,

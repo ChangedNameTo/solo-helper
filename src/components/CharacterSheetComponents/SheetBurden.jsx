@@ -10,7 +10,7 @@ export default function SheetBurden(props) {
     <li>
       <Switch.Group as="div" className="flex items-center py-2 px-2">
         <Switch
-          checked={props.bane.active}
+          checked={props.burden.active}
           onChange={setEnabled}
           className={classNames(
             enabled ? "bg-indigo-600" : "bg-gray-200",
@@ -26,8 +26,8 @@ export default function SheetBurden(props) {
           />
         </Switch>
         <Switch.Label as="span" className="ml-3 text-sm">
-          <span className="font-semibold text-gray-900">{props.bane.name}</span>{" "}
-          <span className="text-gray-500">{props.bane.description}</span>
+          <span className="font-semibold text-gray-900">{props.burden.name}</span>{" "}
+          <span className="text-gray-500">{props.burden.description}</span>
         </Switch.Label>
       </Switch.Group>
     </li>

@@ -13,7 +13,7 @@ export default function SheetAsset(props) {
       </div>
       <div className="divide-y">
       {props.asset.abilities.map((ability) => (
-        <Switch.Group key={ability} as="div" className="flex items-center py-2 px-2">
+        <Switch.Group key={ability.name} as="div" className="flex items-center py-2 px-2">
           <Switch
             checked={ability.active}
             onChange={setEnabled}

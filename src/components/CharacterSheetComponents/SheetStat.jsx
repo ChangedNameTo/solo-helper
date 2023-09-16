@@ -1,17 +1,45 @@
+import { useContext } from "react";
 import { classNames } from "../../assets/Helpers";
+import { DraftMessageContext } from "../MessagesContext";
 
 export default function SheetStat(props) {
+  const {draftText, setDraftText} = useContext(DraftMessageContext)
+
+  const buttonBorderStyle = () => {
+    switch (props.idx) {
+      case props.arr.length - 1:
+        return "rounded-bl-md";
+      default:
+        return "";
+    }
+  };
+
+  const divBorderStyle = () => {
+    switch (props.idx) {
+      case props.arr.length - 1:
+        return "rounded-br-md";
+      default:
+        return "";
+    }
+  };
+
   return (
-    <li className="col-span-1 flex rounded-md shadow-sm">
+    <li className="col-span-1 flex border-gray-200 border-t border-b">
       <button
         className={classNames(
-          props.stat.bgColor,
-          "flex w-16 flex-shrink-0 items-center justify-center rounded-l-md text-xl font-bold text-white"
+          buttonBorderStyle(),
+          "bg-indigo-600 hover:bg-indigo-500 flex w-16 flex-shrink-0 items-center justify-center text-xl font-bold text-white"
         )}
+        onClick={() => setDraftText(`/moveroll 1d6+${props.stat.value}`)}
       >
         {props.stat.value}
       </button>
-      <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white">
+      <div
+        className={classNames(
+          divBorderStyle(),
+          "flex flex-1 items-center justify-between truncate bg-white"
+        )}
+      >
         <div className="px-4 py-1 text-sm">
           <a
             href={props.stat.href}
