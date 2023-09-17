@@ -91,7 +91,7 @@ export const IronswornCharacter = {
   ],
   vows: [
     {
-      vow: "Find my sister",
+      name: "Find my sister",
       description:
         "My sister has wandered away from the village. I need to find her and bring her home.",
       tier: "troublesome",
@@ -100,7 +100,7 @@ export const IronswornCharacter = {
       current: 0,
     },
     {
-      vow: "Slay the Dragon",
+      name: "Slay the Dragon",
       description: "Lorem ipsum dolor sit amet.",
       tier: "dangerous",
       min: 0,

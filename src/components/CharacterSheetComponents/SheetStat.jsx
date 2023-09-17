@@ -1,9 +1,21 @@
 import { useContext } from "react";
 import { classNames } from "../../assets/Helpers";
-import { DraftMessageContext } from "../MessagesContext";
+import { DraftMessageContext, MessagesDispatchContext } from "../MessagesContext";
 
 export default function SheetStat(props) {
   const {draftText, setDraftText} = useContext(DraftMessageContext)
+
+  const dispatch = useContext(MessagesDispatchContext)
+
+  const dispatchStatMoveRoll = () => {
+    const statMoveRollMessage = {
+      type:'added',
+      text:`/moveroll 1d6+${props.stat.value} ${props.stat.initials}`,
+      date: Date.now()
+    }
+    
+    dispatch(statMoveRollMessage)
+  }
 
   const buttonBorderStyle = () => {
     switch (props.idx) {
@@ -30,7 +42,7 @@ export default function SheetStat(props) {
           buttonBorderStyle(),
           "bg-indigo-600 hover:bg-indigo-500 flex w-16 flex-shrink-0 items-center justify-center text-xl font-bold text-white"
         )}
-        onClick={() => setDraftText(`/moveroll 1d6+${props.stat.value}`)}
+        onClick={() => dispatchStatMoveRoll()}
       >
         {props.stat.value}
       </button>

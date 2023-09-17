@@ -1,13 +1,7 @@
 import { useEffect, useRef, useContext } from "react";
 import CommandInputBox from "./CommandInputBox";
 
-import MessageListItem from "./MessageListItem";
-
-// Set up the relative date formatter
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en";
-TimeAgo.addDefaultLocale(en);
-const timeAgo = new TimeAgo("en-US");
+import MessageListItem from "./MessageListItemTypes/MessageListItem";
 
 // Set up the slash command parser
 import { MessagesContext, MessagesDispatchContext } from "./MessagesContext";
@@ -54,11 +48,12 @@ export default function GameFeed() {
     <div className="flex flex-col h-full bg-gray-100">
       {/* List of current messages */}
       <ul role="list" className="m-2 flex-grow space-y-2 overflow-scroll" ref={messageListRef}>
-        {messages.map((activityItem, activityItemIdx) => (
+        {messages.map((message, idx, arr) => (
           <MessageListItem 
-            message={activityItem}
-            index={activityItemIdx}
-            length={messages.length}
+            message={message}
+            index={idx}
+            length={arr.length}
+            key={message.id}
           />
         ))}
       </ul>
@@ -68,7 +63,6 @@ export default function GameFeed() {
         <CommandInputBox onClick={(i) => dispatch(
           {
             type: 'added',
-            id: messages.length + 1,
             text: i,
             date: Date.now()
           }

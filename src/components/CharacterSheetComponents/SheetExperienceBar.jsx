@@ -5,8 +5,6 @@ export default function SheetExperienceBar(props) {
     const spentGaugeWidth = () =>
     (props.experience.spent / (props.experience.max - props.experience.min)) * 100 + "%";
     
-  console.log(props)
-
   return (
     <div className="relative z-0 m-2 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 border border-gray-700">
       <div

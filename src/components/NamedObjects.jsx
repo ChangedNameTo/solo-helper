@@ -1,11 +1,7 @@
 import { useContext } from "react";
 import { MessagesContext } from "./MessagesContext";
 
-// Set up the relative date formatter
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en";
-TimeAgo.addDefaultLocale(en);
-const timeAgo = new TimeAgo("en-US");
+import { timeAgo } from "../assets/Helpers";
 
 export default function NamedObjects() {
   const messages = useContext(MessagesContext);
@@ -40,10 +36,10 @@ export default function NamedObjects() {
                 ? dlItem("Slash Command", lastMessage.command)
                 : ""}
               {lastMessage.type === "command"
-                ? dlItem("Dice Notation", lastMessage.arguments)
+                ? dlItem("Dice Notation", lastMessage.fields.notation)
                 : ""}
               {lastMessage.type === "command"
-                ? dlItem("Roll Result", lastMessage.roll)
+                ? dlItem("Roll Result", lastMessage.fields.rollResult)
                 : ""}
               {dlItem("Sent On", timeAgo.format(lastMessage.date))}
             </>

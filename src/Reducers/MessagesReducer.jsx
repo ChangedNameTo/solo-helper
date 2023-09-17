@@ -1,41 +1,78 @@
-import slashCommand from "slash-command"
-import * as rpgDiceRoller from '@dice-roller/rpg-dice-roller'
+import slashCommand from "slash-command";
+import * as rpgDiceRoller from "@dice-roller/rpg-dice-roller";
+import { useId } from "react";
+
+const commandRegex = /\/[^\s]+\s+/;
+const diceNotationRegex = /\/[\w]+\s(\d+d\d+[+-]?\d*)/;
+
+let nextId = 0;
 
 export default function messagesReducer(messages, action) {
   const roller = new rpgDiceRoller.DiceRoller();
 
   switch (action.type) {
-    case 'added': {
-      // Handle the role logic
-      const enteredText = slashCommand(action.text)
+    case "added": {
+      // Don't add empty messages
+      if (!action.text.length) {
+        return messages;
+      }
 
-      // Create the new message
+      // Check for a command
+      const matchedText = action.text.match(commandRegex);
+      const isCommand = matchedText?.length > 0;
+
+      // if true, is a command
       const newMessage = {
-        id: action.id,
-        command: enteredText.slashcommand,
-        arguments: enteredText.body,
-        text: enteredText.original,
+        id: nextId,
+        text: action.text,
         date: action.date,
-      }
+        type: isCommand ? "command" : "text",
+        fields: {},
+      };
 
-      if (enteredText.slashcommand) {
-        try {
-          const roll = roller.roll(enteredText.body)
-          
-          newMessage.roll = roll.output
-        } catch (error) {
-          console.error(error)
+      nextId++;
+
+      if (isCommand) {
+        const command = matchedText[0].trim();
+        newMessage.command = command;
+
+        switch (command) {
+          case "/roll": {
+            const diceNotation = action.text.match(diceNotationRegex)[1];
+            const roll = roller.roll(diceNotation);
+
+            newMessage.fields.notation = diceNotation;
+            newMessage.fields.rollResult = roll.output;
+            break;
+          }
+          case "/moveroll": {
+            const diceNotation = action.text.match(diceNotationRegex)[1];
+            const roll = roller.roll(diceNotation);
+
+            newMessage.fields.actionDice = {
+              notation: diceNotation,
+              rollResult: roll.output,
+            };
+// simple in cards https://tailwindui.com/components/application-ui/data-display/stats
+            const challengeDiceOne = roller.roll("1d10").output;
+            const challengeDiceTwo = roller.roll("1d10").output;
+
+            newMessage.fields.challengeDice = [
+              challengeDiceOne,
+              challengeDiceTwo,
+            ];
+            break;
+          }
+          default: {
+            break;
+          }
         }
-        
-        newMessage.type = 'command'
-      } else {
-        newMessage.type = 'text'
       }
 
-      return [...messages, newMessage]
+      return [...messages, newMessage];
     }
     default: {
-      throw Error('Unknown action: ' + action.type)
+      throw Error("Unknown action: " + action.type);
     }
   }
 }

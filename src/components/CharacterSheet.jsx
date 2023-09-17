@@ -78,7 +78,7 @@ export default function CharacterSheet() {
       {/* Vows */}
       <div className="text-l font-semibold text-center">Vows</div>
       <ul role="list" className="mx-2 flex flex-col gap-2">
-        {IronswornCharacter.vows.map((vow, idx) => (
+        {IronswornCharacter.vows.map((vow) => (
           <SheetVow vow={vow} key={vow.name} />
         ))}
       </ul>

@@ -34,7 +34,7 @@ export default function SheetVow(props) {
             href={props.vow.href}
             className="font-bold text-gray-900 hover:text-gray-600"
           >
-            {props.vow.vow}
+            {props.vow.name}
           </a>
           <span className={classNames(tierColorString(),"inline-flex flex-shrink-0 items-center rounded-full ml-3 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset")}>
             {props.vow.tier}
