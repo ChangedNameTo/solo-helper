@@ -2,8 +2,6 @@ import { timeAgo, classNames } from "../../assets/Helpers";
 
 export default function ActionRollMessageListItem(props) {
   const diceSymbol = (diceValue, challengeDiceResult = undefined) => {
-    console.log(diceValue);
-    console.log(challengeDiceResult);
     if (challengeDiceResult) {
       if (diceValue > challengeDiceResult) {
         return (

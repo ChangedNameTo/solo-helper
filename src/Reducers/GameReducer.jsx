@@ -7,7 +7,6 @@ export default function gameReducer(games, action) {
 
     }
     case "selected": {
-      console.log(action.gameID)
       return {
         ...games,
         selectedGame: games.games[action.gameID]

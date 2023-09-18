@@ -17,7 +17,13 @@ function App() {
   });
 
   if (games.selectedGame) {
-    return <Dashboard />;
+    return (
+      <GamesContext.Provider value={games}>
+        <GamesDispatchContext.Provider value={dispatch}>
+          <Dashboard />;
+        </GamesDispatchContext.Provider>
+      </GamesContext.Provider>
+    );
   } else {
     return (
       <GamesContext.Provider value={games}>
