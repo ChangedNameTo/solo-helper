@@ -80,9 +80,9 @@ export default function messagesReducer(messages, action) {
             const resultTwo = actionDiceTotal > challengeDiceTwo
             
             if (resultOne && resultTwo) {
-              newMessage.fields.actionResult = "Full"
+              newMessage.fields.actionResult = "Full Success"
             } else if (resultOne || resultTwo) {
-              newMessage.fields.actionResult = "Partial"
+              newMessage.fields.actionResult = "Partial Success"
             } else {
               newMessage.fields.actionResult = "Failure"
             }

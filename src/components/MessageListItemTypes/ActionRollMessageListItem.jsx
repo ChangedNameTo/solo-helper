@@ -1,10 +1,31 @@
 import { timeAgo, classNames } from "../../assets/Helpers";
 
 export default function ActionRollMessageListItem(props) {
-  const diceTableClasses = () =>
-    "px-2 rounded-lg bg-white shadow flex-1 mx-2 mb-2";
-  const diceLabelClasses = () =>
-    "font-semibold text-center border-b border-gray-600";
+  const diceSymbol = (diceValue, challengeDiceResult = undefined) => {
+    console.log(diceValue);
+    console.log(challengeDiceResult);
+    if (challengeDiceResult) {
+      if (diceValue > challengeDiceResult) {
+        return (
+          <div className="flex-shrink m-1 px-2 pb-0.5 rounded-md bg-green-800 text-white font-semibold">
+            {challengeDiceResult}
+          </div>
+        );
+      } else {
+        return (
+          <div className="flex-shrink m-1 px-2 pb-0.5 rounded-md bg-red-800 text-white font-semibold">
+            {challengeDiceResult}
+          </div>
+        );
+      }
+    } else {
+      return (
+        <div className="flex-shrink m-1 px-2 pb-0.5 rounded-md bg-black text-white font-semibold">
+          {diceValue}
+        </div>
+      );
+    }
+  };
 
   const statLabel = () => {
     switch (props.message.fields.actionDice.stat) {
@@ -24,58 +45,55 @@ export default function ActionRollMessageListItem(props) {
   const matchButton = () => {
     if (props.message.fields.challengeDice.match) {
       return (
-          <span className={classNames("bg-indigo-50 text-indigo-700 ring-indigo-600/20 inline-flex flex-shrink-0 items-center rounded-full ml-3 px-1.5 py-0.5 mb-1 text-xs font-medium ring-1 ring-inset shadow-sm")}>
-            Match!
-          </span>
-      )
+        <span
+          className={classNames(
+            "bg-indigo-50 text-indigo-700 ring-indigo-600/20 flex-shrink-0 items-center rounded-full m-1 px-2 py-1 text-xs font-medium ring-1 ring-inset shadow-sm"
+          )}
+        >
+          Match!
+        </span>
+      );
     }
-  }
+  };
 
   return (
-    <li className="bg-white relative flex-col pl-0.5 pr-2 rounded-lg">
-      <div className="flex flex-row">
-        <div className="flex-1 flex-col">
-          <h3 className="text-base font-semibold text-gray-900 ml-2 w-full">
-            {props.message.text}
-          </h3>
-          <div className="ml-2 w-full text-gray-600">
+    <li className="bg-white rounded-lg shadow-sm ring-1 ring-gray-900/5">
+      <dl className="flex flex-wrap">
+        <div className="flex-auto pl-1 pt-0.5">
+          <dt className="font-semibold leading-1 text-gray-900">
             Move Roll for {statLabel()} (
             {props.message.fields.actionDice.statValue})
-          </div>
-        </div>
-        <time
-          dateTime={props.message.dateTime}
-          className="py-0.5 text-s text-gray-500 text-right flex-shrink"
-        >
-          {timeAgo.format(props.message.date, "mini")}
-        </time>
-      </div>
-      <dl className="flex flex-row">
-        <div className={classNames(diceTableClasses(), "")}>
-          <dt className={classNames(diceLabelClasses())}>Action</dt>
-          <dd className="text-center">
-            {props.message.fields.actionDice.total}
+          </dt>
+          <dd className="flex flex-row text-gray-800">
+            {props.message.fields.actionResult}
           </dd>
         </div>
-
-        <div className={classNames(diceTableClasses(), "")}>
-          <dt className={classNames(diceLabelClasses())}>Challenge</dt>
-          <div className="grid grid-cols-2">
-            <dd className="text-center">
-              {props.message.fields.challengeDice.results[0]}
-            </dd>
-            <dd className="text-center">
-              {props.message.fields.challengeDice.results[1]}
-            </dd>
-          </div>
-          {matchButton()}
-        </div>
-
-        <div className={classNames(diceTableClasses(), "")}>
-          <dt className={classNames(diceLabelClasses())}>Success?</dt>
-          <dd className="text-center">{props.message.fields.actionResult}</dd>
+        <div className="flex-none px-1 pt-0.5">
+          <time
+            dateTime={props.message.dateTime}
+            className="self-end text-s text-gray-500"
+          >
+            {timeAgo.format(props.message.date, "mini")}
+          </time>
         </div>
       </dl>
+      <div className="bg-gray-50 ring-gray-900/5 ring-1 shadow-sm rounded-b-lg flex flex-row">
+        <div className="flex-grow"></div>
+        {diceSymbol(props.message.fields.actionDice.total)}
+
+        <span className="font-bold my-1">VS.</span>
+
+        {diceSymbol(
+          props.message.fields.actionDice.total,
+          props.message.fields.challengeDice.results[0]
+        )}
+        {diceSymbol(
+          props.message.fields.actionDice.total,
+          props.message.fields.challengeDice.results[1]
+        )}
+        {matchButton()}
+        <div className="flex-grow"></div>
+      </div>
     </li>
   );
 }
