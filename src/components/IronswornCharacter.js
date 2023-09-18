@@ -8,6 +8,7 @@ export const vowTiers = [
 
 export const IronswornCharacter = {
   name: "Nismera Elro",
+  worldName: "The Iron Isles",
   experience: {
     min: 0,
     spent: 3,
