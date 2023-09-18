@@ -5,6 +5,7 @@ import MessageListItem from "./MessageListItemTypes/MessageListItem";
 
 // Set up the slash command parser
 import { MessagesContext, MessagesDispatchContext } from "./MessagesContext";
+import { classNames } from "../assets/Helpers";
 
 export default function GameFeed() {
   const messages = useContext(MessagesContext)
@@ -17,7 +18,7 @@ export default function GameFeed() {
   const calculateMaxHeight = () => {
     const viewportHeight = window.innerHeight;
     const headerHeight = 64; // Adjust this value based on your header size
-    const footerHeight = commandInputBoxRef.innerHeight; // Adjust this value based on your header size
+    const footerHeight = commandInputBoxRef.clientHeight || 60; // Adjust this value based on your header size
     return viewportHeight - headerHeight - footerHeight; 
   };
 
@@ -47,7 +48,7 @@ export default function GameFeed() {
   return (
     <div className="flex flex-col h-full bg-gray-100">
       {/* List of current messages */}
-      <ul role="list" className="m-2 flex-grow space-y-2 overflow-scroll" ref={messageListRef}>
+      <ul role="list" className={ classNames("p-2 flex-grow space-y-2 overflow-scroll")} ref={messageListRef} style={{maxHeight:`${calculateMaxHeight()}`}}>
         {messages.map((message, idx, arr) => (
           <MessageListItem 
             message={message}

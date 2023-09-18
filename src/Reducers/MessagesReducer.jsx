@@ -3,7 +3,7 @@ import * as rpgDiceRoller from "@dice-roller/rpg-dice-roller";
 import { useId } from "react";
 
 const commandRegex = /\/[^\s]+\s+/;
-const diceNotationRegex = /\/[\w]+\s(\d+d\d+[+-]?\d*)/;
+const diceNotationRegex = /\/[\w]+\s(\d+d\d+[+-]?(\d*))\s?(\w)?/;
 
 let nextId = 0;
 
@@ -41,26 +41,51 @@ export default function messagesReducer(messages, action) {
             const diceNotation = action.text.match(diceNotationRegex)[1];
             const roll = roller.roll(diceNotation);
 
-            newMessage.fields.notation = diceNotation;
-            newMessage.fields.rollResult = roll.output;
+            newMessage.fields.actionDice = {
+              notation: diceNotation,
+              rollResult: roll.output,
+              total:roll.total
+            };
+
             break;
           }
           case "/moveroll": {
             const diceNotation = action.text.match(diceNotationRegex)[1];
+            const statValue = action.text.match(diceNotationRegex)[2]
+            const stat = action.text.match(diceNotationRegex)[3]
             const roll = roller.roll(diceNotation);
+            const actionDiceTotal = roll.total
 
             newMessage.fields.actionDice = {
               notation: diceNotation,
+              stat: stat,
+              statValue: statValue,
               rollResult: roll.output,
+              total: actionDiceTotal
             };
-// simple in cards https://tailwindui.com/components/application-ui/data-display/stats
-            const challengeDiceOne = roller.roll("1d10").output;
-            const challengeDiceTwo = roller.roll("1d10").output;
 
-            newMessage.fields.challengeDice = [
+            const challengeDice = {}
+            const challengeDiceOne = roller.roll("1d10").total;
+            const challengeDiceTwo = roller.roll("1d10").total;
+
+            challengeDice.results = [
               challengeDiceOne,
               challengeDiceTwo,
             ];
+            challengeDice.match = challengeDiceOne === challengeDiceTwo
+
+            newMessage.fields.challengeDice = challengeDice
+
+            const resultOne = actionDiceTotal > challengeDiceOne
+            const resultTwo = actionDiceTotal > challengeDiceTwo
+            
+            if (resultOne && resultTwo) {
+              newMessage.fields.actionResult = "Full"
+            } else if (resultOne || resultTwo) {
+              newMessage.fields.actionResult = "Partial"
+            } else {
+              newMessage.fields.actionResult = "Failure"
+            }
             break;
           }
           default: {

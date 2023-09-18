@@ -32,7 +32,7 @@ export default function CommandMessageListItem(props) {
           <div className="flex-auto py-0.5 text-s leading-5 text-gray-500">
             {props.message.text}
             <p className="pl-1 inline font-bold">
-              {props.message.fields.rollResult}
+              {props.message.fields.actionDice.rollResult}
             </p>
           </div>
           <time

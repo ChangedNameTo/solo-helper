@@ -1,51 +1,70 @@
-import { timeAgo,classNames } from "../../assets/Helpers";
+import { timeAgo, classNames } from "../../assets/Helpers";
 
 export default function ActionRollMessageListItem(props) {
+  const diceTableClasses = () =>
+    "px-2 rounded-lg bg-white shadow flex-1 mx-2 mb-2";
+  const diceLabelClasses = () =>
+    "font-semibold text-center border-b border-gray-600";
+
+  const statLabel = () => {
+    switch (props.message.fields.actionDice.stat) {
+      case "E":
+        return "Edge";
+      case "H":
+        return "Heart";
+      case "I":
+        return "Iron";
+      case "S":
+        return "Shadow";
+      case "W":
+        return "Wit";
+    }
+  };
+
   return (
-    <li className="bg-white relative flex pl-0.5 pr-2 rounded-lg">
-      <div
-        className={classNames(
-          props.index === props.length - 1 ? "h-6" : "-bottom-6",
-          "absolute left-0.5 top-0 flex w-6 justify-center"
-        )}
-      >
-        <div className="w-px bg-gray-300" />
+    <li className="bg-white relative flex-col pl-0.5 pr-2 rounded-lg">
+      <div className="flex flex-row">
+        <div className="flex-1 flex-col">
+          <h3 className="text-base font-semibold text-gray-900 ml-2 w-full">
+            {props.message.text}
+          </h3>
+          <div className="ml-2 w-full text-gray-600">
+            Move Roll for {statLabel()} (
+            {props.message.fields.actionDice.statValue})
+          </div>
+        </div>
+        <time
+          dateTime={props.message.dateTime}
+          className="py-0.5 text-s text-gray-500 text-right flex-shrink"
+        >
+          {timeAgo.format(props.message.date, "mini")}
+        </time>
       </div>
-      <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
-        <div className="h-1.5 w-1.5 rounded-full bg-gray-100 ring-1 ring-gray-300" />
-      </div>
-      <div className="flex-auto py-0.5 text-s leading-5 text-gray-500">
-        {props.message.text}
-        <p className="pl-1 inline font-bold">
-          {props.message.fields.actionDice.rollResult}
-        </p>
-      </div>
-      <div>
-        <h3 className="text-base font-semibold leading-6 text-gray-900">
-          Last 30 days
-        </h3>
-        <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-          {stats.map((item) => (
-            <div
-              key={item.name}
-              className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
-            >
-              <dt className="truncate text-sm font-medium text-gray-500">
-                {item.name}
-              </dt>
-              <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
-                {item.stat}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-      <time
-        dateTime={props.message.dateTime}
-        className="flex-none py-0.5 text-s leading-5 text-gray-500"
-      >
-        {timeAgo.format(props.message.date)}
-      </time>
+      <dl className="flex flex-row">
+        <div className={classNames(diceTableClasses(), "")}>
+          <dt className={classNames(diceLabelClasses())}>Action</dt>
+          <dd className="text-center">
+            {props.message.fields.actionDice.total}
+          </dd>
+        </div>
+
+        <div className={classNames(diceTableClasses(), "")}>
+          <dt className={classNames(diceLabelClasses())}>Challenge</dt>
+          <div className="grid grid-cols-2">
+            <dd className="text-center">
+              {props.message.fields.challengeDice.results[0]}
+            </dd>
+            <dd className="text-center">
+              {props.message.fields.challengeDice.results[1]}
+            </dd>
+          </div>
+        </div>
+
+        <div className={classNames(diceTableClasses(), "")}>
+          <dt className={classNames(diceLabelClasses())}>Success?</dt>
+          <dd className="text-center">{props.message.fields.actionResult}</dd>
+        </div>
+      </dl>
     </li>
   );
 }
