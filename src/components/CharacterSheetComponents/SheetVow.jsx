@@ -15,6 +15,8 @@ export default function SheetVow(props) {
         return 'red'
       case 'epic':
         return 'black'
+      default:
+        return 'gray'
     }
   }
 

@@ -21,6 +21,16 @@ export default function ActionRollMessageListItem(props) {
     }
   };
 
+  const matchButton = () => {
+    if (props.message.fields.challengeDice.match) {
+      return (
+          <span className={classNames("bg-indigo-50 text-indigo-700 ring-indigo-600/20 inline-flex flex-shrink-0 items-center rounded-full ml-3 px-1.5 py-0.5 mb-1 text-xs font-medium ring-1 ring-inset shadow-sm")}>
+            Match!
+          </span>
+      )
+    }
+  }
+
   return (
     <li className="bg-white relative flex-col pl-0.5 pr-2 rounded-lg">
       <div className="flex flex-row">
@@ -58,6 +68,7 @@ export default function ActionRollMessageListItem(props) {
               {props.message.fields.challengeDice.results[1]}
             </dd>
           </div>
+          {matchButton()}
         </div>
 
         <div className={classNames(diceTableClasses(), "")}>
