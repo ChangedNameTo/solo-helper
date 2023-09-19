@@ -1,6 +1,6 @@
-import { GameAction } from "../Types/GameTypes"
+import { GamesAction } from "../Types/GameTypes"
 
-export default function gameReducer(games, action:GameAction) {
+export default function gameReducer(games, action:GamesAction) {
   switch (action.type) {
     case "added": {
 

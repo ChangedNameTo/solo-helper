@@ -1,4 +1,4 @@
-export interface GameAction {
+export interface GamesAction {
   type: string;
   gameID: string;
 }

@@ -1,12 +1,6 @@
-export const vowTiers = [
-  "troublesome",
-  "dangerous",
-  "formidable",
-  "extreme",
-  "epic",
-];
+import { IronswornCharacter, VowTier } from "../Types/CharacterTypes";
 
-export const IronswornCharacter = {
+export const IronswornCharacter: IronswornCharacter = {
   name: "Nismera Elro",
   worldName: "The Iron Isles",
   experience: {
@@ -23,7 +17,6 @@ export const IronswornCharacter = {
       max: 5,
       current: 5,
       reset: 1,
-      bgColor: "bg-red-600",
     },
     {
       name: "Spirit",
@@ -32,7 +25,6 @@ export const IronswornCharacter = {
       max: 5,
       current: 5,
       reset: 1,
-      bgColor: "bg-blue-600",
     },
     {
       name: "Supply",
@@ -41,7 +33,6 @@ export const IronswornCharacter = {
       max: 5,
       current: 5,
       reset: 1,
-      bgColor: "bg-amber-600",
     },
     {
       name: "Momentum",
@@ -50,7 +41,6 @@ export const IronswornCharacter = {
       max: 12,
       current: 2,
       reset: 2,
-      bgColor: "bg-green-600",
     },
   ],
   stats: [
@@ -58,35 +48,30 @@ export const IronswornCharacter = {
       name: "Edge",
       initials: "E",
       value: 3,
-      href: "#",
       description: "Quickness, agility, and prowess in ranged combat",
     },
     {
       name: "Heart",
       initials: "H",
       value: 2,
-      href: "#",
       description: "Courage, willpower, empathy, sociability, and loyalty",
     },
     {
       name: "Iron",
       initials: "I",
       value: 2,
-      href: "#",
       description: "Strength, endurance, aggressiveness, and martial prowess",
     },
     {
       name: "Shadow",
       initials: "S",
       value: 1,
-      href: "#",
       description: "Sneakiness, guile, deceptiveness, and cunning",
     },
     {
       name: "Wit",
       initials: "W",
       value: 1,
-      href: "#",
       description: "Expertise, versatility, knowledge, and observation",
     },
   ],
@@ -95,7 +80,7 @@ export const IronswornCharacter = {
       name: "Find my sister",
       description:
         "My sister has wandered away from the village. I need to find her and bring her home.",
-      tier: "troublesome",
+      tier: VowTier.Troublesome,
       min: 0,
       max: 40,
       current: 0,
@@ -103,7 +88,7 @@ export const IronswornCharacter = {
     {
       name: "Slay the Dragon",
       description: "Lorem ipsum dolor sit amet.",
-      tier: "dangerous",
+      tier: VowTier.Epic,
       min: 0,
       max: 40,
       current: 0,
