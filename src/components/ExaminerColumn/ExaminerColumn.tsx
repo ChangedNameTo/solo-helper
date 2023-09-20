@@ -1,7 +1,7 @@
-import * as React from "react"
+import * as React from "react";
 
 import CommandList from "./CommandList";
-import NamedObjects from "./NamedObjects";
+import NamedObjects from "../NamedObjects";
 
 export default function ExaminerColumn() {
   return (

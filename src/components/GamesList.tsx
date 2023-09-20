@@ -4,9 +4,10 @@ import { Fragment, useState, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 import Header from "./Header";
-import { GamesContext, GamesDispatchContext } from "./GamesContext";
+import { GamesContext, GamesDispatchContext } from "../Contexts/GamesContext";
 import GameButton from "./GameButton";
-import NewCharacterForm from "./NewCharacterForm"
+import CharacterForm from "./CharacterForm";
+import { blankCharacter } from "../Characters/DefaultCharacter";
 
 export default function GamesList() {
   const games = useContext(GamesContext);
@@ -32,7 +33,10 @@ export default function GamesList() {
                 Games
               </h1>
               <div>
-                <button className="bg-indigo-700 text-white rounded-md text-lg font-semibold px-2 py-1 transition duration-300 hover:bg-indigo-600" onClick={openModal}>
+                <button
+                  className="bg-indigo-700 text-white rounded-md text-lg font-semibold px-2 py-1 transition duration-300 hover:bg-indigo-600"
+                  onClick={openModal}
+                >
                   Start New Game
                 </button>
               </div>
@@ -71,15 +75,14 @@ export default function GamesList() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-bold leading-6 text-gray-900"
                   >
                     New Character Creation
                   </Dialog.Title>
-                  <NewCharacterForm />
-                  
+                  <CharacterForm character={blankCharacter} />
                 </Dialog.Panel>
               </Transition.Child>
             </div>

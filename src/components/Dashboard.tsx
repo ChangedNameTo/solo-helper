@@ -1,25 +1,26 @@
-import * as React from "react"
+import * as React from "react";
 
-import GameFeed from "./GameFeed";
-import ExaminerColumn from "./ExaminerColumn";
+import GameFeed from "./GameFeed/GameFeed";
+import ExaminerColumn from "./ExaminerColumn/ExaminerColumn";
 import Header from "./Header";
 
 import messagesReducer from "../Reducers/MessagesReducer";
-import { DraftMessageContext, MessagesContext, MessagesDispatchContext } from "./MessagesContext";
-import CharacterSheet from "./CharacterSheet";
+import {
+  DraftMessageContext,
+  MessagesContext,
+  MessagesDispatchContext,
+} from "../Contexts/MessagesContext";
+import CharacterSheet from "./CharacterSheetComponents/CharacterSheet";
 
 export default function Dashboard() {
-  const [messages, dispatch] = React.useReducer(
-    messagesReducer,
-    []
-  )
+  const [messages, dispatch] = React.useReducer(messagesReducer, []);
 
   const [draftText, setDraftText] = React.useState("");
 
   return (
     <MessagesContext.Provider value={messages}>
       <MessagesDispatchContext.Provider value={dispatch}>
-        <DraftMessageContext.Provider value={{draftText, setDraftText}}>
+        <DraftMessageContext.Provider value={{ draftText, setDraftText }}>
           <div className="flex flex-col h-screen grow">
             <Header />
 

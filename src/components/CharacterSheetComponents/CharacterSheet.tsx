@@ -1,19 +1,20 @@
 import * as React from "react";
 
-import { IronswornCharacter } from "./IronswornCharacter";
-import SheetGauge from "./CharacterSheetComponents/SheetGauge";
-import SheetStat from "./CharacterSheetComponents/SheetStat";
-import SheetVow from "./CharacterSheetComponents/SheetVow";
-import SheetBond from "./CharacterSheetComponents/SheetBond";
-import SheetCondition from "./CharacterSheetComponents/SheetCondition";
-import SheetBane from "./CharacterSheetComponents/SheetBane";
-import SheetBurden from "./CharacterSheetComponents/SheetBurden";
-import SheetCompanion from "./CharacterSheetComponents/SheetCompanion";
-import SheetAsset from "./CharacterSheetComponents/SheetAsset";
-import SheetExperienceBar from "./CharacterSheetComponents/SheetExperienceBar";
+import { testCharacter } from "../../Characters/IronswornCharacter";
+import SheetGauge from "./SheetGauge";
+import SheetStat from "./SheetStat";
+import SheetVow from "./SheetVow";
+import SheetBond from "./SheetBond";
+import SheetCondition from "./SheetCondition";
+import SheetBane from "./SheetBane";
+import SheetBurden from "./SheetBurden";
+import SheetCompanion from "./SheetCompanion";
+import SheetAsset from "./SheetAsset";
+import SheetExperienceBar from "./SheetExperienceBar";
+import { PencilIcon } from "@heroicons/react/20/solid";
 
 export default function CharacterSheet() {
-  const characterSheetRef = React.useRef(null);
+  const characterSheetRef = React.useRef({} as HTMLDivElement);
 
   // Calculate the maximum height based on the viewport size
   const calculateMaxHeight = () => {
@@ -44,13 +45,18 @@ export default function CharacterSheet() {
   return (
     <div className="overflow-scroll bg-gray-100" ref={characterSheetRef}>
       {/* Name */}
-      <div className="text-xl font-bold text-center border border-1">
-        {IronswornCharacter.name}
+      <div className="my-2 mx-2 flex flex-row shadow-sm rounded-md bg-white">
+        <div className="pl-2 text-xl font-semibold text-center">
+          {testCharacter.name}
+        </div>
+        <button className="justify-right flex-shrink bg-indigo-600 hover:bg-indigo-500 rounded-lg px-2 py-1 my-1">
+          <PencilIcon className="h-5 w-5 text-white" aria-hidden="true" />
+        </button>
       </div>
 
-      <div className="mx-2 flex flex-col shadow-sm rounded-md bg-white">
+      <div className="my-2 mx-2 flex flex-col shadow-sm rounded-md bg-white">
         <div className="text-l font-semibold text-center">Experience</div>
-        <SheetExperienceBar experience={IronswornCharacter.experience} />
+        <SheetExperienceBar experience={testCharacter.experience} />
       </div>
 
       {/* Stats */}
@@ -61,7 +67,7 @@ export default function CharacterSheet() {
           </h2>
         </div>
         <ul role="list" className="flex flex-col">
-          {IronswornCharacter.stats.map((stat, idx, arr) => (
+          {testCharacter.stats.map((stat, idx, arr) => (
             <SheetStat stat={stat} idx={idx} key={stat.name} arr={arr} />
           ))}
         </ul>
@@ -70,7 +76,7 @@ export default function CharacterSheet() {
       {/* Gauges */}
       <div className="text-l font-semibold text-center">Gauges</div>
       <ul role="list" className="mx-2 flex flex-col gap-2">
-        {IronswornCharacter.gauges.map((gauge, idx) => (
+        {testCharacter.gauges.map((gauge, idx) => (
           <SheetGauge gauge={gauge} key={gauge.name} />
         ))}
       </ul>
@@ -78,7 +84,7 @@ export default function CharacterSheet() {
       {/* Vows */}
       <div className="text-l font-semibold text-center">Vows</div>
       <ul role="list" className="mx-2 flex flex-col gap-2">
-        {IronswornCharacter.vows.map((vow) => (
+        {testCharacter.vows.map((vow) => (
           <SheetVow vow={vow} key={vow.name} />
         ))}
       </ul>
@@ -86,7 +92,7 @@ export default function CharacterSheet() {
       {/* Bonds */}
       <div className="text-l font-semibold text-center">Bonds</div>
       <ul role="list" className="mx-2 flex flex-col gap-2">
-        {IronswornCharacter.bonds.bonds.map((bond) => (
+        {testCharacter.bonds.bonds.map((bond) => (
           <SheetBond bond={bond} key={bond.name} />
         ))}
       </ul>
@@ -102,7 +108,7 @@ export default function CharacterSheet() {
           </h3>
         </div>
         <ul role="list" className="divide-y divide-gray-200">
-          {IronswornCharacter.conditions.map((condition) => (
+          {testCharacter.conditions.map((condition) => (
             <SheetCondition condition={condition} key={condition.name} />
           ))}
         </ul>
@@ -116,7 +122,7 @@ export default function CharacterSheet() {
           </h3>
         </div>
         <ul role="list" className="divide-y divide-gray-200">
-          {IronswornCharacter.banes.map((bane) => (
+          {testCharacter.banes.map((bane) => (
             <SheetBane bane={bane} key={bane.name} />
           ))}
         </ul>
@@ -130,7 +136,7 @@ export default function CharacterSheet() {
           </h3>
         </div>
         <ul role="list" className="divide-y divide-gray-200">
-          {IronswornCharacter.burdens.map((burden) => (
+          {testCharacter.burdens.map((burden) => (
             <SheetBurden burden={burden} key={burden.name} />
           ))}
         </ul>
@@ -147,7 +153,7 @@ export default function CharacterSheet() {
           </h3>
         </div>
         <ul role="list" className="divide-y divide-gray-200">
-          {IronswornCharacter.companions.map((companion) => (
+          {testCharacter.companions.map((companion) => (
             <SheetCompanion companion={companion} key={companion.name} />
           ))}
         </ul>
@@ -161,7 +167,7 @@ export default function CharacterSheet() {
           </h3>
         </div>
         <ul role="list" className="divide-y divide-gray-200">
-          {IronswornCharacter.paths.map((path) => (
+          {testCharacter.paths.map((path) => (
             <SheetAsset asset={path} key={path.name} />
           ))}
         </ul>
@@ -175,7 +181,7 @@ export default function CharacterSheet() {
           </h3>
         </div>
         <ul role="list" className="divide-y divide-gray-200">
-          {IronswornCharacter.talents.map((talent) => (
+          {testCharacter.talents.map((talent) => (
             <SheetAsset asset={talent} key={talent.name} />
           ))}
         </ul>
@@ -189,7 +195,7 @@ export default function CharacterSheet() {
           </h3>
         </div>
         <ul role="list" className="divide-y divide-gray-200">
-          {IronswornCharacter.rituals.map((ritual) => (
+          {testCharacter.rituals.map((ritual) => (
             <SheetAsset asset={ritual} key={ritual.name} />
           ))}
         </ul>

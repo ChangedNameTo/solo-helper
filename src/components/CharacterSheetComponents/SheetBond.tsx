@@ -1,7 +1,7 @@
 import * as React from "react";
-
+// TODO: Add the bond gauge
 export default function SheetBond(props) {
-  return(
+  return (
     <li className="col-span-1 flex rounded-md shadow-sm">
       <div className="flex flex-1 items-center justify-between truncate rounded-md border border-gray-200 bg-white">
         <div className="px-4 py-1 text-sm w-full">
@@ -17,5 +17,5 @@ export default function SheetBond(props) {
         </div>
       </div>
     </li>
-  )
+  );
 }

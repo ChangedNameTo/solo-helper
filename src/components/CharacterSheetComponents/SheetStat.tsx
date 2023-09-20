@@ -1,21 +1,24 @@
 import * as React from "react";
 import { classNames } from "../../assets/Helpers";
-import { DraftMessageContext, MessagesDispatchContext } from "../MessagesContext";
+import {
+  DraftMessageContext,
+  MessagesDispatchContext,
+} from "../../Contexts/MessagesContext";
 
 export default function SheetStat(props) {
-  const {draftText, setDraftText} = React.useContext(DraftMessageContext)
+  const { draftText, setDraftText } = React.useContext(DraftMessageContext);
 
-  const dispatch = React.useContext(MessagesDispatchContext)
+  const dispatch = React.useContext(MessagesDispatchContext);
 
   const dispatchStatMoveRoll = () => {
     const statMoveRollMessage = {
-      type:'added',
-      text:`/moveroll 1d6+${props.stat.value} ${props.stat.initials}`,
-      date: Date.now()
-    }
-    
-    dispatch(statMoveRollMessage)
-  }
+      type: "added",
+      text: `/moveroll 1d6+${props.stat.value} ${props.stat.initials}`,
+      date: Date.now(),
+    };
+
+    dispatch(statMoveRollMessage);
+  };
 
   const buttonBorderStyle = () => {
     switch (props.idx) {

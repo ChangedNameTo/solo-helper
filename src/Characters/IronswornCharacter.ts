@@ -1,6 +1,6 @@
 import { IronswornCharacter, VowTier } from "../Types/CharacterTypes";
 
-export const IronswornCharacter: IronswornCharacter = {
+export const testCharacter: IronswornCharacter = {
   name: "Nismera Elro",
   worldName: "The Iron Isles",
   experience: {
@@ -157,7 +157,7 @@ export const IronswornCharacter: IronswornCharacter = {
       description:
         "You have returned with a soul-bound quest, and must clear it by completing the quest",
       manifesting: "",
-      relatedVow: "",
+      relatedVow: undefined,
     },
     {
       name: "Tormented",
@@ -165,7 +165,7 @@ export const IronswornCharacter: IronswornCharacter = {
       description:
         "You alone can prevent a dire future, and must clear it by completing the quest",
       manifesting: "",
-      relatedVow: "",
+      relatedVow: undefined,
     },
   ],
   companions: [
@@ -201,6 +201,7 @@ export const IronswornCharacter: IronswornCharacter = {
         min: 0,
         max: 3,
         current: 3,
+        reset: 1,
       },
     },
   ],
@@ -236,6 +237,7 @@ export const IronswornCharacter: IronswornCharacter = {
   talents: [
     {
       name: "Shield-Bearer",
+      requirement: "Holding Shield",
       active: false,
       abilities: [
         {

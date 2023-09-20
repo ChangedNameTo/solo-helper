@@ -5,14 +5,14 @@ import Dashboard from "./components/Dashboard";
 
 import gameReducer from "./Reducers/GameReducer";
 
-import { IronswornCharacter } from "./components/IronswornCharacter";
+import { testCharacter } from "./Characters/IronswornCharacter";
 import GamesList from "./components/GamesList";
-import { GamesContext, GamesDispatchContext } from "./components/GamesContext";
+import { GamesContext, GamesDispatchContext } from "./Contexts/GamesContext";
 
 function App() {
   const [games, dispatch] = React.useReducer(gameReducer, {
     selectedGame: null,
-    games: [IronswornCharacter],
+    games: [testCharacter],
   });
 
   if (games.selectedGame) {

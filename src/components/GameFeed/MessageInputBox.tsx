@@ -1,10 +1,10 @@
 import * as React from "react";
-import { DraftMessageContext } from "./MessagesContext";
+import { DraftMessageContext } from "../../Contexts/MessagesContext";
 
-import { classNames } from "../assets/Helpers";
+import { classNames } from "../../assets/Helpers";
 
-export default function CommandInputBox(props) {
-  const {draftText, setDraftText} = React.useContext(DraftMessageContext)
+export default function MessageInputBox(props) {
+  const { draftText, setDraftText } = React.useContext(DraftMessageContext);
 
   const isCommand = () => draftText[0] === "/";
 
@@ -19,7 +19,9 @@ export default function CommandInputBox(props) {
       <div className="relative mt-2 flex items-center">
         <div
           className={classNames(
-            isCommand() ? "bg-indigo-600 text-white" : "bg-white text-indigo-600",
+            isCommand()
+              ? "bg-indigo-600 text-white"
+              : "bg-white text-indigo-600",
             "border-indigo-600 border-2 my-2 mx-2 rounded pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-lg"
           )}
         >

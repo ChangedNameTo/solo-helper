@@ -1,10 +1,10 @@
 import * as React from "react";
 
 import { CalendarDaysIcon } from "@heroicons/react/20/solid";
-import { GamesDispatchContext } from "./GamesContext";
+import { GamesDispatchContext } from "../Contexts/GamesContext";
 
 export default function GameButton(props) {
-  const dispatch = React.useContext(GamesDispatchContext)
+  const dispatch = React.useContext(GamesDispatchContext);
 
   const dispatchGameSelect = () => {
     const gameSelect = {
@@ -12,7 +12,7 @@ export default function GameButton(props) {
       gameID: props.idx,
     };
 
-    dispatch(gameSelect) 
+    dispatch(gameSelect);
   };
 
   return (

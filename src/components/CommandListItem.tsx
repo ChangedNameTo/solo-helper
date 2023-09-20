@@ -1,9 +1,9 @@
-import * as React from "react"
+import * as React from "react";
 
-import { DraftMessageContext } from "./MessagesContext"
+import { DraftMessageContext } from "../Contexts/MessagesContext";
 
 export default function CommandListItem(props) {
-  const {draftText, setDraftText} = React.useContext(DraftMessageContext)
+  const { draftText, setDraftText } = React.useContext(DraftMessageContext);
 
   return (
     <li>
@@ -16,5 +16,5 @@ export default function CommandListItem(props) {
         {props.commandText.commandText}
       </button>
     </li>
-  )
+  );
 }

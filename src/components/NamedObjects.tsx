@@ -1,7 +1,7 @@
-import * as React from "react"
+import * as React from "react";
 
 import { useContext } from "react";
-import { MessagesContext } from "./MessagesContext";
+import { MessagesContext } from "../Contexts/MessagesContext";
 
 import { timeAgo } from "../assets/Helpers";
 
