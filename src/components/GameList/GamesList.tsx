@@ -2,22 +2,29 @@ import * as React from "react";
 
 import { Fragment, useState, useContext } from "react";
 
-import Header from "./Header";
-import { GamesContext, GamesDispatchContext } from "../Contexts/GamesContext";
+import Header from "../Header";
+import { GamesContext, GamesDispatchContext } from "../../Contexts/GamesContext";
 import GameButton from "./GameButton";
-import CharacterForm from "./CharacterForm";
+import CharacterForm from "../CharacterForm";
+import { CharacterFormContext } from "../../Contexts/FormContexts";
+import { generateUUID } from "../../assets/Helpers";
 
 export default function GamesList() {
   const games = useContext(GamesContext);
+  const dispatch = useContext(GamesDispatchContext);
+  const characterFormContext = React.useContext(CharacterFormContext);
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [newCharacterCreationOpen, setNewCharacterCreationOpen] = useState(false)
 
-  const closeModal = (): void => {
-    setIsOpen(false);
-  };
+  const startNewGame = () => {
+    const newID = generateUUID();
 
-  const openModal = (): void => {
-    setIsOpen(true);
+    dispatch({
+      type: "added",
+      gameID: newID,
+    });
+
+    characterFormContext.openModal(newID)
   };
 
   return (
@@ -33,22 +40,23 @@ export default function GamesList() {
               <div>
                 <button
                   className="bg-indigo-700 text-white rounded-md text-lg font-semibold px-2 py-1 transition duration-300 hover:bg-indigo-600"
-                  onClick={openModal}
+                  onClick={() => startNewGame()}
                 >
                   Start New Game
                 </button>
               </div>
             </div>
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap4">
-              {games.games.map((game, idx) => (
-                <GameButton game={game} idx={idx} key={game.name} />
+              {Array.from(games.gamesMap.values()).map((game) => (
+                <Fragment key={game.id}>
+                  <GameButton game={game} />
+                  <CharacterForm character={game.id} />
+                </Fragment>
               ))}
             </ul>
           </div>
         </div>
       </div>
-
-      <CharacterForm isOpen={isOpen} closeModal={closeModal} />
     </>
   );
 }

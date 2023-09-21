@@ -4,7 +4,7 @@ import MoveRoll from "./Commands/MoveRoll";
 
 const commandRegex = /\/[^\s]+\s+/;
 
-export default function messagesReducer(messages, action) {
+export default function MessagesReducer(messages, action) {
   const roller: rpgDiceRoller.DiceRoller = new rpgDiceRoller.DiceRoller();
 
   switch (action.type) {

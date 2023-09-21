@@ -1,7 +1,9 @@
-import { IronswornCharacter, VowTier } from "../Types/CharacterTypes";
+import { IronswornCharacter } from "../Types/CharacterTypes";
+import { VowTier } from "../Types/VowTypes";
 
 export const testCharacter: IronswornCharacter = {
   name: "Nismera Elro",
+  id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
   worldName: "The Iron Isles",
   experience: {
     min: 0,
@@ -77,21 +79,23 @@ export const testCharacter: IronswornCharacter = {
   ],
   vows: [
     {
+      id:"9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
       name: "Find my sister",
       description:
         "My sister has wandered away from the village. I need to find her and bring her home.",
       tier: VowTier.Troublesome,
       min: 0,
       max: 40,
-      current: 0,
+      current: 20,
     },
     {
+      id:"1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
       name: "Slay the Dragon",
       description: "Lorem ipsum dolor sit amet.",
       tier: VowTier.Epic,
       min: 0,
       max: 40,
-      current: 0,
+      current: 10,
     },
   ],
   bonds: {
@@ -299,4 +303,5 @@ export const testCharacter: IronswornCharacter = {
         "Full greatshield emblazoned with the head of a golden lion.",
     },
   ],
+  date:'yesterday'
 };

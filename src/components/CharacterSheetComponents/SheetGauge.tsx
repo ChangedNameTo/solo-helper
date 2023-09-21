@@ -20,8 +20,7 @@ export default function SheetGauge(props) {
     <li key={props.gauge.name} className="col-span-1 flex rounded-md shadow-sm">
       <button
         className={classNames(
-          props.gauge.bgColor,
-          "flex w-16 flex-shrink-0 items-center justify-center rounded-l-md text-xl font-bold text-white"
+          "bg-indigo-600 flex w-16 flex-shrink-0 items-center justify-center rounded-l-md text-xl font-bold text-white"
         )}
       >
         {textDecoration(props.gauge.current)} {props.gauge.current}

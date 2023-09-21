@@ -1,9 +1,7 @@
-export enum VowTier {
-  Troublesome = "troublesome",
-  Dangerous = "dangerous",
-  Formidable = "formidable",
-  Extreme = "Extreme",
-  Epic = "Epic",
+import { Vow } from "./VowTypes";
+
+export interface CharactersAction {
+  type:string
 }
 
 export interface Gauge {
@@ -20,15 +18,6 @@ export interface Stat {
   initials: string;
   value: number;
   description: string;
-}
-
-export interface Vow {
-  name: string;
-  description: string;
-  tier: VowTier;
-  min: number;
-  max: number;
-  current: number;
 }
 
 export interface Bond {
@@ -97,6 +86,7 @@ export interface Equipment {
 
 export interface IronswornCharacter {
   name: string;
+  id: string;
   worldName: string;
   experience: {
     min: number;
@@ -119,4 +109,5 @@ export interface IronswornCharacter {
   talents: Array<Talent>;
   rituals: Array<Ritual>;
   equipment: Array<Equipment>;
+  date:string
 }

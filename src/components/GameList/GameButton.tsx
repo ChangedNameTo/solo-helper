@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { CalendarDaysIcon } from "@heroicons/react/20/solid";
-import { GamesDispatchContext } from "../Contexts/GamesContext";
+import { GamesDispatchContext } from "../../Contexts/GamesContext";
 
 export default function GameButton(props) {
   const dispatch = React.useContext(GamesDispatchContext);
@@ -9,7 +9,7 @@ export default function GameButton(props) {
   const dispatchGameSelect = () => {
     const gameSelect = {
       type: "selected",
-      gameID: props.idx,
+      gameID: props.game.id,
     };
 
     dispatch(gameSelect);
@@ -35,7 +35,7 @@ export default function GameButton(props) {
               />
             </dt>
             <dd className="text-white font-semibold">
-              <time dateTime="2023-01-31 font-normal">January 31, 2023</time>
+              <time dateTime="2023-01-31 font-normal">{props.game.date}</time>
             </dd>
           </div>
         </dl>

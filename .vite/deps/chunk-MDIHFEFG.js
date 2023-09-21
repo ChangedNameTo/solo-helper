@@ -6976,7 +6976,7 @@ var require_react_dom_development = __commonJS({
           }
           var inCapturePhase = (eventSystemFlags & IS_CAPTURE_PHASE) !== 0;
           {
-            var accumulateTargetOnly = !inCapturePhase && // TODO: ideally, we'd eventually add all events from
+            var accumulateTargetOnly = !inCapturePhase &&
             // nonDelegatedEvents list in DOMPluginEventSystem.
             // Then we can remove this special list.
             // This is a breaking change that can wait until React 18.
