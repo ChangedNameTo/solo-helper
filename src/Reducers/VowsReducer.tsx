@@ -1,9 +1,9 @@
 import { VowsAction } from "../Types/VowTypes"
 
-export default function VowsReducer(vows, action: VowsAction) {
+export default function vowsReducer(vows, action: VowsAction) {
   switch (action.type) {
     case "added": {
-      if (!action.text.length) {
+      if (!action.name.length) {
         return vows
       }
 

@@ -96,7 +96,7 @@ export interface IronswornCharacter {
   };
   gauges: Array<Gauge>;
   stats: Array<Stat>;
-  vows: Array<Vow>;
+  vows: Map<string, Vow>;
   bonds: {
     bonds: Array<Bond>;
     max: number;
@@ -109,5 +109,5 @@ export interface IronswornCharacter {
   talents: Array<Talent>;
   rituals: Array<Ritual>;
   equipment: Array<Equipment>;
-  date:string
+  date:number
 }

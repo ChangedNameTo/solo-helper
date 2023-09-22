@@ -99,8 +99,8 @@ export default function CharacterSheet() {
             </h2>
           </div>
           <ul role="list" className="flex flex-col">
-            {currentCharacter.vows.map((vow) => (
-              <SheetVow vow={vow} key={vow.name} />
+            {Array.from(currentCharacter.vows.values()).map((vow) => (
+              <SheetVow vow={vow} key={vow.id} />
             ))}
           </ul>
         </div>

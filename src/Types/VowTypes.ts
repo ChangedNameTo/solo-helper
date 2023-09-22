@@ -1,5 +1,9 @@
-export interface VowsAction {
-  type: string;
+import { GamesAction } from "./GameTypes";
+
+export interface VowsAction extends GamesAction{
+  type: "updated_vow";
+  vowID: string;
+  payload: Partial<Vow>;
 }
 
 export enum VowTier {

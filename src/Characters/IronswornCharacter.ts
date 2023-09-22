@@ -3,7 +3,7 @@ import { VowTier } from "../Types/VowTypes";
 
 export const testCharacter: IronswornCharacter = {
   name: "Nismera Elro",
-  id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
+  id: "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
   worldName: "The Iron Isles",
   experience: {
     min: 0,
@@ -77,27 +77,35 @@ export const testCharacter: IronswornCharacter = {
       description: "Expertise, versatility, knowledge, and observation",
     },
   ],
-  vows: [
-    {
-      id:"9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
-      name: "Find my sister",
-      description:
-        "My sister has wandered away from the village. I need to find her and bring her home.",
-      tier: VowTier.Troublesome,
-      min: 0,
-      max: 40,
-      current: 20,
-    },
-    {
-      id:"1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
-      name: "Slay the Dragon",
-      description: "Lorem ipsum dolor sit amet.",
-      tier: VowTier.Epic,
-      min: 0,
-      max: 40,
-      current: 10,
-    },
-  ],
+  vows: new Map([
+    [
+      "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      {
+        name: "Find my sister",
+        id:"9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        description:
+          "My sister has wandered away from the village. I need to find her and bring her home.",
+        tier: VowTier.Troublesome,
+        min: 0,
+        max: 40,
+        current: 20,
+      },
+    ],
+    [
+      "qpoqiweuroiqeurpoqwrpiqwuwqq",
+      {
+        name: "Slay the Dragon",
+        id:
+      "qpoqiweuroiqeurpoqwrpiqwuwqq",
+        description:
+          "Pee poo peepee.",
+        tier: VowTier.Epic,
+        min: 0,
+        max: 40,
+        current: 20,
+      },
+    ],
+  ]),
   bonds: {
     bonds: [
       {
@@ -303,5 +311,5 @@ export const testCharacter: IronswornCharacter = {
         "Full greatshield emblazoned with the head of a golden lion.",
     },
   ],
-  date:'yesterday'
+  date: Date.now(),
 };

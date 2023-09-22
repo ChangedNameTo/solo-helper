@@ -1,8 +1,8 @@
 import { IronswornCharacter } from "../Types/CharacterTypes";
 
 export const blankCharacter: IronswornCharacter = {
-  name: "",
-  worldName: "",
+  name: "New Game",
+  worldName: "New Game",
   id:"",
   experience: {
     min: 0,
@@ -146,5 +146,5 @@ export const blankCharacter: IronswornCharacter = {
   talents: [],
   rituals: [],
   equipment: [],
-  date:'yesterday'
+  date:Date.now()
 };

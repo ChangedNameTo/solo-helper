@@ -8,15 +8,17 @@ import gameReducer from "./Reducers/GameReducer";
 import { testCharacter } from "./Characters/IronswornCharacter";
 import GamesList from "./components/GameList/GamesList";
 import { GamesContext, GamesDispatchContext } from "./Contexts/GamesContext";
-import { VowFormContext, VowsFormContext, CharacterFormContext } from "./Contexts/FormContexts";
+import {
+  VowFormContext,
+  VowsFormContext,
+  CharacterFormContext,
+} from "./Contexts/FormContexts";
 import { Games } from "./Types/GameTypes";
 
 function App() {
-  const [games , dispatch] = React.useReducer(gameReducer, {
+  const [games, gamesDispatch] = React.useReducer(gameReducer, {
     selectedGame: "",
-    gamesMap: new Map([
-      [testCharacter.id,testCharacter]
-    ]),
+    gamesMap: new Map([[testCharacter.id, testCharacter]]),
   } as Games);
 
   const display = () => {
@@ -32,44 +34,44 @@ function App() {
     const [openForms, setOpenForms] = React.useState({});
 
     const isOpen = (objectID: string): boolean => {
-      return openForms[objectID] || false
-    }
+      return openForms[objectID] || false;
+    };
 
     const openModal = (objectID: string): void => {
       setOpenForms((prevOpenForms) => ({
         ...prevOpenForms,
-        [objectID]:true
-      }))
+        [objectID]: true,
+      }));
     };
-    
+
     const closeModal = (objectID: string): void => {
       setOpenForms((prevOpenForms) => ({
         ...prevOpenForms,
-        [objectID]:false
-      }))
+        [objectID]: false,
+      }));
     };
 
     return {
       openForms: openForms,
-      isOpen:isOpen,
+      isOpen: isOpen,
       setOpenForms: setOpenForms,
       closeModal: closeModal,
-      openModal: openModal
-    }
-  }
+      openModal: openModal,
+    };
+  };
 
   return (
-    <GamesContext.Provider value={games}>
-      <GamesDispatchContext.Provider value={dispatch}>
-        <CharacterFormContext.Provider value={generateFormContext()}>
-          <VowsFormContext.Provider value={generateFormContext()}>
-            <VowFormContext.Provider value={generateFormContext()}>
-              {display()}
-            </VowFormContext.Provider>
-          </VowsFormContext.Provider>
-        </CharacterFormContext.Provider>
-      </GamesDispatchContext.Provider>
-    </GamesContext.Provider>
+      <GamesContext.Provider value={games as Games}>
+        <GamesDispatchContext.Provider value={gamesDispatch}>
+          <CharacterFormContext.Provider value={generateFormContext()}>
+            <VowsFormContext.Provider value={generateFormContext()}>
+              <VowFormContext.Provider value={generateFormContext()}>
+                {display()}
+              </VowFormContext.Provider>
+            </VowsFormContext.Provider>
+          </CharacterFormContext.Provider>
+        </GamesDispatchContext.Provider>
+      </GamesContext.Provider>
   );
 }
 

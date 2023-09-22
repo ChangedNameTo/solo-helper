@@ -14,8 +14,6 @@ export default function GamesList() {
   const dispatch = useContext(GamesDispatchContext);
   const characterFormContext = React.useContext(CharacterFormContext);
 
-  const [newCharacterCreationOpen, setNewCharacterCreationOpen] = useState(false)
-
   const startNewGame = () => {
     const newID = generateUUID();
 

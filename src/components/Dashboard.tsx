@@ -11,10 +11,10 @@ import {
   MessagesDispatchContext,
 } from "../Contexts/MessagesContext";
 import CharacterSheet from "./CharacterSheetComponents/CharacterSheet";
+import { CurrentGameContext } from "../Contexts/GamesContext";
 
 export default function Dashboard() {
   const [messages, dispatch] = React.useReducer(messagesReducer, []);
-
   const [draftText, setDraftText] = React.useState("");
 
   return (
