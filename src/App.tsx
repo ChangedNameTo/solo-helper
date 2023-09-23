@@ -8,11 +8,7 @@ import gameReducer from "./Reducers/GameReducer";
 import { testCharacter } from "./Characters/IronswornCharacter";
 import GamesList from "./components/GameList/GamesList";
 import { GamesContext, GamesDispatchContext } from "./Contexts/GamesContext";
-import {
-  VowFormContext,
-  VowsFormContext,
-  CharacterFormContext,
-} from "./Contexts/FormContexts";
+import { generateFormContext, FormsContext } from "./Contexts/FormContexts";
 import { Games } from "./Types/GameTypes";
 
 function App() {
@@ -30,48 +26,15 @@ function App() {
   };
 
   // TODO: Migrate this into the FormContext folder
-  const generateFormContext = () => {
-    const [openForms, setOpenForms] = React.useState({});
-
-    const isOpen = (objectID: string): boolean => {
-      return openForms[objectID] || false;
-    };
-
-    const openModal = (objectID: string): void => {
-      setOpenForms((prevOpenForms) => ({
-        ...prevOpenForms,
-        [objectID]: true,
-      }));
-    };
-
-    const closeModal = (objectID: string): void => {
-      setOpenForms((prevOpenForms) => ({
-        ...prevOpenForms,
-        [objectID]: false,
-      }));
-    };
-
-    return {
-      openForms: openForms,
-      isOpen: isOpen,
-      setOpenForms: setOpenForms,
-      closeModal: closeModal,
-      openModal: openModal,
-    };
-  };
 
   return (
-      <GamesContext.Provider value={games as Games}>
-        <GamesDispatchContext.Provider value={gamesDispatch}>
-          <CharacterFormContext.Provider value={generateFormContext()}>
-            <VowsFormContext.Provider value={generateFormContext()}>
-              <VowFormContext.Provider value={generateFormContext()}>
-                {display()}
-              </VowFormContext.Provider>
-            </VowsFormContext.Provider>
-          </CharacterFormContext.Provider>
-        </GamesDispatchContext.Provider>
-      </GamesContext.Provider>
+    <GamesContext.Provider value={games as Games}>
+      <GamesDispatchContext.Provider value={gamesDispatch}>
+        <FormsContext.Provider value={generateFormContext()}>
+          {display()}
+        </FormsContext.Provider>
+      </GamesDispatchContext.Provider>
+    </GamesContext.Provider>
   );
 }
 

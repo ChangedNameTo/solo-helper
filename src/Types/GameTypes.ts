@@ -8,7 +8,6 @@ export interface GamesAction {
 export interface Games {
   gamesMap: Map<string, IronswornCharacter>;
   selectedGame: string;
-  currentGame():IronswornCharacter
 }
 
 export interface Game {

@@ -3,16 +3,20 @@ import * as React from "react";
 import { Fragment, useState, useContext } from "react";
 
 import Header from "../Header";
-import { GamesContext, GamesDispatchContext } from "../../Contexts/GamesContext";
+import {
+  GamesContext,
+  GamesDispatchContext,
+} from "../../Contexts/GamesContext";
 import GameButton from "./GameButton";
-import CharacterForm from "../CharacterForm";
-import { CharacterFormContext } from "../../Contexts/FormContexts";
+import CharacterForm from "../Forms/CharacterForm";
+import { FormsContext } from "../../Contexts/FormContexts";
 import { generateUUID } from "../../assets/Helpers";
+import FormModal from "../Forms/FormModal";
 
 export default function GamesList() {
   const games = useContext(GamesContext);
   const dispatch = useContext(GamesDispatchContext);
-  const characterFormContext = React.useContext(CharacterFormContext);
+  const formsContext = React.useContext(FormsContext);
 
   const startNewGame = () => {
     const newID = generateUUID();
@@ -22,7 +26,7 @@ export default function GamesList() {
       gameID: newID,
     });
 
-    characterFormContext.openModal(newID)
+    formsContext.openModal(newID);
   };
 
   return (
@@ -48,7 +52,7 @@ export default function GamesList() {
               {Array.from(games.gamesMap.values()).map((game) => (
                 <Fragment key={game.id}>
                   <GameButton game={game} />
-                  <CharacterForm character={game.id} />
+                  <FormModal id={game.id} children={<CharacterForm />} />
                 </Fragment>
               ))}
             </ul>

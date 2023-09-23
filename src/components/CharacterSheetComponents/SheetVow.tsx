@@ -5,12 +5,13 @@ import ProgressRing from "./ProgressRing";
 import { VowTier } from "../../Types/VowTypes";
 
 import { PencilIcon } from "@heroicons/react/20/solid";
-import { VowFormContext } from "../../Contexts/FormContexts";
 
-import VowForm from "../VowForm";
+import VowForm from "../Forms/VowForm";
+import FormModal from "../Forms/FormModal";
+import { FormsContext } from "../../Contexts/FormContexts";
 
 export default function SheetVow(props) {
-  const vowFormContext = React.useContext(VowFormContext);
+  const formsContext = React.useContext(FormsContext);
 
   const tierColor = () => {
     switch (props.vow.tier) {
@@ -34,7 +35,7 @@ export default function SheetVow(props) {
 
   const currentVowProgress = () =>
     (props.vow.current / (props.vow.max - props.vow.min)) * 100;
-  
+
   return (
     <>
       <li className="col-span-1 flex border-gray-200 border-t border-b">
@@ -59,7 +60,7 @@ export default function SheetVow(props) {
             </div>
             <button
               className="place-content-end flex-shrink bg-indigo-600 hover:bg-indigo-500 rounded-lg px-2 py-1 my-1 mx-2"
-              onClick={() => vowFormContext.openModal(props.vow.id)}
+              onClick={() => formsContext.openModal(props.vow.id)}
             >
               <PencilIcon className="h-5 w-5 text-white" aria-hidden="true" />
             </button>
@@ -69,9 +70,7 @@ export default function SheetVow(props) {
           </div>
         </div>
       </li>
-      <VowForm
-        vow={props.vow}
-      />
+      <FormModal id={props.vow.id} children={<VowForm id={props.vow.id} />} />
     </>
   );
 }

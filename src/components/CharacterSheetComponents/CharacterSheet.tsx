@@ -11,16 +11,17 @@ import SheetBurden from "./SheetBurden";
 import SheetCompanion from "./SheetCompanion";
 import SheetAsset from "./SheetAsset";
 import SheetExperienceBar from "./SheetExperienceBar";
-import CharacterForm from "../CharacterForm";
-import { CharacterFormContext } from "../../Contexts/FormContexts";
+import CharacterForm from "../Forms/CharacterForm";
 import { GamesContext } from "../../Contexts/GamesContext";
+import FormModal from "../Forms/FormModal";
+import { FormsContext } from "../../Contexts/FormContexts";
 
 export default function CharacterSheet() {
-  const characterFormContext = React.useContext(CharacterFormContext);
+  const formsContext = React.useContext(FormsContext);
   const characterSheetRef = React.useRef({} as HTMLDivElement);
-  const gamesContext = React.useContext(GamesContext)
+  const gamesContext = React.useContext(GamesContext);
 
-  const currentCharacter = gamesContext.gamesMap.get(gamesContext.selectedGame)
+  const currentCharacter = gamesContext.gamesMap.get(gamesContext.selectedGame);
 
   // Calculate the maximum height based on the viewport size
   const calculateMaxHeight = () => {
@@ -58,7 +59,7 @@ export default function CharacterSheet() {
           </div>
           <button
             className="place-content-end flex-shrink bg-indigo-600 hover:bg-indigo-500 rounded-lg px-2 py-1 my-1 mx-2"
-            onClick={() => characterFormContext.openModal(currentCharacter.id)}
+            onClick={() => formsContext.openModal(currentCharacter.id)}
           >
             <PencilIcon className="h-5 w-5 text-white" aria-hidden="true" />
           </button>
@@ -217,8 +218,9 @@ export default function CharacterSheet() {
           </ul>
         </div>
       </div>
-      <CharacterForm
-        character={currentCharacter}
+      <FormModal
+        id={currentCharacter.id}
+        children={<CharacterForm id={currentCharacter.id} />}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import * as React from "react";
 
 interface FormContext {
   openForms: Map<string, boolean>;
@@ -8,10 +8,34 @@ interface FormContext {
   openModal: (objectID: string) => void;
 }
 
-interface VowFormContext extends FormContext {}
-interface VowsFormContext extends FormContext {}
-interface CharacterFormContext extends FormContext {}
+export const FormsContext = React.createContext({} as FormContext);
 
-export const VowFormContext = createContext({} as VowFormContext);
-export const VowsFormContext = createContext({} as VowsFormContext);
-export const CharacterFormContext = createContext({} as CharacterFormContext);
+export const generateFormContext = () => {
+  const [openForms, setOpenForms] = React.useState(new Map());
+
+  const isOpen = (objectID: string): boolean => {
+    return openForms[objectID] || false;
+  };
+
+  const openModal = (objectID: string): void => {
+    setOpenForms((prevOpenForms) => ({
+      ...prevOpenForms,
+      [objectID]: true,
+    }));
+  };
+
+  const closeModal = (objectID: string): void => {
+    setOpenForms((prevOpenForms) => ({
+      ...prevOpenForms,
+      [objectID]: false,
+    }));
+  };
+
+  return {
+    openForms: openForms,
+    isOpen: isOpen,
+    setOpenForms: setOpenForms,
+    closeModal: closeModal,
+    openModal: openModal,
+  };
+};
