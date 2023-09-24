@@ -70,7 +70,11 @@ export default function SheetVow(props) {
           </div>
         </div>
       </li>
-      <FormModal id={props.vow.id} children={<VowForm id={props.vow.id} />} />
+      <FormModal
+        id={props.vow.id}
+        title={"Edit Vow"}
+        children={<VowForm id={props.vow.id} />}
+      />
     </>
   );
 }

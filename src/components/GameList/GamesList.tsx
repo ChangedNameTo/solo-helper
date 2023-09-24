@@ -52,7 +52,10 @@ export default function GamesList() {
               {Array.from(games.gamesMap.values()).map((game) => (
                 <Fragment key={game.id}>
                   <GameButton game={game} />
-                  <FormModal id={game.id} children={<CharacterForm />} />
+                  <FormModal
+                    id={game.id}
+                    children={<CharacterForm id={game.id} />}
+                  />
                 </Fragment>
               ))}
             </ul>

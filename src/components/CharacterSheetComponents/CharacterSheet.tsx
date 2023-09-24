@@ -49,6 +49,10 @@ export default function CharacterSheet() {
     };
   }, []);
 
+  if (!currentCharacter) {
+    return;
+  }
+
   return (
     <>
       <div className="overflow-scroll bg-gray-100" ref={characterSheetRef}>

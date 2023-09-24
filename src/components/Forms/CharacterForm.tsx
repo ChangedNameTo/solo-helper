@@ -11,7 +11,7 @@ export default function CharacterForm(props) {
   const gamesContext = React.useContext(GamesContext);
   const gameDispatchContext = React.useContext(GamesDispatchContext);
 
-  const game = gamesContext.gamesMap.get(gamesContext.selectedGame);
+  const game = gamesContext.gamesMap.get(props.id);
 
   if (!game) {
     formsContext.closeModal(props.id);

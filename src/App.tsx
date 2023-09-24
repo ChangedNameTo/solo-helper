@@ -8,7 +8,7 @@ import gameReducer from "./Reducers/GameReducer";
 import { testCharacter } from "./Characters/IronswornCharacter";
 import GamesList from "./components/GameList/GamesList";
 import { GamesContext, GamesDispatchContext } from "./Contexts/GamesContext";
-import { generateFormContext, FormsContext } from "./Contexts/FormContexts";
+import { FormsContext } from "./Contexts/FormContexts";
 import { Games } from "./Types/GameTypes";
 
 function App() {
@@ -23,6 +23,36 @@ function App() {
     } else {
       return <GamesList />;
     }
+  };
+
+  const generateFormContext = () => {
+    const [openForms, setOpenForms] = React.useState(new Map());
+
+    const isOpen = (objectID: string): boolean => {
+      return openForms[objectID] || false;
+    };
+
+    const openModal = (objectID: string): void => {
+      setOpenForms((prevOpenForms) => ({
+        ...prevOpenForms,
+        [objectID]: true,
+      }));
+    };
+
+    const closeModal = (objectID: string): void => {
+      setOpenForms((prevOpenForms) => ({
+        ...prevOpenForms,
+        [objectID]: false,
+      }));
+    };
+
+    return {
+      openForms: openForms,
+      isOpen: isOpen,
+      setOpenForms: setOpenForms,
+      closeModal: closeModal,
+      openModal: openModal,
+    };
   };
 
   // TODO: Migrate this into the FormContext folder

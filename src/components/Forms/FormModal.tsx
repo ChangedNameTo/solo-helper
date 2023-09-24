@@ -49,7 +49,6 @@ export default function FormModal(props) {
                   as="h3"
                   className="text-lg font-bold leading-6 text-gray-900"
                 >
-                  New Character Creation
                   {props.title}
                 </Dialog.Title>
                 {props.children}

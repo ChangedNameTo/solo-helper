@@ -57,27 +57,38 @@ export default function VowForm(props) {
   return (
     <form>
       <div className="space-y-12">
-        <div className="border-b border-gray-900/10 pb-12">
+        <div className="border-b border-gray-900/10 pb-6">
           <p className="mt-1 text-sm leading-6 text-gray-600">
             When you Swear an Iron Vow, you give it a rank and record it on your
             character sheet.
-          </p>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
-            You should start your first session with two vows: A long term goal
-            (your background vow) and an immediate situation which must be dealt
-            with (your inciting incident). These vows have a progress track that
-            will move as you Reach a Milestone.
           </p>
           <fieldset className="my-2">
             <Listbox value={tier} onChange={setTier}>
               {({ open }) => (
                 <>
-                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
-                    Assigned to
-                  </Listbox.Label>
+                  <div className="my-3">
+                    <label
+                      htmlFor="vow-text"
+                      className="block text-sm font-bold leading-6 text-gray-900"
+                    >
+                      Vow Text
+                    </label>
+                    <input
+                      type="text"
+                      name="vow-text"
+                      id="vow-text"
+                      autoComplete="vow-text"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      value={formData().name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
 
-                  <div className="relative mt-2">
-                    <Listbox.Button className="text-left pl-3 relative block w-full rounded-none rounded-t-md border-0 bg-transparent py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  <div className="my-3">
+                    <Listbox.Label className="block text-sm font-bold leading-6 text-gray-900">
+                      Tier
+                    </Listbox.Label>
+                    <Listbox.Button className="text-left pl-3 relative block w-full rounded-md border-0 bg-transparent py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 shadow-sm">
                       <span className="block truncate">{tier}</span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                         <ChevronUpDownIcon
@@ -142,22 +153,11 @@ export default function VowForm(props) {
                 </>
               )}
             </Listbox>
-            <div>
-              <label htmlFor="vow-text" className="sr-only">
-                Vow Text
-              </label>
-              <input
-                type="text"
-                name="vow-text"
-                id="vow-text"
-                autoComplete="vow-text"
-                className=""
-                value={formData().name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="vow-text" className="sr-only">
+            <div className="my-3">
+              <label
+                htmlFor="vow-text"
+                className="block text-sm font-bold leading-6 text-gray-900"
+              >
                 Vow Description
               </label>
               <input
@@ -165,7 +165,7 @@ export default function VowForm(props) {
                 name="vow-text"
                 id="vow-text"
                 autoComplete="vow-text"
-                className=""
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 value={formData().description}
                 onChange={(e) => setDescription(e.target.value)}
               />
