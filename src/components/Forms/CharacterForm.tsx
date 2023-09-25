@@ -5,6 +5,7 @@ import {
   GamesDispatchContext,
 } from "../../Contexts/GamesContext";
 import { FormsContext } from "../../Contexts/FormContexts";
+import StatFormTableRow from "./StatFormTableRow";
 
 export default function CharacterForm(props) {
   const formsContext = React.useContext(FormsContext);
@@ -99,34 +100,66 @@ export default function CharacterForm(props) {
           </div>
         </div>
 
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Stats
-          </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
-            There are five stats. Each is given a value from 1 to 3. When you
-            make a move and roll dice, you usually add one of your stats to your
-            action die. The move will tell you which stat to add, or give you a
-            choice.
-            <br />
-            <br /> To assign stats, pick a bonus across each stat in any order.
-          </p>
-          <div className="mt-10 space-y-10">
-            <div>
-              <label
-                htmlFor="3bonus"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                +3 Bonus
-              </label>
-              <select
-                id="3bonus"
-                name="3bonus"
-                className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                defaultValue=""
-              >
-                <option>Edge</option>
-              </select>
+        <div className="border-b border-gray-900/10">
+          <div className="sm:flex sm:items-center">
+            <div className="sm:flex-auto">
+              <h1 className="text-base font-semibold leading-6 text-gray-900">
+                Stats
+              </h1>
+              <p className="mt-1 text-sm leading-6 text-gray-600">
+                There are five stats. Each is given a value from 1 to 3. When
+                you make a move and roll dice, you usually add one of your stats
+                to your action die. The move will tell you which stat to add, or
+                give you a choice.
+                <br />
+                <br /> To assign stats, pick a bonus across each stat in any
+                order.
+              </p>
+            </div>
+          </div>
+          <div className="mt-8 flow-root">
+            <div className="inline-block min-w-full py-2 align-middle">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                    >
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Description
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      +1
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      +2
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      +3
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {game.stats.map((stat) => (
+                    <StatFormTableRow stat={stat} />
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
