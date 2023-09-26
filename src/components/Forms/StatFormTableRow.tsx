@@ -6,9 +6,8 @@ import {
 } from "../../Contexts/GamesContext";
 import { StatsAction } from "../../Types/CharacterTypes";
 
-export default function StatFormTableRow({ stat, disabled }) {
+export default function StatFormTableRow({ stat, disabled, game }) {
   const checkboxes = (stat, column) => {
-    const gamesContext = React.useContext(GamesContext);
     const gameDispatchContext = React.useContext(GamesDispatchContext);
 
     const updateStat = (e, column) => {
@@ -17,7 +16,7 @@ export default function StatFormTableRow({ stat, disabled }) {
 
       gameDispatchContext({
         type: "updated_stat",
-        gameID: gamesContext.selectedGame,
+        gameID: game.id,
         stat: stat,
         value: newStatValue,
       } as StatsAction);

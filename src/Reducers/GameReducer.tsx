@@ -11,6 +11,10 @@ export default function gameReducer(games, action:GamesAction) {
       // Make sure the game exists
       const game = games.gamesMap.get(action.gameID)
 
+      console.log('hi')
+      console.log(game)
+      console.log(action.gameID)
+      console.log(games)
       if (!game) {
         return games
       }
@@ -39,7 +43,7 @@ export default function gameReducer(games, action:GamesAction) {
         ...games,
         gamesMap:newGamesMap
       }
-
+      console.log('hi')
       return newGamesObject
     }
     case "updated_vow": {

@@ -26,7 +26,7 @@ export default function StatForm({ game }) {
           </div>
           <div className="ml-3">
             <h3 className="text-sm font-medium text-indigo-800">
-              {statsNeedingValues()} stat(s) need(s) a bonus:
+              {statsNeedingValues()} { statsNeedingValues() > 1 ? "stats need values":"stat needs a value"}
             </h3>
             <div className="mt-2 text-sm text-indigo-700">
               <ul role="list" className="list-disc space-y-1 pl-5">
@@ -34,7 +34,7 @@ export default function StatForm({ game }) {
                   .filter((stat) => stat.value === 0)
                   .map((stat) => stat.name)
                   .map((stat) => {
-                    return <li>{stat}</li>;
+                    return <li key={stat}>{stat}</li>;
                   })}
               </ul>
             </div>
@@ -103,7 +103,7 @@ export default function StatForm({ game }) {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {game.stats.map((stat) => (
-                <StatFormTableRow key={stat.initials} stat={stat} disabled={disabledColumns()} />
+                <StatFormTableRow key={stat.initials} stat={stat} disabled={disabledColumns()} game={ game} />
               ))}
             </tbody>
           </table>
