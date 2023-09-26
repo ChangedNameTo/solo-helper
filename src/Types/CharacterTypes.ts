@@ -1,4 +1,10 @@
+import { GamesAction } from "./GameTypes";
 import { Vow } from "./VowTypes";
+
+export interface StatsAction extends GamesAction {
+  stat: Stat;
+  value: number;
+}
 
 export interface CharactersAction {
   type:string
