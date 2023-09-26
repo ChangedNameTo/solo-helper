@@ -15,6 +15,7 @@ import CharacterForm from "../Forms/CharacterForm";
 import { GamesContext } from "../../Contexts/GamesContext";
 import FormModal from "../Forms/FormModal";
 import { FormsContext } from "../../Contexts/FormContexts";
+import StatsSection from "./StatsSection";
 
 export default function CharacterSheet() {
   const formsContext = React.useContext(FormsContext);
@@ -76,16 +77,9 @@ export default function CharacterSheet() {
 
         {/* Stats */}
         <div className="overflow-hidden bg-white rounded-md shadow-sm m-2 border-gray-200 border">
-          <div className="border-b border-gray-200 bg-white px-4 py-2">
-            <h2 className="text-lg font-semibold leading-6 text-gray-900">
-              Stats
-            </h2>
-          </div>
-          <ul role="list" className="flex flex-col">
-            {currentCharacter.stats.map((stat, idx, arr) => (
-              <SheetStat stat={stat} idx={idx} key={stat.name} arr={arr} />
-            ))}
-          </ul>
+          {<StatsSection
+            character = {currentCharacter}
+          />}
         </div>
 
         {/* Gauges */}
