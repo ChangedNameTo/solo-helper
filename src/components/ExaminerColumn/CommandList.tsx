@@ -1,5 +1,5 @@
 import * as React from "react";
-import CommandListItem from "../CommandListItem";
+import CommandListItem from "../MessageListItemTypes/CommandListItem";
 
 const commands = [
   { id: 1, commandText: "/moveroll" },

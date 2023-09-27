@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { DraftMessageContext } from "../Contexts/MessagesContext";
+import { DraftMessageContext } from "../../Contexts/MessagesContext";
 
 export default function CommandListItem(props) {
   const { draftText, setDraftText } = React.useContext(DraftMessageContext);
