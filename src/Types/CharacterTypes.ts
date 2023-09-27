@@ -1,13 +1,10 @@
 import { GamesAction } from "./GameTypes";
 import { Vow } from "./VowTypes";
+import { Stat } from "./StatTypes";
 
-export interface StatsAction extends GamesAction {
-  stat: Stat;
-  value: number;
-}
-
-export interface CharactersAction {
-  type:string
+export interface CharactersAction extends GamesAction{
+  type: string;
+  payload: Partial<IronswornCharacter>;
 }
 
 export interface Gauge {
@@ -17,13 +14,6 @@ export interface Gauge {
   max: number;
   current: number;
   reset: number;
-}
-
-export interface Stat {
-  name: string;
-  initials: string;
-  value: number;
-  description: string;
 }
 
 export interface Bond {
@@ -91,9 +81,10 @@ export interface Equipment {
 }
 
 export interface IronswornCharacter {
-  name: string;
   id: string;
+  name: string;
   worldName: string;
+  description: string;
   experience: {
     min: number;
     spent: number;
@@ -115,5 +106,5 @@ export interface IronswornCharacter {
   talents: Array<Talent>;
   rituals: Array<Ritual>;
   equipment: Array<Equipment>;
-  date:number
+  date: number;
 }

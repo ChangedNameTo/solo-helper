@@ -1,9 +1,10 @@
 import { IronswornCharacter } from "../Types/CharacterTypes";
 
 export const blankCharacter: IronswornCharacter = {
+  id:"",
   name: "",
   worldName: "",
-  id:"",
+  description:"",
   experience: {
     min: 0,
     spent: 0,

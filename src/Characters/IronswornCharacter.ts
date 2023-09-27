@@ -2,9 +2,10 @@ import { IronswornCharacter } from "../Types/CharacterTypes";
 import { VowTier } from "../Types/VowTypes";
 
 export const testCharacter: IronswornCharacter = {
-  name: "Nismera Elro",
   id: "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
+  name: "Nismera Elro",
   worldName: "The Iron Isles",
+  description: "A pale female high-elf with slanted cheekbones",
   experience: {
     min: 0,
     spent: 3,

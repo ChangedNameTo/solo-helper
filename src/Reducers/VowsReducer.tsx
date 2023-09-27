@@ -1,19 +1,21 @@
-import { VowsAction } from "../Types/VowTypes"
+import { Vow, VowsAction } from "../Types/VowTypes"
 
-export default function vowsReducer(vows, action: VowsAction) {
+export default function vowsReducer(vows: Map<string, Vow>, action: VowsAction) {
   switch (action.type) {
-    case "added": {
-      if (!action.name.length) {
+    case "updated_vow": {
+      const { vowID, payload } = action as VowsAction
+
+      const vow = vows.get(vowID)
+
+      // If no vow exists, nothing to update
+      if (!vow) {
         return vows
       }
 
-      const newVow = {
-      }
-
-      return [...vows, newVow]
+      return vows.set(vowID, payload) 
     }
     default: {
-      throw Error("Unknown action: " + action.type)
+      return vows
     }
   }
 }

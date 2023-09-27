@@ -1,81 +1,34 @@
 import { blankCharacter } from "../Characters/DefaultCharacter"
-import { StatsAction } from "../Types/CharacterTypes";
 import { GamesAction } from "../Types/GameTypes"
+import { StatsAction } from "../Types/StatTypes";
 import { VowsAction } from "../Types/VowTypes";
+import characterReducer from "./CharacterReducer";
 
 export default function gameReducer(games, action:GamesAction) {
   switch (action.type) {
+    // All of the methods for updating a character go here
+    case "updated_character":
+    case "updated_vow":
     case "updated_stat": {
-      const { stat, value } = action as StatsAction
-      
       // Make sure the game exists
-      const game = games.gamesMap.get(action.gameID)
+      const character = games.gamesMap.get(action.gameID)
 
-      if (!game) {
+      if (!character) {
         return games
       }
 
-      const foundStatIndex = game.stats.findIndex((arrStats) => arrStats.initials === stat.initials)
-      const foundStat = game.stats[foundStatIndex]
+      const updatedCharacter = characterReducer(character, action)
 
-      const newStat = {
-        ...foundStat,
-        value: value
-      }
-
-      const newStatsArr = game.stats.with(foundStatIndex, newStat)
-
-      const updatedGame = {
-        ...game,
-        stats:newStatsArr
-      }
 
       const newGamesMap = new Map([
         ...games.gamesMap,
-        [action.gameID, updatedGame]
+        [action.gameID, updatedCharacter]
       ])
 
       const newGamesObject = {
         ...games,
         gamesMap:newGamesMap
       }
-      return newGamesObject
-    }
-    case "updated_vow": {
-      const { vowID, payload } = action as VowsAction;
-
-      // Make sure the game exists
-      const game = games.gamesMap.get(action.gameID)
-
-      if (!game) {
-        return games
-      }
-
-      // Make sure the vow exists
-      const vow = game.vows.get(vowID)
-
-      if (!vow) {
-        return games
-      }
-
-      const newVowsMap = new Map(game.vows)
-      newVowsMap.set(vowID, payload)
-
-      const updatedGame = {
-        ...game,
-        vows:newVowsMap
-      }
-
-      const newGamesMap = new Map([
-        ...games.gamesMap,
-        [action.gameID, updatedGame]
-      ])
-
-      const newGamesObject = {
-        ...games,
-        gamesMap: newGamesMap
-      }
-
       return newGamesObject
     }
     case "added": {
