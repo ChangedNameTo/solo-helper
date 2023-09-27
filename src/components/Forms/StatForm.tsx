@@ -25,7 +25,7 @@ export default function StatForm({ game }) {
             />
           </div>
           <div className="ml-3">
-            <h3 className="text-sm font-medium text-indigo-800">
+            <h3 className="text-sm font-semibold text-indigo-800">
               {statsNeedingValues()} { statsNeedingValues() > 1 ? "stats need values":"stat needs a value"}
             </h3>
             <div className="mt-2 text-sm text-indigo-700">

@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import { useContext } from "react";
-import { MessagesContext } from "../Contexts/MessagesContext";
+import { MessagesContext } from "../../Contexts/MessagesContext";
 
-import { timeAgo } from "../assets/Helpers";
+import { timeAgo } from "../../assets/Helpers";
 
 export default function NamedObjects() {
   const messages = useContext(MessagesContext);
