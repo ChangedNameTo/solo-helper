@@ -38,6 +38,8 @@ export default function CharacterForm(props) {
       gameID: game.id,
       payload:formData,
     } as CharactersAction)
+
+    formsContext.closeModal(props.id)
   };
 
   return (

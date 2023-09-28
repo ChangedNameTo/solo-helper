@@ -77,11 +77,8 @@ export const blankCharacter: IronswornCharacter = {
       description: "Expertise, versatility, knowledge, and observation",
     },
   ],
-  vows: [],
-  bonds: {
-    bonds: [],
-    max: 40,
-  },
+  vows: new Map(),
+  bonds: new Map(),
   conditions: [
     {
       name: "Wounded",

@@ -1,6 +1,7 @@
 import { GamesAction } from "./GameTypes";
 import { Vow } from "./VowTypes";
 import { Stat } from "./StatTypes";
+import { Bond } from "./BondTypes";
 
 export interface CharactersAction extends GamesAction{
   type: string;
@@ -16,10 +17,6 @@ export interface Gauge {
   reset: number;
 }
 
-export interface Bond {
-  name: string;
-  description: string;
-}
 
 export interface Condition {
   name: string;
@@ -94,10 +91,7 @@ export interface IronswornCharacter {
   gauges: Array<Gauge>;
   stats: Array<Stat>;
   vows: Map<string, Vow>;
-  bonds: {
-    bonds: Array<Bond>;
-    max: number;
-  };
+  bonds: Map<string, Bond>;
   conditions: Array<Condition>;
   banes: Array<Bane>;
   burdens: Array<Burden>;

@@ -160,8 +160,7 @@ export default function VowForm(props) {
               >
                 Vow Description
               </label>
-              <input
-                type="text"
+              <textarea
                 name="vow-text"
                 id="vow-text"
                 autoComplete="vow-text"
@@ -178,6 +177,7 @@ export default function VowForm(props) {
         <button
           type="button"
           className="text-sm font-semibold leading-6 text-gray-900"
+          onClick={() => formsContext.closeModal(props.id)}
         >
           Cancel
         </button>

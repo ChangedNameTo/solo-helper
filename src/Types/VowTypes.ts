@@ -1,7 +1,6 @@
 import { GamesAction } from "./GameTypes";
 
-export interface VowsAction extends GamesAction{
-  type: "updated_vow";
+export interface VowsAction extends GamesAction {
   vowID: string;
   payload: Partial<Vow>;
 }

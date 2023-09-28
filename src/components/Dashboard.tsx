@@ -11,8 +11,12 @@ import {
   MessagesDispatchContext,
 } from "../Contexts/MessagesContext";
 import CharacterSheet from "./CharacterSheetComponents/CharacterSheet";
-import { GamesContext } from "../Contexts/GamesContext";
+import { GamesContext, GamesDispatchContext } from "../Contexts/GamesContext";
 import { XCircleIcon } from "@heroicons/react/20/solid";
+import { generateUUID } from "../assets/Helpers";
+import { FormsContext } from "../Contexts/FormContexts";
+import { VowTier, VowsAction } from "../Types/VowTypes";
+import { BondsAction } from "../Types/BondTypes";
 
 export default function Dashboard() {
   const [messages, dispatch] = React.useReducer(messagesReducer, []);
@@ -21,24 +25,67 @@ export default function Dashboard() {
   const gamesContext = React.useContext(GamesContext);
   const currentCharacter = gamesContext.gamesMap.get(gamesContext.selectedGame);
 
+  const gamesDispatch = React.useContext(GamesDispatchContext);
+  const formsContext = React.useContext(FormsContext);
+
   if (!currentCharacter) {
     return;
   }
 
   const hasVows = () => currentCharacter?.vows.size > 0;
-  const hasBonds = () => currentCharacter?.bonds.bonds.length > 0;
+  const hasBonds = () => currentCharacter?.bonds.size > 0;
   const hasStatBonuses = () =>
     currentCharacter.stats.filter((stat) => stat.value === 0).length === 0;
   const hasAssets = () =>
-    (currentCharacter.companions.length +
-    currentCharacter.paths.length +
-    currentCharacter.rituals.length +
-    currentCharacter.talents.length) > 0;
-  
-  const hasEquipment = () => currentCharacter.equipment.length > 0
+    currentCharacter.companions.length +
+      currentCharacter.paths.length +
+      currentCharacter.rituals.length +
+      currentCharacter.talents.length >
+    0;
+
+  const hasEquipment = () => currentCharacter.equipment.length > 0;
 
   const isReadyForPlay = () => {
     return hasVows() && hasBonds() && hasStatBonuses() && hasAssets();
+  };
+
+  const createNewVow = () => {
+    const newID = generateUUID();
+
+    gamesDispatch({
+      type: "added_vow",
+      gameID: currentCharacter.id,
+      vowID: newID,
+      payload: {
+        id: newID,
+        name: "Vow Name",
+        description: "Who sent you on this quest? What is your objective?",
+        tier: VowTier.Extreme,
+        min: 0,
+        max: 40,
+        current: 0,
+      },
+    } as VowsAction);
+
+    formsContext.openModal(newID);
+  };
+
+  const createNewBond = () => {
+    const newID = generateUUID();
+
+    gamesDispatch({
+      type: "added_bond",
+      gameID: currentCharacter.id,
+      bondID: newID,
+      payload: {
+        id: newID,
+        name: "New Bond Name",
+        description:
+          "What places do you return to? When your journey is too much to bear, to whom do you turn?",
+      },
+    } as BondsAction);
+
+    formsContext.openModal(newID);
   };
 
   const centerColumn = () => {
@@ -65,31 +112,71 @@ export default function Dashboard() {
                     <ul role="list" className="list-disc space-y-1 pl-5">
                       {!hasVows() ? (
                         <li>
-                          Your character does not have any Vows. Create one by
-                          clicking here
+                          Your character does not have any Vows.{" "}
+                          <a
+                            href="#"
+                            className="underline hover:text-indigo-600"
+                            onClick={() => createNewVow()}
+                          >
+                            Create one by clicking here
+                          </a>
                         </li>
                       ) : (
                         ""
                       )}
                       {!hasBonds() ? (
                         <li>
-                          Your character does not have any Bonds. Create 2 here
+                          Your character does not have any Bonds.{" "}
+                          <a
+                            href="#"
+                            className="underline hover:text-indigo-600"
+                            onClick={() => createNewBond()}
+                          >
+                            Create at least one by clicking here.
+                          </a>{" "}
+                          Start with no more than three bonds.
                         </li>
                       ) : (
                         ""
                       )}
                       {!hasStatBonuses() ? (
-                        <li>Your character does not have any Stat Bonuses. Set them using the pencil icon, or by clicking here</li>
+                        <li>
+                          Your character does not have any Stat Bonuses.{" "}
+                          <a
+                            href=""
+                            className="underline hover:text-indigo-600"
+                          >
+                            Set them by clicking here, or by clicking the Pencil
+                            Icon.
+                          </a>{" "}
+                        </li>
                       ) : (
                         ""
                       )}
                       {!hasAssets() ? (
-                        <li>Your character does not have any assets. Click here to open the asset selection menu.</li>
+                        <li>
+                          Your character does not have any assets.{" "}
+                          <a
+                            href=""
+                            className="underline hover:text-indigo-600"
+                          >
+                            Click here to open the asset selection menu.
+                          </a>{" "}
+                        </li>
                       ) : (
                         ""
                       )}
                       {!hasEquipment() ? (
-                        <li>Your character does not have any equipment. This will not prevent them from starting the game, but you can add equipment here</li>
+                        <li>
+                          Your character does not have any equipment. This will
+                          not prevent them from starting the game, but you can{" "}
+                          <a
+                            href=""
+                            className="underline hover:text-indigo-600"
+                          >
+                            add equipment by clicking here.
+                          </a>{" "}
+                        </li>
                       ) : (
                         ""
                       )}

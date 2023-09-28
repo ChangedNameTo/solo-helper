@@ -1,14 +1,32 @@
 import { blankCharacter } from "../Characters/DefaultCharacter"
 import { GamesAction } from "../Types/GameTypes"
-import { StatsAction } from "../Types/StatTypes";
-import { VowsAction } from "../Types/VowTypes";
 import characterReducer from "./CharacterReducer";
 
-export default function gameReducer(games, action:GamesAction) {
+export default function gameReducer(games, action: GamesAction) {
+  const updatedGameObject = (updatedCharacter) => {
+    const newGamesMap = new Map([
+      ...games.gamesMap,
+      [action.gameID, updatedCharacter]
+    ])
+
+    const newGamesObject = {
+      ...games,
+      gamesMap:newGamesMap
+    }
+
+    return newGamesObject
+  }
+
   switch (action.type) {
     // All of the methods for updating a character go here
     case "updated_character":
+
+    case "added_vow":
     case "updated_vow":
+
+    case "added_bond":
+    case "updated_bond":
+
     case "updated_stat": {
       // Make sure the game exists
       const character = games.gamesMap.get(action.gameID)
@@ -19,19 +37,9 @@ export default function gameReducer(games, action:GamesAction) {
 
       const updatedCharacter = characterReducer(character, action)
 
-
-      const newGamesMap = new Map([
-        ...games.gamesMap,
-        [action.gameID, updatedCharacter]
-      ])
-
-      const newGamesObject = {
-        ...games,
-        gamesMap:newGamesMap
-      }
-      return newGamesObject
+      return updatedGameObject(updatedCharacter)
     }
-    case "added": {
+    case "added_character": {
       const newCharacter = blankCharacter
       newCharacter.id = action.gameID
 

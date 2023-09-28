@@ -107,7 +107,7 @@ export default function CharacterSheet() {
         {/* Bonds */}
         <div className="text-l font-semibold text-center">Bonds</div>
         <ul role="list" className="mx-2 flex flex-col gap-2">
-          {currentCharacter.bonds.bonds.map((bond) => (
+          {Array.from(currentCharacter.bonds.values()).map((bond) => (
             <SheetBond bond={bond} key={bond.name} />
           ))}
         </ul>

@@ -83,7 +83,7 @@ export const testCharacter: IronswornCharacter = {
       "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
       {
         name: "Find my sister",
-        id:"9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        id: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
         description:
           "My sister has wandered away from the village. I need to find her and bring her home.",
         tier: VowTier.Troublesome,
@@ -96,10 +96,8 @@ export const testCharacter: IronswornCharacter = {
       "qpoqiweuroiqeurpoqwrpiqwuwqq",
       {
         name: "Slay the Dragon",
-        id:
-      "qpoqiweuroiqeurpoqwrpiqwuwqq",
-        description:
-          "Pee poo peepee.",
+        id: "qpoqiweuroiqeurpoqwrpiqwuwqq",
+        description: "Pee poo peepee.",
         tier: VowTier.Epic,
         min: 0,
         max: 40,
@@ -107,20 +105,24 @@ export const testCharacter: IronswornCharacter = {
       },
     ],
   ]),
-  bonds: {
-    bonds: [
+  bonds: new Map([
+    [
+      "c90f9243-9e14-4fef-9ac7-2c87e9491a58",
       {
+        id: "c90f9243-9e14-4fef-9ac7-2c87e9491a58",
         name: "Last Hearth",
         description: "My home village",
       },
+    ],
+    [
+      "23c48e07-2ab8-42a0-8639-b0db26b47488",
       {
-        name: "The Shaman, Alia",
-        description:
-          "The Shaman Alia is the clan overseer, a true and loyal friend. She is one of the few that knows of my former life as a raider.",
+        id: "23c48e07-2ab8-42a0-8639-b0db26b47488",
+        name: "My friends",
+        description: "Simba and Calcifer, my sacred beasts",
       },
     ],
-    max: 40,
-  },
+  ]),
   conditions: [
     {
       name: "Wounded",

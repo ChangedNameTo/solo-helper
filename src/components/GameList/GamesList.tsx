@@ -22,7 +22,7 @@ export default function GamesList() {
     const newID = generateUUID();
 
     dispatch({
-      type: "added",
+      type: "added_character",
       gameID: newID,
     });
 
