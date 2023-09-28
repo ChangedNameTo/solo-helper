@@ -12,10 +12,50 @@ import { FormsContext } from "./Contexts/FormContexts";
 import { Games } from "./Types/GameTypes";
 
 function App() {
-  const [games, gamesDispatch] = React.useReducer(gameReducer, {
-    selectedGame: "",
-    gamesMap: new Map([[testCharacter.id, testCharacter]]),
-  } as Games);
+  const replacer = (key, value) => {
+      if(value instanceof Map) {
+    return {
+      dataType: 'Map',
+      value: Array.from(value.entries()), // or with spread: value: [...value]
+    };
+  } else {
+    return value;
+  }
+  }
+
+  const reviver = (key, value) => {
+  if(typeof value === 'object' && value !== null) {
+    if (value.dataType === 'Map') {
+      return new Map(value.value);
+    }
+  }
+  return value;
+}
+
+  const seedGames = () => {
+    const savedGames = window.localStorage.getItem('games')
+    // Is this the first load? If so, seed the map. If not, load.
+    if (savedGames) {
+      const games = JSON.parse(savedGames, reviver)
+
+      return {
+        selectedGame: "",
+        gamesMap: games["gamesMap"]
+      };
+    } else {
+      return {
+        selectedGame: "",
+        gamesMap: new Map([[testCharacter.id, testCharacter]]),
+      };
+    }
+  };
+
+  const [games, gamesDispatch] = React.useReducer(gameReducer, seedGames());
+
+  React.useEffect(() => {
+    console.log(games)
+    window.localStorage.setItem('games', JSON.stringify(games, replacer))
+  },[games])
 
   const display = () => {
     if (games.selectedGame) {
