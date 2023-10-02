@@ -2,6 +2,7 @@ import { GamesAction } from "./GameTypes";
 import { Vow } from "./VowTypes";
 import { Stat } from "./StatTypes";
 import { Bond } from "./BondTypes";
+import { Companion, Path, Ritual, Talent } from "./AssetTypes";
 
 export interface CharactersAction extends GamesAction{
   type: string;
@@ -31,45 +32,6 @@ export interface Bane extends Condition {
 export interface Burden extends Condition {
   manifesting: string;
   relatedVow: Vow | undefined;
-}
-
-export interface Companion {
-  type: string;
-  name: string;
-  description: string;
-  abilities: Array<Ability>;
-  health: {
-    min: number;
-    max: number;
-    current: number;
-    reset: number;
-  };
-}
-
-export interface Ability {
-  name: string;
-  description: string;
-  starting: boolean;
-  active: boolean;
-}
-
-export interface Path {
-  name: string;
-  active: boolean;
-  abilities: Array<Ability>;
-}
-
-export interface Talent {
-  name: string;
-  active: boolean;
-  abilities: Array<Ability>;
-  requirement: string;
-}
-
-export interface Ritual {
-  name: string;
-  active: boolean;
-  abilities: Array<Ability>;
 }
 
 export interface Equipment {

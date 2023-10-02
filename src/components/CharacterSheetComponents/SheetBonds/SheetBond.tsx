@@ -1,16 +1,16 @@
 import * as React from "react";
-import FormModal from "../Forms/FormModal";
-import BondForm from "../Forms/BondForm";
+import FormModal from "../../Forms/FormModal";
+import BondForm from "../../Forms/BondForm";
 import { PencilIcon } from "@heroicons/react/20/solid";
-import { FormsContext } from "../../Contexts/FormContexts";
+import { FormsContext } from "../../../Contexts/FormContexts";
 // TODO: Add the bond gauge
 export default function SheetBond(props) {
   const formsContext = React.useContext(FormsContext);
   
   return (
     <>
-      <li className="col-span-1 flex rounded-md shadow-sm">
-        <div className="flex flex-1 items-center justify-between truncate rounded-md border border-gray-200 bg-white">
+      <li className="col-span-1 flex shadow-sm border-gray-200 border-b">
+        <div className="flex flex-1 items-center justify-between truncate bg-white">
           <div className="px-4 py-1 text-sm w-full">
             <a
               href={props.bond.name}

@@ -13,3 +13,18 @@ import { v4 as uuidv4 } from "uuid"
 export function generateUUID():string {
   return uuidv4()
 }
+
+// Set up the lodash parser
+const assetsFileUrl = "https://raw.githubusercontent.com/rsek/datasworn/master/ironsworn_assets.json"
+let assetJSON
+
+fetch(assetsFileUrl).then((response) => {
+  if (!response.ok) {
+    throw new Error('Failed to fetch assets')
+  }
+  return response.json()
+}).then((jsonData) => {
+  assetJSON = jsonData.Assets
+})
+
+export { assetJSON }

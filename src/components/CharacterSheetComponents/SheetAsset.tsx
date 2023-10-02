@@ -7,13 +7,14 @@ export default function SheetAsset(props) {
   const [enabled, setEnabled] = React.useState(false);
   
   return (
+    <>
     <li className="m-2 rounded-md border-2 border-indigo-600">
       <div className="rounded-md border-b border-gray-200 bg-white px-4 py-2">
         <h3 className="text-base font-semibold leading-6 text-gray-900">{props.asset.name}</h3>
       </div>
       <div className="divide-y">
       {props.asset.abilities.map((ability) => (
-        <Switch.Group key={ability.name} as="div" className="flex items-center py-2 px-2">
+        <Switch.Group key={ability.type} as="div" className="flex items-center py-2 px-2">
           <Switch
             checked={ability.active}
             onChange={setEnabled}
@@ -38,6 +39,8 @@ export default function SheetAsset(props) {
       ))}
 
       </div>
-    </li>
+      </li>
+      
+    </>
   );
 }

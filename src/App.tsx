@@ -53,7 +53,6 @@ function App() {
   const [games, gamesDispatch] = React.useReducer(gameReducer, seedGames());
 
   React.useEffect(() => {
-    console.log(games)
     window.localStorage.setItem('games', JSON.stringify(games, replacer))
   },[games])
 

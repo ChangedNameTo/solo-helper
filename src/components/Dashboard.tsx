@@ -143,8 +143,9 @@ export default function Dashboard() {
                         <li>
                           Your character does not have any Stat Bonuses.{" "}
                           <a
-                            href=""
+                            href="#"
                             className="underline hover:text-indigo-600"
+                            onClick={() => formsContext.openModal(currentCharacter.id)}
                           >
                             Set them by clicking here, or by clicking the Pencil
                             Icon.
@@ -157,8 +158,9 @@ export default function Dashboard() {
                         <li>
                           Your character does not have any assets.{" "}
                           <a
-                            href=""
+                            href="#"
                             className="underline hover:text-indigo-600"
+                            onClick={() => formsContext.openModal("ASSETS")}
                           >
                             Click here to open the asset selection menu.
                           </a>{" "}
@@ -171,7 +173,7 @@ export default function Dashboard() {
                           Your character does not have any equipment. This will
                           not prevent them from starting the game, but you can{" "}
                           <a
-                            href=""
+                            href="#"
                             className="underline hover:text-indigo-600"
                           >
                             add equipment by clicking here.

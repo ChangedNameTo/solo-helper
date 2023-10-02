@@ -187,6 +187,7 @@ export const testCharacter: IronswornCharacter = {
     {
       type: "Hawk",
       name: "Silijana",
+      active: true,
       description:
         "Silijana is no ordinary bird; it's a majestic, iridescent phoenix with shimmering plumage that shifts from fiery reds and oranges to cool blues and greens. Its wingspan is impressive, casting a warm, ethereal glow that lights your path through the darkest of dungeons.",
       abilities: [

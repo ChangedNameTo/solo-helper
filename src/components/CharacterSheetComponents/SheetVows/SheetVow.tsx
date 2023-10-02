@@ -1,14 +1,14 @@
 import * as React from "react";
 
-import { classNames } from "../../assets/Helpers";
-import ProgressRing from "./ProgressRing";
-import { VowTier } from "../../Types/VowTypes";
+import { classNames } from "../../../assets/Helpers";
+import ProgressRing from "../ProgressRing";
+import { VowTier } from "../../../Types/VowTypes";
 
 import { PencilIcon } from "@heroicons/react/20/solid";
 
-import VowForm from "../Forms/VowForm";
-import FormModal from "../Forms/FormModal";
-import { FormsContext } from "../../Contexts/FormContexts";
+import VowForm from "../../Forms/VowForm";
+import FormModal from "../../Forms/FormModal";
+import { FormsContext } from "../../../Contexts/FormContexts";
 
 export default function SheetVow(props) {
   const formsContext = React.useContext(FormsContext);

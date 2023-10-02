@@ -1,8 +1,10 @@
+import { CompanionsAction } from "../Types/AssetTypes";
 import { BondsAction } from "../Types/BondTypes";
 import { CharactersAction } from "../Types/CharacterTypes";
 import { StatsAction } from "../Types/StatTypes";
 import { VowsAction } from "../Types/VowTypes";
 import bondsReducer from "./BondsReducer";
+import companionsReducer from "./CompanionsReducer";
 import statsReducer from "./StatsReducer";
 import vowsReducer from "./VowsReducer";
 
@@ -17,6 +19,12 @@ export default function characterReducer(character, action: CharactersAction) {
         worldName: payload.worldName,
         description: payload.description,
       };
+    }
+      
+    case "added_companion":
+    case "updated_companion":
+    case "deleted_companion": {
+      return {...character, companions:companionsReducer(character.companions, action as CompanionsAction)}
     }
       
     case "added_bond":

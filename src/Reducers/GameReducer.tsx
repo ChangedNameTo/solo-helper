@@ -1,4 +1,5 @@
 import { blankCharacter } from "../Characters/DefaultCharacter"
+import { CharactersAction } from "../Types/CharacterTypes";
 import { GamesAction } from "../Types/GameTypes"
 import characterReducer from "./CharacterReducer";
 
@@ -27,15 +28,19 @@ export default function gameReducer(games, action: GamesAction) {
     case "added_bond":
     case "updated_bond":
 
+    case "added_companion":
+    case "deleted_companion":
+
     case "updated_stat": {
       // Make sure the game exists
       const character = games.gamesMap.get(action.gameID)
 
       if (!character) {
+        console.error('Missing character')
         return games
       }
 
-      const updatedCharacter = characterReducer(character, action)
+      const updatedCharacter = characterReducer(character, action as CharactersAction)
 
       return updatedGameObject(updatedCharacter)
     }

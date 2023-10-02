@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 
 import { classNames } from "../../assets/Helpers";
 
@@ -16,16 +16,43 @@ export default function SheetGauge(props) {
   const gaugeWidth = () =>
     (props.gauge.current / (props.gauge.max - props.gauge.min)) * 100 + "%";
 
+  const buttonBorderStyle = () => {
+    switch (props.idx) {
+      case props.arr.length - 1:
+        return "rounded-bl-md";
+      default:
+        return "";
+    }
+  };
+
+  const divBorderStyle = () => {
+    switch (props.idx) {
+      case props.arr.length - 1:
+        return "rounded-br-md";
+      default:
+        return "";
+    }
+  };
+
   return (
-    <li key={props.gauge.name} className="col-span-1 flex rounded-md shadow-sm">
+    <li
+      key={props.gauge.name}
+      className="col-span-1 flex border-gray-199 border-b"
+    >
       <button
         className={classNames(
-          "bg-indigo-600 flex w-16 flex-shrink-0 items-center justify-center rounded-l-md text-xl font-bold text-white"
+          buttonBorderStyle(),
+          "bg-indigo-600 flex w-16 flex-shrink-0 items-center justify-center text-xl font-bold text-white"
         )}
       >
         {textDecoration(props.gauge.current)} {props.gauge.current}
       </button>
-      <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white">
+      <div
+        className={classNames(
+          divBorderStyle(),
+          "flex flex-1 items-center justify-between truncate bg-white"
+        )}
+      >
         <div className="px-4 py-1 text-sm w-full">
           <a href={""} className="font-bold text-gray-900 hover:text-gray-600">
             {props.gauge.name}
