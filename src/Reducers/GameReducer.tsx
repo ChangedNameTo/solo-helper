@@ -83,7 +83,8 @@ export default function gameReducer(games, action: GamesAction) {
       }
     }
     default: {
-      throw Error("Unknown action: " + action.type)
+      console.warn(`Unknown action: ${action.type}`)
+      return games
     }
   }
 }

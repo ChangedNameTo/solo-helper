@@ -19,14 +19,34 @@ export default function SheetCompanion(props) {
       100 +
     "%";
 
+  const handleUpdateCompanion = (abilityDescription) => {
+    gameDispatchContext({
+      type: "updated_companion",
+      gameID: gamesContext.selectedGame,
+      payload: {
+        ...props.companion,
+        abilities: props.companion.abilities.map((ability) => {
+          if (ability.description !== abilityDescription) {
+            return ability;
+          } else {
+            return {
+              ...ability,
+              active: !ability.active,
+            };
+          }
+        }),
+      },
+    } as CompanionsAction);
+  };
+
   const handleAddCompanion = () => {
     gameDispatchContext({
       type: "added_companion",
       gameID: gamesContext.selectedGame,
-      payload: { ...props.companion, active:true}
+      payload: { ...props.companion, active: true },
     } as CompanionsAction);
   };
-  
+
   const handleRemoveCompanion = () => {
     gameDispatchContext({
       type: "deleted_companion",
@@ -86,16 +106,16 @@ export default function SheetCompanion(props) {
           >
             <Switch
               checked={ability.active}
-              onChange={setEnabled}
+              onChange={() => handleUpdateCompanion(ability.description)}
               className={classNames(
-                enabled ? "bg-indigo-600" : "bg-gray-200",
+                ability.active ? "bg-indigo-600" : "bg-gray-200",
                 "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
               )}
             >
               <span
                 aria-hidden="true"
                 className={classNames(
-                  enabled ? "translate-x-5" : "translate-x-0",
+                  ability.active ? "translate-x-5" : "translate-x-0",
                   "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
                 )}
               />

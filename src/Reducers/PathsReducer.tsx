@@ -9,13 +9,12 @@ export default function pathsReducer(paths: Array<Path>, action: PathsAction) {
       return paths.filter((path) => path.type !== action.payload.type)
     }
     case "updated_path": {
-      const returnVal = paths.map((path) => {
+      return paths.map((path) => {
         if (path.type === action.payload.type) {
           return action.payload
         }
         return path
       })
-      return returnVal
     }
     default: {
       return paths

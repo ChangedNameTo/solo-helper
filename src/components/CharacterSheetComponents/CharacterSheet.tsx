@@ -18,6 +18,7 @@ import SheetCompanion from "./SheetCompanion";
 import SheetPath from "./SheetPath";
 import SheetTalent from "./SheetTalent";
 import SheetRitual from "./SheetRitual";
+import GaugesSection from "./GaugesSection";
 
 export default function CharacterSheet() {
   const formsContext = React.useContext(FormsContext);
@@ -84,14 +85,7 @@ export default function CharacterSheet() {
 
         {/* Gauges */}
         <div className="overflow-hidden bg-white rounded-md shadow-sm m-2 border-gray-200 border">
-          <div className="border-b border-gray-200 bg-white px-4 py-2">
-            <h2 className="text-lg font-semibold leading-6 text-gray-900">
-              Gauges
-            </h2>
-          </div>
-          {currentCharacter.gauges.map((gauge, idx, arr) => (
-            <SheetGauge gauge={gauge} key={gauge.name} idx={idx} arr={arr} />
-          ))}
+          {<GaugesSection character={currentCharacter} />}
         </div>
 
         {/* Vows */}
@@ -102,8 +96,8 @@ export default function CharacterSheet() {
         
         {/* Assets */}
         <div className="overflow-hidden bg-white rounded-md shadow-sm mx-2 my-2">
-          <div className="border-b border-gray-200 bg-white px-4 py-2">
-            <h3 className="text-base font-semibold leading-6 text-gray-900">
+          <div className="flex flex-row border-b border-gray-200 bg-white px-4 py-2">
+            <h3 className="flex-1 text-base font-semibold leading-6 text-gray-900">
               Assets
             </h3>
             <button

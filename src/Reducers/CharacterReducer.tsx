@@ -65,6 +65,7 @@ export default function characterReducer(character, action: CharactersAction) {
     }
 
     default: {
+      console.warn(`Unknown action: ${action.type}`)
       return character;
     }
   }
