@@ -2,22 +2,45 @@ import * as React from "react";
 import { Switch } from "@headlessui/react";
 
 import { classNames } from "../../assets/Helpers";
-import { GamesContext, GamesDispatchContext } from "../../Contexts/GamesContext";
+import {
+  GamesContext,
+  GamesDispatchContext,
+} from "../../Contexts/GamesContext";
 import { CharactersAction } from "../../Types/CharacterTypes";
+import { Path } from "../../Types/AssetTypes";
 
 export default function SheetAsset(props) {
-  const [enabled, setEnabled] = React.useState(false);
-  const gameDispatchContext = React.useContext(GamesDispatchContext)
-  const gamesContext = React.useContext(GamesContext)
-  
+  const gameDispatchContext = React.useContext(GamesDispatchContext);
+  const gamesContext = React.useContext(GamesContext);
+
+  const handleUpdateAbilities = (abilityDescription) => {
+    gameDispatchContext({
+      type: "updated_path",
+      gameID: gamesContext.selectedGame,
+      payload: {
+        ...props.asset,
+        abilities: props.asset.abilities.map((ability) => {
+          if (ability.description !== abilityDescription) {
+            return ability;
+          } else {
+            return {
+              ...ability,
+              active: !ability.active,
+            };
+          }
+        }),
+      } as Path,
+    } as CharactersAction);
+  };
+
   const handleAddPath = () => {
     gameDispatchContext({
       type: "added_path",
       gameID: gamesContext.selectedGame,
-      payload: { ...props.asset, active:true}
+      payload: { ...props.asset, active: true },
     } as CharactersAction);
   };
-  
+
   const handleRemovePath = () => {
     gameDispatchContext({
       type: "deleted_path",
@@ -26,7 +49,7 @@ export default function SheetAsset(props) {
       payload: props.asset,
     } as CharactersAction);
   };
-  
+
   const actionButton = () => {
     if (!props.asset.active) {
       return (
@@ -66,17 +89,17 @@ export default function SheetAsset(props) {
               className="flex items-center py-2 px-2"
             >
               <Switch
+                onChange={() => handleUpdateAbilities(ability.description)}
                 checked={ability.active}
-                onChange={setEnabled}
                 className={classNames(
-                  enabled ? "bg-indigo-600" : "bg-gray-200",
+                  ability.active ? "bg-indigo-600" : "bg-gray-200",
                   "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
                 )}
               >
                 <span
                   aria-hidden="true"
                   className={classNames(
-                    enabled ? "translate-x-5" : "translate-x-0",
+                    ability.active ? "translate-x-5" : "translate-x-0",
                     "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
                   )}
                 />

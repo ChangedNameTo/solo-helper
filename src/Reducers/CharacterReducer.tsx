@@ -27,7 +27,7 @@ export default function characterReducer(character, action: CharactersAction) {
     case "deleted_companion": {
       return {...character, companions:companionsReducer(character.companions, action as CompanionsAction)}
     }
-      
+     
     case "added_path":
     case "updated_path":
     case "deleted_path": {
