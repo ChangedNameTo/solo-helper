@@ -4,7 +4,7 @@ import _ from "lodash";
 import { GamesContext } from "../../Contexts/GamesContext";
 import { FormsContext } from "../../Contexts/FormContexts";
 import SheetCompanion from "../CharacterSheetComponents/SheetCompanion";
-import { Disclosure } from "@headlessui/react";
+import { Disclosure, Transition } from "@headlessui/react";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import SheetPath from "../CharacterSheetComponents/SheetPath";
 import SheetTalent from "../CharacterSheetComponents/SheetTalent";
@@ -34,14 +34,14 @@ export default function AssetsForm(props) {
   React.useEffect(() => {
     currentPaths = game.paths.map((path) => path.type);
   }, [game.paths]);
-  
+
   React.useEffect(() => {
     currentTalents = game.talents.map((talent) => talent.type);
   }, [game.talents]);
 
   React.useEffect(() => {
     currentRituals = game.rituals.map((ritual) => ritual.type);
-  },[game.rituals]);
+  }, [game.rituals]);
 
   const companions = _.filter(assetJSON, (asset) => {
     return asset["Asset Type"] === "Companion";
@@ -108,8 +108,7 @@ export default function AssetsForm(props) {
       };
     })
     .filter((asset) => currentCompanions.indexOf(asset.type) < 0);
-  
-  
+
   const rituals = _.filter(assetJSON, (asset) => {
     return asset["Asset Type"] === "Ritual";
   })
@@ -170,7 +169,7 @@ export default function AssetsForm(props) {
           <Disclosure>
             {({ open }) => (
               <div className="m-2 p-2 border-indigo-500 border-2 rounded-lg">
-                <Disclosure.Button className="relative flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="z-10 relative flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
                   <h2 className="text-base font-semibold leading-7 text-indigo-900 text-left">
                     Paths
                   </h2>
@@ -185,17 +184,26 @@ export default function AssetsForm(props) {
                     />
                   </div>
                 </Disclosure.Button>
-                <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                  <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                    {paths
-                      .filter(
-                        (path) => currentCompanions.indexOf(path.type) !== 0
-                      )
-                      .map((path) => {
-                        return <SheetPath key={path.type} path={path} />;
-                      })}
-                  </ul>
-                </Disclosure.Panel>
+                <Transition
+                  enter="transition duration-400 ease-in"
+                  enterFrom="transform -translate-y-10 opacity-0"
+                  enterTo="transform translate-y-0 opacity-100"
+                  leave="transition duration-400 ease-out"
+                  leaveFrom="transform translate-y-0 opacity-100"
+                  leaveTo="transform -translate-y-10 opacity-0"
+                >
+                  <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
+                    <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
+                      {paths
+                        .filter(
+                          (path) => currentCompanions.indexOf(path.type) !== 0
+                        )
+                        .map((path) => {
+                          return <SheetPath key={path.type} path={path} />;
+                        })}
+                    </ul>
+                  </Disclosure.Panel>
+                </Transition>
               </div>
             )}
           </Disclosure>
@@ -204,7 +212,7 @@ export default function AssetsForm(props) {
           <Disclosure>
             {({ open }) => (
               <div className="m-2 p-2 border-indigo-500 border-2 rounded-lg">
-                <Disclosure.Button className="relative flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="z-10 relative flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
                   <h2 className="text-base font-semibold leading-7 text-indigo-900 text-left">
                     Companions
                   </h2>
@@ -220,23 +228,32 @@ export default function AssetsForm(props) {
                     />
                   </div>
                 </Disclosure.Button>
-                <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                  <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                    {companions
-                      .filter(
-                        (companion) =>
-                          currentCompanions.indexOf(companion.type) !== 0
-                      )
-                      .map((companion) => {
-                        return (
-                          <SheetCompanion
-                            key={companion.type}
-                            companion={companion}
-                          />
-                        );
-                      })}
-                  </ul>
-                </Disclosure.Panel>
+                <Transition
+                  enter="transition duration-400 ease-in"
+                  enterFrom="transform -translate-y-10 opacity-0"
+                  enterTo="transform translate-y-0 opacity-100"
+                  leave="transition duration-400 ease-out"
+                  leaveFrom="transform translate-y-0 opacity-100"
+                  leaveTo="transform -translate-y-10 opacity-0"
+                >
+                  <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
+                    <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
+                      {companions
+                        .filter(
+                          (companion) =>
+                            currentCompanions.indexOf(companion.type) !== 0
+                        )
+                        .map((companion) => {
+                          return (
+                            <SheetCompanion
+                              key={companion.type}
+                              companion={companion}
+                            />
+                          );
+                        })}
+                    </ul>
+                  </Disclosure.Panel>
+                </Transition>
               </div>
             )}
           </Disclosure>
@@ -245,7 +262,7 @@ export default function AssetsForm(props) {
           <Disclosure>
             {({ open }) => (
               <div className="m-2 p-2 border-indigo-500 border-2 rounded-lg">
-                <Disclosure.Button className="relative flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="z-10 relative flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
                   <h2 className="text-base font-semibold leading-7 text-indigo-900 text-left">
                     Talents
                   </h2>
@@ -260,28 +277,37 @@ export default function AssetsForm(props) {
                     />
                   </div>
                 </Disclosure.Button>
-                <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                  <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                    {talents
-                      .filter(
-                        (talent) => currentTalents.indexOf(talent.type) !== 0
-                      )
-                      .map((talent) => {
-                        return (
-                          <SheetTalent key={talent.type} talent={talent} />
-                        );
-                      })}
-                  </ul>
-                </Disclosure.Panel>
+                <Transition
+                  enter="transition duration-400 ease-in"
+                  enterFrom="transform -translate-y-10 opacity-0"
+                  enterTo="transform translate-y-0 opacity-100"
+                  leave="transition duration-400 ease-out"
+                  leaveFrom="transform translate-y-0 opacity-100"
+                  leaveTo="transform -translate-y-10 opacity-0"
+                >
+                  <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
+                    <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
+                      {talents
+                        .filter(
+                          (talent) => currentTalents.indexOf(talent.type) !== 0
+                        )
+                        .map((talent) => {
+                          return (
+                            <SheetTalent key={talent.type} talent={talent} />
+                          );
+                        })}
+                    </ul>
+                  </Disclosure.Panel>
+                </Transition>
               </div>
             )}
           </Disclosure>
-          
+
           {/* Rituals */}
           <Disclosure>
             {({ open }) => (
               <div className="m-2 p-2 border-indigo-500 border-2 rounded-lg">
-                <Disclosure.Button className="relative flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="z-10 relative flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
                   <h2 className="text-base font-semibold leading-7 text-indigo-900 text-left">
                     Rituals
                   </h2>
@@ -296,19 +322,28 @@ export default function AssetsForm(props) {
                     />
                   </div>
                 </Disclosure.Button>
-                <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                  <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                    {rituals
-                      .filter(
-                        (ritual) => currentRituals.indexOf(ritual.type) !== 0
-                      )
-                      .map((ritual) => {
-                        return (
-                          <SheetRitual key={ritual.type} ritual={ritual} />
-                        );
-                      })}
-                  </ul>
-                </Disclosure.Panel>
+                <Transition
+                  enter="transition duration-400 ease-in"
+                  enterFrom="transform -translate-y-10 opacity-0"
+                  enterTo="transform translate-y-0 opacity-100"
+                  leave="transition duration-400 ease-out"
+                  leaveFrom="transform translate-y-0 opacity-100"
+                  leaveTo="transform -translate-y-10 opacity-0"
+                >
+                  <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
+                    <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
+                      {rituals
+                        .filter(
+                          (ritual) => currentRituals.indexOf(ritual.type) !== 0
+                        )
+                        .map((ritual) => {
+                          return (
+                            <SheetRitual key={ritual.type} ritual={ritual} />
+                          );
+                        })}
+                    </ul>
+                  </Disclosure.Panel>
+                </Transition>
               </div>
             )}
           </Disclosure>
