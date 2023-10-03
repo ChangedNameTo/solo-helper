@@ -34,6 +34,10 @@ export default function gameReducer(games, action: GamesAction) {
     case "added_path":
     case "updated_path":
     case "deleted_path":
+    
+    case "added_talent":
+    case "updated_talent":
+    case "deleted_talent":
 
     case "updated_stat": {
       // Make sure the game exists

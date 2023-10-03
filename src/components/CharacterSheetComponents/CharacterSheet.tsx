@@ -15,7 +15,8 @@ import SheetVows from "./SheetVows/SheetVows";
 import SheetBonds from "./SheetBonds/SheetBonds";
 import AssetsForm from "../Forms/AssetsForm";
 import SheetCompanion from "./SheetCompanion";
-import SheetAsset from "./SheetAsset";
+import SheetPath from "./SheetPath";
+import SheetTalent from "./SheetTalent";
 
 export default function CharacterSheet() {
   const formsContext = React.useContext(FormsContext);
@@ -153,12 +154,15 @@ export default function CharacterSheet() {
               <PencilIcon className="h-5 w-5 text-white" aria-hidden="true" />
             </button>
           </div>
-          <ul role="list" className="divide-y divide-gray-200">
+          <ul role="list" className="">
             {currentCharacter.companions.map((companion) => (
               <SheetCompanion companion={companion} key={companion.type} />
             ))}
             {currentCharacter.paths.map((path) => (
-              <SheetAsset asset={path} key={path.type} />
+              <SheetPath path={path} key={path.type} />
+            ))}
+            {currentCharacter.talents.map((talent) => (
+              <SheetTalent talent={talent} key={talent.type} /> 
             ))}
           </ul>
         </div>

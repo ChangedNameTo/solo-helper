@@ -8,6 +8,10 @@ export interface PathsAction extends CharactersAction {
   payload:Partial<Path>
 }
 
+export interface TalentsAction extends CharactersAction {
+  payload:Partial<Talent>
+}
+
 export interface Companion {
   active: boolean;
   type: string;
@@ -35,7 +39,7 @@ export interface Path {
 }
 
 export interface Talent {
-  name: string;
+  type: string;
   active: boolean;
   abilities: Array<Ability>;
   requirement: string;

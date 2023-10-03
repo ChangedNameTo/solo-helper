@@ -249,7 +249,7 @@ export const testCharacter: IronswornCharacter = {
   ],
   talents: [
     {
-      name: "Shield-Bearer",
+      type: "Shield-Bearer",
       requirement: "Holding Shield",
       active: false,
       abilities: [
@@ -257,21 +257,18 @@ export const testCharacter: IronswornCharacter = {
           name: "Stand Behind Me!",
           description:
             "When you Face Danger using your shield as cover, add +1. When you Clash in close quarters, take +1 momentum on a strong hit.",
-          starting: false,
           active: false,
         },
         {
           name: "Chosen's Champion",
           description:
             "When you bear a shield painted with a meaningful symbol, and you Endure Stress as you face off against a fearsome foe, add +1 and take +1 momentum on a hit.",
-          starting: false,
           active: false,
         },
         {
           name: "Bent, not Broken",
           description:
             "When forced to Endure Harm in a fight, you may instead sacrifice your shield and ignore all harm. If you do, your shield is destroyed or will require extensive repair; suffer -2 momentum.",
-          starting: false,
           active: false,
         },
       ],

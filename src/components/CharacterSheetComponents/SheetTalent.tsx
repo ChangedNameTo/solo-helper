@@ -7,19 +7,19 @@ import {
   GamesDispatchContext,
 } from "../../Contexts/GamesContext";
 import { CharactersAction } from "../../Types/CharacterTypes";
-import { Path } from "../../Types/AssetTypes";
+import { Talent } from "../../Types/AssetTypes";
 
-export default function SheetAsset(props) {
+export default function SheetTalent(props) {
   const gameDispatchContext = React.useContext(GamesDispatchContext);
   const gamesContext = React.useContext(GamesContext);
 
   const handleUpdateAbilities = (abilityDescription) => {
     gameDispatchContext({
-      type: "updated_path",
+      type: "updated_talent",
       gameID: gamesContext.selectedGame,
       payload: {
-        ...props.asset,
-        abilities: props.asset.abilities.map((ability) => {
+        ...props.talent,
+        abilities: props.talent.abilities.map((ability) => {
           if (ability.description !== abilityDescription) {
             return ability;
           } else {
@@ -29,33 +29,33 @@ export default function SheetAsset(props) {
             };
           }
         }),
-      } as Path,
+      } as Talent,
     } as CharactersAction);
   };
 
-  const handleAddPath = () => {
+  const handleAddTalent = () => {
     gameDispatchContext({
-      type: "added_path",
+      type: "added_talent",
       gameID: gamesContext.selectedGame,
-      payload: { ...props.asset, active: true },
+      payload: { ...props.talent, active: true },
     } as CharactersAction);
   };
 
-  const handleRemovePath = () => {
+  const handleRemoveTalent = () => {
     gameDispatchContext({
-      type: "deleted_path",
+      type: "deleted_talent",
       gameID: gamesContext.selectedGame,
       active: false,
-      payload: props.asset,
+      payload: props.talent,
     } as CharactersAction);
   };
 
   const actionButton = () => {
-    if (!props.asset.active) {
+    if (!props.talent.active) {
       return (
         <button
           className="bg-indigo-600 text-white font-semibold px-2 my-1 rounded hover:bg-indigo-500"
-          onClick={() => handleAddPath()}
+          onClick={() => handleAddTalent()}
         >
           Add
         </button>
@@ -64,7 +64,7 @@ export default function SheetAsset(props) {
       return (
         <button
           className="bg-indigo-600 text-white font-semibold px-2 my-1 rounded hover:bg-indigo-500"
-          onClick={() => handleRemovePath()}
+          onClick={() => handleRemoveTalent()}
         >
           Remove
         </button>
@@ -75,14 +75,19 @@ export default function SheetAsset(props) {
   return (
     <>
       <li className="m-2 rounded-md border-2 border-indigo-600">
-        <div className="flex flex-row rounded-md border-b border-gray-200 bg-white px-4 py-2">
+      <div className="rounded-md border-b border-gray-200 bg-white px-4 py-2">
+        <div className="flex flex-row">
           <h3 className="flex-1 text-base font-semibold leading-6 text-gray-900">
-            {props.asset.type}
+            {props.talent.type}
           </h3>
           {actionButton()}
         </div>
+        <span className="text-sm text-gray-500">
+          {props.talent.description}
+        </span>
+      </div>
         <div className="divide-y">
-          {props.asset.abilities.map((ability) => (
+          {props.talent.abilities.map((ability) => (
             <Switch.Group
               key={ability.description}
               as="div"
