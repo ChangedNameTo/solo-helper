@@ -223,28 +223,25 @@ export const testCharacter: IronswornCharacter = {
   ],
   paths: [
     {
-      name: "Storyweaver",
-      active: false,
+      type: "Storyweaver",
+      active: true,
       abilities: [
         {
           name: "Perform",
           description:
             "When you Secure an Advantage, Compel, or Forge a Bond by sharing an inspiring or enlightening song, poem, or tale, envision the story you tell. Then, add +1 and take +1 momentum on a hit.",
-          starting: false,
-          active: false,
+          active: true,
         },
         {
           name: "Spin Stories",
           description:
             "When you Make Camp and choose the option to relax, you may share a story with your allies or compose a new story if alone. If you do, envision the story you tell and take +1 spirit or +1 momentum. Any allies who choose to relax in your company may also take +1 spirit or +1 momentum.",
-          starting: false,
           active: false,
         },
         {
           name: "Gossip",
           description:
             "When you Sojourn within a community with which you share a bond, add +2 (instead of +1).",
-          starting: false,
           active: false,
         },
       ],

@@ -4,6 +4,10 @@ export interface CompanionsAction extends CharactersAction {
   payload:Partial<Companion>
 }
 
+export interface PathsAction extends CharactersAction {
+  payload:Partial<Path>
+}
+
 export interface Companion {
   active: boolean;
   type: string;
@@ -21,12 +25,11 @@ export interface Companion {
 export interface Ability {
   name: string;
   description: string;
-  starting: boolean;
   active: boolean;
 }
 
 export interface Path {
-  name: string;
+  type: string;
   active: boolean;
   abilities: Array<Ability>;
 }

@@ -6,7 +6,7 @@ import { Companion, Path, Ritual, Talent } from "./AssetTypes";
 
 export interface CharactersAction extends GamesAction{
   type: string;
-  payload: Partial<IronswornCharacter>;
+  payload: Partial<any>;
 }
 
 export interface Gauge {

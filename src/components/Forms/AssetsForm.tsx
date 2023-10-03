@@ -9,6 +9,7 @@ import { FormsContext } from "../../Contexts/FormContexts";
 import SheetCompanion from "../CharacterSheetComponents/SheetCompanion";
 import { Disclosure } from "@headlessui/react";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
+import SheetAsset from "../CharacterSheetComponents/SheetAsset";
 
 export default function AssetsForm(props) {
   // Import our contexts
@@ -23,37 +24,80 @@ export default function AssetsForm(props) {
     return;
   }
 
-  let currentAssets = game.companions.map((companion) => companion.type);
-
+  let currentCompanions = game.companions.map((companion) => companion.type);
+  let currentPaths = game.paths.map((path) => path.type);
 
   React.useEffect(() => {
-    currentAssets = game.companions.map((companion) => companion.type)
-  },[game.companions])
+    currentCompanions = game.companions.map((companion) => companion.type);
+  }, [game.companions]);
+  
+  React.useEffect(() => {
+    currentPaths = game.paths.map((path) => path.type);
+  }, [game.paths]);
 
   const companions = _.filter(assetJSON, (asset) => {
     return asset["Asset Type"] === "Companion";
-  }).map((asset) => {
-    return {
-      name: "Placeholder",
-      type: asset["Name"],
-      description: asset["Description"],
-      active: false,
-      abilities: asset["Abilities"].map((ability) => {
-        return {
-          name: ability["Name"],
-          description: ability["Text"],
-          active: false,
-          starting: false,
-        };
-      }),
-      health: {
-        min: 0,
-        max: asset["Asset Track"]["Max"],
-        current: asset["Asset Track"]["Max"],
-        reset: 1,
-      },
-    };
-  }).filter((asset) => currentAssets.indexOf(asset.type) < 0)
+  })
+    .map((asset) => {
+      return {
+        name: "Placeholder",
+        type: asset["Name"],
+        description: asset["Description"],
+        active: false,
+        abilities: asset["Abilities"].map((ability) => {
+          return {
+            name: ability["Name"],
+            description: ability["Text"],
+            active: false,
+            starting: false,
+          };
+        }),
+        health: {
+          min: 0,
+          max: asset["Asset Track"]["Max"],
+          current: asset["Asset Track"]["Max"],
+          reset: 1,
+        },
+      };
+    })
+    .filter((asset) => currentCompanions.indexOf(asset.type) < 0);
+
+  const paths = _.filter(assetJSON, (asset) => {
+    return asset["Asset Type"] === "Path";
+  })
+    .map((asset) => {
+      return {
+        type: asset["Name"],
+        active: false,
+        abilities: asset["Abilities"].map((ability) => {
+          return {
+            name: ability["Name"],
+            description: ability["Text"],
+            active: ability["Enabled"] || false
+          };
+        }),
+      };
+    })
+    .filter((asset) => currentPaths.indexOf(asset.type) < 0);
+  
+  const talents = _.filter(assetJSON, (asset) => {
+    return asset["Asset Type"] === "Combat Talent";
+  })
+    .map((asset) => {
+      return {
+        type: asset["Name"],
+        description:asset["Description"],
+        active: false,
+        abilities: asset["Abilities"].map((ability) => {
+          return {
+            name: ability["Name"],
+            description: ability["Text"],
+            active: ability["Enabled"] || false
+          };
+        }),
+      };
+    })
+    .filter((asset) => currentCompanions.indexOf(asset.type) < 0);
 
   return (
     <>
@@ -74,16 +118,56 @@ export default function AssetsForm(props) {
           <ul>
             {game.companions.map((companion) => {
               return (
-                <SheetCompanion
-                  key={companion.type}
-                  companion={companion}
-                />
-              )
-            })
-            }
+                <SheetCompanion key={companion.type} companion={companion} />
+              );
+            })}
+            {game.paths.map((path) => {
+              return (
+                <SheetAsset key={path.type} asset={path} />
+              );
+            })}
           </ul>
         </div>
+
         <div className="col-span-2">
+          <Disclosure>
+            {({ open }) => (
+              <div className="m-2 p-2 border-indigo-500 border-2 rounded-lg">
+                <Disclosure.Button className="relative flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
+                  <h2 className="text-base font-semibold leading-7 text-indigo-900 text-left">
+                    Paths
+                  </h2>
+                  <p className="mx-1 text-sm leading-6 text-indigo-600">
+                    The crafts we spent a lifetime mastering
+                  </p>
+                  <div className="h-full">
+                    <ChevronRightIcon
+                      className={`${
+                        open ? "rotate-90 transform" : " "
+                      } h-5 w-5 text-indigo-500`}
+                    />
+                  </div>
+                </Disclosure.Button>
+                <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
+                  <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
+                    {paths
+                      .filter(
+                        (path) =>
+                          currentCompanions.indexOf(path.type) !== 0
+                      )
+                      .map((path) => {
+                        return (
+                          <SheetAsset
+                            key={path.type}
+                            asset={path}
+                          />
+                        );
+                      })}
+                  </ul>
+                </Disclosure.Panel>
+              </div>
+            )}
+          </Disclosure>
           <Disclosure>
             {({ open }) => (
               <div className="m-2 p-2 border-indigo-500 border-2 rounded-lg">
@@ -108,7 +192,7 @@ export default function AssetsForm(props) {
                     {companions
                       .filter(
                         (companion) =>
-                          currentAssets.indexOf(companion.type) !== 0
+                          currentCompanions.indexOf(companion.type) !== 0
                       )
                       .map((companion) => {
                         return (

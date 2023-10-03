@@ -15,6 +15,7 @@ import SheetVows from "./SheetVows/SheetVows";
 import SheetBonds from "./SheetBonds/SheetBonds";
 import AssetsForm from "../Forms/AssetsForm";
 import SheetCompanion from "./SheetCompanion";
+import SheetAsset from "./SheetAsset";
 
 export default function CharacterSheet() {
   const formsContext = React.useContext(FormsContext);
@@ -155,6 +156,9 @@ export default function CharacterSheet() {
           <ul role="list" className="divide-y divide-gray-200">
             {currentCharacter.companions.map((companion) => (
               <SheetCompanion companion={companion} key={companion.type} />
+            ))}
+            {currentCharacter.paths.map((path) => (
+              <SheetAsset asset={path} key={path.type} />
             ))}
           </ul>
         </div>

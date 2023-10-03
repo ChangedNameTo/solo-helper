@@ -30,6 +30,9 @@ export default function gameReducer(games, action: GamesAction) {
 
     case "added_companion":
     case "deleted_companion":
+    
+    case "added_path":
+    case "deleted_path":
 
     case "updated_stat": {
       // Make sure the game exists
