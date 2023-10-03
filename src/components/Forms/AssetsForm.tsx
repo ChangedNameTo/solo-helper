@@ -8,6 +8,7 @@ import { Disclosure } from "@headlessui/react";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import SheetPath from "../CharacterSheetComponents/SheetPath";
 import SheetTalent from "../CharacterSheetComponents/SheetTalent";
+import SheetRitual from "../CharacterSheetComponents/SheetRitual";
 
 export default function AssetsForm(props) {
   // Import our contexts
@@ -24,6 +25,7 @@ export default function AssetsForm(props) {
   let currentCompanions = game.companions.map((companion) => companion.type);
   let currentPaths = game.paths.map((path) => path.type);
   let currentTalents = game.talents.map((talent) => talent.type);
+  let currentRituals = game.rituals.map((ritual) => ritual.type);
 
   React.useEffect(() => {
     currentCompanions = game.companions.map((companion) => companion.type);
@@ -32,6 +34,14 @@ export default function AssetsForm(props) {
   React.useEffect(() => {
     currentPaths = game.paths.map((path) => path.type);
   }, [game.paths]);
+  
+  React.useEffect(() => {
+    currentTalents = game.talents.map((talent) => talent.type);
+  }, [game.talents]);
+
+  React.useEffect(() => {
+    currentRituals = game.rituals.map((ritual) => ritual.type);
+  },[game.rituals]);
 
   const companions = _.filter(assetJSON, (asset) => {
     return asset["Asset Type"] === "Companion";
@@ -46,8 +56,8 @@ export default function AssetsForm(props) {
           return {
             name: ability["Name"],
             description: ability["Text"],
-            active: false,
-            starting: false,
+            active: ability["Enabled"] || false,
+            starting: ability["Enabled"] || false,
           };
         }),
         health: {
@@ -72,6 +82,7 @@ export default function AssetsForm(props) {
             name: ability["Name"],
             description: ability["Text"],
             active: ability["Enabled"] || false,
+            starting: ability["Enabled"] || false,
           };
         }),
       };
@@ -91,6 +102,28 @@ export default function AssetsForm(props) {
             name: ability["Name"],
             description: ability["Text"],
             active: ability["Enabled"] || false,
+            starting: ability["Enabled"] || false,
+          };
+        }),
+      };
+    })
+    .filter((asset) => currentCompanions.indexOf(asset.type) < 0);
+  
+  
+  const rituals = _.filter(assetJSON, (asset) => {
+    return asset["Asset Type"] === "Ritual";
+  })
+    .map((asset) => {
+      return {
+        type: asset["Name"],
+        description: asset["Description"],
+        active: false,
+        abilities: asset["Abilities"].map((ability) => {
+          return {
+            name: ability["Name"],
+            description: ability["Text"],
+            active: ability["Enabled"] || false,
+            starting: ability["Enabled"] || false,
           };
         }),
       };
@@ -125,6 +158,9 @@ export default function AssetsForm(props) {
             })}
             {game.talents.map((talent) => {
               return <SheetTalent key={talent.type} talent={talent} />;
+            })}
+            {game.rituals.map((ritual) => {
+              return <SheetRitual key={ritual.type} ritual={ritual} />;
             })}
           </ul>
         </div>
@@ -233,6 +269,42 @@ export default function AssetsForm(props) {
                       .map((talent) => {
                         return (
                           <SheetTalent key={talent.type} talent={talent} />
+                        );
+                      })}
+                  </ul>
+                </Disclosure.Panel>
+              </div>
+            )}
+          </Disclosure>
+          
+          {/* Rituals */}
+          <Disclosure>
+            {({ open }) => (
+              <div className="m-2 p-2 border-indigo-500 border-2 rounded-lg">
+                <Disclosure.Button className="relative flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
+                  <h2 className="text-base font-semibold leading-7 text-indigo-900 text-left">
+                    Rituals
+                  </h2>
+                  <p className="mx-1 text-sm leading-6 text-indigo-600">
+                    The arcana we call upon to bend the world to our will
+                  </p>
+                  <div className="h-full">
+                    <ChevronRightIcon
+                      className={`${
+                        open ? "rotate-90 transform" : " "
+                      } h-5 w-5 text-indigo-500`}
+                    />
+                  </div>
+                </Disclosure.Button>
+                <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
+                  <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
+                    {rituals
+                      .filter(
+                        (ritual) => currentRituals.indexOf(ritual.type) !== 0
+                      )
+                      .map((ritual) => {
+                        return (
+                          <SheetRitual key={ritual.type} ritual={ritual} />
                         );
                       })}
                   </ul>

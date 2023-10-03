@@ -1,4 +1,4 @@
-import { CompanionsAction, PathsAction, TalentsAction } from "../Types/AssetTypes";
+import { CompanionsAction, PathsAction, RitualsAction, TalentsAction } from "../Types/AssetTypes";
 import { BondsAction } from "../Types/BondTypes";
 import { CharactersAction } from "../Types/CharacterTypes";
 import { StatsAction } from "../Types/StatTypes";
@@ -6,6 +6,7 @@ import { VowsAction } from "../Types/VowTypes";
 import bondsReducer from "./BondsReducer";
 import companionsReducer from "./CompanionsReducer";
 import pathsReducer from "./PathsReducer";
+import ritualsReducer from "./RitualsReducer";
 import statsReducer from "./StatsReducer";
 import talentsReducer from "./TalentsReducer";
 import vowsReducer from "./VowsReducer";
@@ -39,6 +40,12 @@ export default function characterReducer(character, action: CharactersAction) {
     case "updated_talent":
     case "deleted_talent": {
       return {...character, talents:talentsReducer(character.talents, action as TalentsAction)}
+    }
+    
+    case "added_ritual":
+    case "updated_ritual":
+    case "deleted_ritual": {
+      return {...character, rituals:ritualsReducer(character.rituals, action as RitualsAction)}
     }
       
     case "added_bond":

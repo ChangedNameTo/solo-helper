@@ -29,6 +29,7 @@ export default function gameReducer(games, action: GamesAction) {
     case "updated_bond":
 
     case "added_companion":
+    case "updated_companion":
     case "deleted_companion":
     
     case "added_path":
@@ -38,6 +39,10 @@ export default function gameReducer(games, action: GamesAction) {
     case "added_talent":
     case "updated_talent":
     case "deleted_talent":
+    
+    case "added_ritual":
+    case "updated_ritual":
+    case "deleted_ritual":
 
     case "updated_stat": {
       // Make sure the game exists

@@ -276,7 +276,7 @@ export const testCharacter: IronswornCharacter = {
   ],
   rituals: [
     {
-      name: "Communion",
+      type: "Communion",
       active: false,
       abilities: [
         {

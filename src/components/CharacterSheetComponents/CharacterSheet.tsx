@@ -17,6 +17,7 @@ import AssetsForm from "../Forms/AssetsForm";
 import SheetCompanion from "./SheetCompanion";
 import SheetPath from "./SheetPath";
 import SheetTalent from "./SheetTalent";
+import SheetRitual from "./SheetRitual";
 
 export default function CharacterSheet() {
   const formsContext = React.useContext(FormsContext);
@@ -163,6 +164,9 @@ export default function CharacterSheet() {
             ))}
             {currentCharacter.talents.map((talent) => (
               <SheetTalent talent={talent} key={talent.type} /> 
+            ))}
+            {currentCharacter.rituals.map((ritual) => (
+              <SheetRitual ritual={ritual} key={ritual.type} /> 
             ))}
           </ul>
         </div>

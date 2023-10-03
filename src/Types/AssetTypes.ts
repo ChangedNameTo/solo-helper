@@ -12,6 +12,10 @@ export interface TalentsAction extends CharactersAction {
   payload:Partial<Talent>
 }
 
+export interface RitualsAction extends CharactersAction {
+  payload:Partial<Ritual>
+}
+
 export interface Companion {
   active: boolean;
   type: string;
@@ -46,7 +50,7 @@ export interface Talent {
 }
 
 export interface Ritual {
-  name: string;
+  type: string;
   active: boolean;
   abilities: Array<Ability>;
 }
