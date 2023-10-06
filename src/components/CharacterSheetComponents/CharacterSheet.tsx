@@ -19,6 +19,7 @@ import SheetPath from "./SheetPath";
 import SheetTalent from "./SheetTalent";
 import SheetRitual from "./SheetRitual";
 import GaugesSection from "./GaugesSection";
+import SheetAsset from "./SheetAsset";
 
 export default function CharacterSheet() {
   const formsContext = React.useContext(FormsContext);
@@ -109,7 +110,7 @@ export default function CharacterSheet() {
           </div>
           <ul role="list" className="">
             {currentCharacter.companions.map((companion) => (
-              <SheetCompanion companion={companion} key={companion.type} />
+              <SheetAsset passedAsset={companion} key={companion.type} />
             ))}
             {currentCharacter.paths.map((path) => (
               <SheetPath path={path} key={path.type} />

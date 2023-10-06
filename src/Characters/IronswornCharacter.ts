@@ -186,6 +186,7 @@ export const testCharacter: IronswornCharacter = {
   companions: [
     {
       type: "Hawk",
+      class: "Companion",
       name: "Silijana",
       active: true,
       description:
@@ -224,6 +225,7 @@ export const testCharacter: IronswornCharacter = {
   paths: [
     {
       type: "Storyweaver",
+      class:"Path",
       active: true,
       abilities: [
         {
@@ -250,6 +252,7 @@ export const testCharacter: IronswornCharacter = {
   talents: [
     {
       type: "Shield-Bearer",
+      class: "Talent",
       requirement: "Holding Shield",
       active: false,
       abilities: [
@@ -277,6 +280,7 @@ export const testCharacter: IronswornCharacter = {
   rituals: [
     {
       type: "Communion",
+      class: "Ritual",
       active: false,
       abilities: [
         {

@@ -66,6 +66,7 @@ export default function AssetsForm(props) {
           current: asset["Asset Track"]["Max"],
           reset: 1,
         },
+        level:1
       };
     })
     .filter((asset) => currentCompanions.indexOf(asset.type) < 0);
@@ -85,6 +86,7 @@ export default function AssetsForm(props) {
             starting: ability["Enabled"] || false,
           };
         }),
+        level:1
       };
     })
     .filter((asset) => currentPaths.indexOf(asset.type) < 0);
@@ -105,6 +107,7 @@ export default function AssetsForm(props) {
             starting: ability["Enabled"] || false,
           };
         }),
+        level:1
       };
     })
     .filter((asset) => currentCompanions.indexOf(asset.type) < 0);
@@ -125,6 +128,7 @@ export default function AssetsForm(props) {
             starting: ability["Enabled"] || false,
           };
         }),
+        level:1
       };
     })
     .filter((asset) => currentCompanions.indexOf(asset.type) < 0);
