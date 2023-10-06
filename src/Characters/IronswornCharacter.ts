@@ -186,6 +186,7 @@ export const testCharacter: IronswornCharacter = {
   companions: [
     {
       type: "Hawk",
+      level: 1,
       class: "Companion",
       name: "Silijana",
       active: true,
@@ -225,7 +226,10 @@ export const testCharacter: IronswornCharacter = {
   paths: [
     {
       type: "Storyweaver",
-      class:"Path",
+      name: "Storyweaver",
+      description:"A teller of tales, a spinner of yarns, a weaver of words.",
+      level: 1,
+      class: "Path",
       active: true,
       abilities: [
         {
@@ -252,6 +256,9 @@ export const testCharacter: IronswornCharacter = {
   talents: [
     {
       type: "Shield-Bearer",
+      name: "Shield-Bearer",
+      level: 1,
+      description:"A warrior who wields a shield with skill and purpose, protecting their allies and then themselves.",
       class: "Talent",
       requirement: "Holding Shield",
       active: false,
@@ -280,6 +287,9 @@ export const testCharacter: IronswornCharacter = {
   rituals: [
     {
       type: "Communion",
+      name: "Communion",
+      level: 1,
+      description:"A ritual that allows you to commune with the spirits of the dead.",
       class: "Ritual",
       active: false,
       abilities: [

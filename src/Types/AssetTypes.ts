@@ -1,37 +1,58 @@
 import { CharactersAction } from "./CharacterTypes";
 
-export interface CompanionsAction extends CharactersAction {
+export type AssetActionTypes =
+  | AssetsAction
+  | CompanionsAction
+  | PathsAction
+  | TalentsAction
+  | RitualsAction;
+
+export interface AssetsAction extends CharactersAction {
+  gameID: string;
+}
+
+export interface CompanionsAction {
   payload: Partial<Companion>;
 }
 
-export interface PathsAction extends CharactersAction {
+export interface PathsAction {
   payload: Partial<Path>;
 }
 
-export interface TalentsAction extends CharactersAction {
+export interface TalentsAction {
   payload: Partial<Talent>;
 }
 
-export interface RitualsAction extends CharactersAction {
+export interface RitualsAction {
   payload: Partial<Ritual>;
 }
 
 export interface Asset {
   name: string;
+  type: string;
   class: string;
   description: string;
   active: boolean;
+  level: number;
+  abilities: Array<Ability>;
+}
+
+export interface RenderedAsset extends Asset {
+  gaugeWidth?: string;
+  handleUpdateAssetPayload: (abilityDescription: string) => AssetsAction;
+  handleAddAssetPayload: () => AssetsAction;
+  handleRemoveAssetPayload: () => AssetsAction;
 }
 
 export interface Ability {
   name: string;
-  type: string;
   description: string;
   active: boolean;
+  starting?: boolean;
 }
 
 export interface Companion extends Asset {
-  abilities: Array<Ability>;
+  class: "Companion";
   health: {
     min: number;
     max: number;
@@ -40,15 +61,15 @@ export interface Companion extends Asset {
   };
 }
 
-export interface Path {
-  abilities: Array<Ability>;
+export interface Path extends Asset {
+  class: "Path";
 }
 
-export interface Talent {
-  abilities: Array<Ability>;
+export interface Talent extends Asset {
+  class: "Talent";
   requirement: string;
 }
 
-export interface Ritual {
-  abilities: Array<Ability>;
+export interface Ritual extends Asset {
+  class: "Ritual";
 }

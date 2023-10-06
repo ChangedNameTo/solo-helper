@@ -3,12 +3,11 @@ import { assetJSON } from "../../assets/Helpers";
 import _ from "lodash";
 import { GamesContext } from "../../Contexts/GamesContext";
 import { FormsContext } from "../../Contexts/FormContexts";
-import SheetCompanion from "../CharacterSheetComponents/SheetCompanion";
 import { Disclosure, Transition } from "@headlessui/react";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import SheetPath from "../CharacterSheetComponents/SheetPath";
-import SheetTalent from "../CharacterSheetComponents/SheetTalent";
-import SheetRitual from "../CharacterSheetComponents/SheetRitual";
+import SheetAsset from "../CharacterSheetComponents/SheetAssets/SheetAsset";
+import SheetAssetList from "../CharacterSheetComponents/SheetAssetList";
+import { Companion, Path, Ritual, Talent } from "../../Types/AssetTypes";
 
 export default function AssetsForm(props) {
   // Import our contexts
@@ -48,8 +47,10 @@ export default function AssetsForm(props) {
   })
     .map((asset) => {
       return {
-        name: "Placeholder",
+        name: asset["Name"],
         type: asset["Name"],
+        class: asset["Asset Type"],
+        level:1,
         description: asset["Description"],
         active: false,
         abilities: asset["Abilities"].map((ability) => {
@@ -66,7 +67,6 @@ export default function AssetsForm(props) {
           current: asset["Asset Track"]["Max"],
           reset: 1,
         },
-        level:1
       };
     })
     .filter((asset) => currentCompanions.indexOf(asset.type) < 0);
@@ -150,22 +150,7 @@ export default function AssetsForm(props) {
           <p className="mt-1 text-sm leading-6 text-gray-600">
             Assets you have selected will appear here
           </p>
-          <ul>
-            {game.companions.map((companion) => {
-              return (
-                <SheetCompanion key={companion.type} companion={companion} />
-              );
-            })}
-            {game.paths.map((path) => {
-              return <SheetPath key={path.type} path={path} />;
-            })}
-            {game.talents.map((talent) => {
-              return <SheetTalent key={talent.type} talent={talent} />;
-            })}
-            {game.rituals.map((ritual) => {
-              return <SheetRitual key={ritual.type} ritual={ritual} />;
-            })}
-          </ul>
+          <SheetAssetList game={game} />
         </div>
 
         <div className="col-span-2">
@@ -202,8 +187,8 @@ export default function AssetsForm(props) {
                         .filter(
                           (path) => currentCompanions.indexOf(path.type) !== 0
                         )
-                        .map((path) => {
-                          return <SheetPath key={path.type} path={path} />;
+                        .map((path:Path) => {
+                          return <SheetAsset key={path.type} passedAsset={path} />;
                         })}
                     </ul>
                   </Disclosure.Panel>
@@ -247,11 +232,11 @@ export default function AssetsForm(props) {
                           (companion) =>
                             currentCompanions.indexOf(companion.type) !== 0
                         )
-                        .map((companion) => {
+                        .map((companion:Companion) => {
                           return (
-                            <SheetCompanion
+                            <SheetAsset
                               key={companion.type}
-                              companion={companion}
+                              passedAsset={companion}
                             />
                           );
                         })}
@@ -295,9 +280,9 @@ export default function AssetsForm(props) {
                         .filter(
                           (talent) => currentTalents.indexOf(talent.type) !== 0
                         )
-                        .map((talent) => {
+                        .map((talent:Talent) => {
                           return (
-                            <SheetTalent key={talent.type} talent={talent} />
+                            <SheetAsset key={talent.type} passedAsset={talent} />
                           );
                         })}
                     </ul>
@@ -340,9 +325,9 @@ export default function AssetsForm(props) {
                         .filter(
                           (ritual) => currentRituals.indexOf(ritual.type) !== 0
                         )
-                        .map((ritual) => {
+                        .map((ritual:Ritual) => {
                           return (
-                            <SheetRitual key={ritual.type} ritual={ritual} />
+                            <SheetAsset key={ritual.type} passedAsset={ritual} />
                           );
                         })}
                     </ul>

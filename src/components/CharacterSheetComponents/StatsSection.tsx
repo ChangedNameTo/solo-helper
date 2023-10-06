@@ -25,7 +25,7 @@ export default function StatsSection({ character }) {
       {open ? (
         <ul role="list" className="flex flex-col">
           {character.stats.map((stat, idx, arr) => (
-            <SheetStat stat={stat} idx={idx} key={stat.name} arr={arr} />
+            <SheetStat stat={stat} idx={idx} key={stat.initials} arr={arr} />
           ))}
         </ul>
       ) : (
@@ -37,6 +37,7 @@ export default function StatsSection({ character }) {
                 className="flex-grow items-center
                 bg-indigo-600 text-white px-3 py-2 text-sm font-semibold ring-1
                 ring-inset ring-gray-300 hover:bg-indigo-500 focus:z-10"
+                key={stat.initials}
               >
                 <div className="font-bold text-xl">{stat.value}</div>
                 <div className="font-semibold">{stat.name}</div>

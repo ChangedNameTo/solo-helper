@@ -1,18 +1,12 @@
-import * as React from "react";
-import { Switch } from "@headlessui/react";
-
-import { classNames } from "../../assets/Helpers";
 import {
-  GamesContext,
-  GamesDispatchContext,
-} from "../../Contexts/GamesContext";
-import { CompanionsAction } from "../../Types/AssetTypes";
+  AssetActionTypes,
+  RenderedAsset,
+} from "../../../Types/AssetTypes";
 
 export default function SheetCompanion({ companion }) {
-  const gaugeWidth = () =>
+  const gaugeWidth =
     (companion.health.current / (companion.health.max - companion.health.min)) *
-      100 +
-    "%";
+    100+"%";
 
   const handleUpdateCompanionPayload = (abilityDescription) => {
     return {
@@ -30,33 +24,36 @@ export default function SheetCompanion({ companion }) {
           }
         }),
       },
-    } as Partial<CompanionsAction>;
+    } as Partial<AssetActionTypes>;
   };
 
   const handleAddCompanionPayload = () => {
     return {
       type: "added_companion",
       payload: { ...companion, active: true },
-    } as Partial<CompanionsAction>;
+    } as Partial<AssetActionTypes>;
   };
 
   const handleRemoveCompanionPayload = () => {
     return {
       type: "deleted_companion",
-      payload: {...companion, active: false}
-    } as Partial<CompanionsAction>;
+      payload: { ...companion, active: false },
+    } as Partial<AssetActionTypes>;
   };
 
   return {
+    name: companion.name,
+    class: companion.class,
     active: companion.active,
+    level: companion.level,
     type: companion.type,
     description: companion.description,
     abilities: companion.abilities,
     health: companion.health,
-    gaugeWidth: gaugeWidth(),
+    gaugeWidth: gaugeWidth,
     handleUpdateAssetPayload: (abilityDescription) =>
       handleUpdateCompanionPayload(abilityDescription),
     handleAddAssetPayload: handleAddCompanionPayload,
     handleRemoveAssetPayload: handleRemoveCompanionPayload,
-  };
+  } as RenderedAsset;
 }

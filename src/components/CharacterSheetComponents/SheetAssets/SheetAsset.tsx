@@ -1,61 +1,69 @@
 import * as React from "react";
+import {
+  Asset,
+  AssetsAction,
+  RenderedAsset,
+} from "../../../Types/AssetTypes";
 import { Switch } from "@headlessui/react";
-
-import { classNames } from "../../assets/Helpers";
+import { classNames } from "../../../assets/Helpers";
 import {
   GamesContext,
   GamesDispatchContext,
-} from "../../Contexts/GamesContext";
-import { CharactersAction } from "../../Types/CharacterTypes";
-import { Talent } from "../../Types/AssetTypes";
+} from "../../../Contexts/GamesContext";
 
-export default function SheetTalent(props) {
-  const gameDispatchContext = React.useContext(GamesDispatchContext);
+import SheetCompanion from "./SheetCompanion";
+import SheetPath from "./SheetPath";
+import SheetRitual from "./SheetRitual";
+import SheetTalent from "./SheetTalent";
+
+function SheetAssetFactory(asset) {
+  switch (asset.class) {
+    case "Companion":
+      return SheetCompanion({ companion: asset });
+    case "Path":
+      return SheetPath({ path: asset });
+    case "Talent":
+      return SheetTalent({ talent: asset });
+    case "Ritual":
+      return SheetRitual({ ritual: asset });
+    default:
+      throw new Error("Invalid Asset Type");
+  }
+}
+
+export default function SheetAsset({ passedAsset }: { passedAsset: Asset }) {
+  const asset = SheetAssetFactory(passedAsset) as RenderedAsset;
+
   const gamesContext = React.useContext(GamesContext);
+  const gameDispatchContext = React.useContext(GamesDispatchContext);
 
-  const handleUpdateAbilities = (abilityDescription) => {
+  const handleAddAsset = () => {
     gameDispatchContext({
-      type: "updated_talent",
+      ...asset.handleAddAssetPayload(),
       gameID: gamesContext.selectedGame,
-      payload: {
-        ...props.talent,
-        abilities: props.talent.abilities.map((ability) => {
-          if (ability.description !== abilityDescription) {
-            return ability;
-          } else {
-            return {
-              ...ability,
-              active: !ability.active,
-            };
-          }
-        }),
-      } as Talent,
-    } as CharactersAction);
+    } as AssetsAction);
   };
 
-  const handleAddTalent = () => {
+  const handleRemoveAsset = () => {
     gameDispatchContext({
-      type: "added_talent",
+      ...asset.handleRemoveAssetPayload(),
       gameID: gamesContext.selectedGame,
-      payload: { ...props.talent, active: true },
-    } as CharactersAction);
+    } as AssetsAction);
   };
 
-  const handleRemoveTalent = () => {
+  const handleUpdateAsset = (abilityDescription) => {
     gameDispatchContext({
-      type: "deleted_talent",
+      ...asset.handleUpdateAssetPayload(abilityDescription),
       gameID: gamesContext.selectedGame,
-      active: false,
-      payload: props.talent,
-    } as CharactersAction);
+    } as AssetsAction);
   };
 
   const actionButton = () => {
-    if (!props.talent.active) {
+    if (!asset.active) {
       return (
         <button
           className="bg-indigo-600 text-white font-semibold px-2 my-1 rounded hover:bg-indigo-500"
-          onClick={() => handleAddTalent()}
+          onClick={() => handleAddAsset()}
         >
           Add
         </button>
@@ -64,7 +72,7 @@ export default function SheetTalent(props) {
       return (
         <button
           className="bg-indigo-600 text-white font-semibold px-2 my-1 rounded hover:bg-indigo-500"
-          onClick={() => handleRemoveTalent()}
+          onClick={() => handleRemoveAsset()}
         >
           Remove
         </button>
@@ -73,29 +81,36 @@ export default function SheetTalent(props) {
   };
 
   return (
-    <>
-      <li className="m-2 rounded-md border-2 border-indigo-600">
+    <li className="m-2 rounded-md border-2 border-indigo-600">
       <div className="rounded-md border-b border-gray-200 bg-white px-4 py-2">
         <div className="flex flex-row">
           <h3 className="flex-1 text-base font-semibold leading-6 text-gray-900">
-            {props.talent.type}
+            {asset.type}
           </h3>
+          {asset?.level}
           {actionButton()}
         </div>
-        <span className="text-sm text-gray-500">
-          {props.talent.description}
-        </span>
+        {asset.gaugeWidth && (
+          <div className="mt-1 w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+            <div
+              className="bg-blue-600 h-2.5 rounded-full"
+              style={{ width: asset.gaugeWidth }}
+            ></div>
+          </div>
+        )}
+        <span className="text-sm text-gray-500">{asset.description}</span>
       </div>
+      {asset?.abilities?.length > 0 && (
         <div className="divide-y">
-          {props.talent.abilities.map((ability) => (
+          {asset.abilities.map((ability) => (
             <Switch.Group
-              key={ability.description}
+              key={ability.name}
               as="div"
               className="flex items-center py-2 px-2"
             >
               <Switch
-                onChange={() => handleUpdateAbilities(ability.description)}
                 checked={ability.active}
+                onChange={() => handleUpdateAsset(ability.description)}
                 className={classNames(
                   ability.active ? "bg-indigo-600" : "bg-gray-200",
                   "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
@@ -118,7 +133,7 @@ export default function SheetTalent(props) {
             </Switch.Group>
           ))}
         </div>
-      </li>
-    </>
+      )}
+    </li>
   );
 }

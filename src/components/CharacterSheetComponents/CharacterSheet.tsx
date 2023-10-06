@@ -1,7 +1,6 @@
 import * as React from "react";
 import { PencilIcon } from "@heroicons/react/20/solid";
 
-import SheetGauge from "./SheetGauge";
 import SheetCondition from "./SheetCondition";
 import SheetBane from "./SheetBane";
 import SheetBurden from "./SheetBurden";
@@ -14,12 +13,11 @@ import StatsSection from "./StatsSection";
 import SheetVows from "./SheetVows/SheetVows";
 import SheetBonds from "./SheetBonds/SheetBonds";
 import AssetsForm from "../Forms/AssetsForm";
-import SheetCompanion from "./SheetCompanion";
-import SheetPath from "./SheetPath";
-import SheetTalent from "./SheetTalent";
-import SheetRitual from "./SheetRitual";
+import SheetTalent from "./SheetAssets/SheetTalent";
+import SheetRitual from "./SheetAssets/SheetRitual";
 import GaugesSection from "./GaugesSection";
-import SheetAsset from "./SheetAsset";
+import SheetAsset from "./SheetAssets/SheetAsset";
+import SheetAssetList from "./SheetAssetList";
 
 export default function CharacterSheet() {
   const formsContext = React.useContext(FormsContext);
@@ -108,20 +106,9 @@ export default function CharacterSheet() {
               <PencilIcon className="h-5 w-5 text-white" aria-hidden="true" />
             </button>
           </div>
-          <ul role="list" className="">
-            {currentCharacter.companions.map((companion) => (
-              <SheetAsset passedAsset={companion} key={companion.type} />
-            ))}
-            {currentCharacter.paths.map((path) => (
-              <SheetPath path={path} key={path.type} />
-            ))}
-            {currentCharacter.talents.map((talent) => (
-              <SheetTalent talent={talent} key={talent.type} /> 
-            ))}
-            {currentCharacter.rituals.map((ritual) => (
-              <SheetRitual ritual={ritual} key={ritual.type} /> 
-            ))}
-          </ul>
+          <SheetAssetList
+            game={currentCharacter}
+          />
         </div>
 
         {/* Conditions */}
