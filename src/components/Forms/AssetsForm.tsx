@@ -6,7 +6,7 @@ import { FormsContext } from "../../Contexts/FormContexts";
 import { Disclosure, Transition } from "@headlessui/react";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import SheetAsset from "../CharacterSheetComponents/SheetAssets/SheetAsset";
-import SheetAssetList from "../CharacterSheetComponents/SheetAssetList";
+import SheetAssetList from "../CharacterSheetComponents/SheetAssets/SheetAssetList";
 import { Companion, Path, Ritual, Talent } from "../../Types/AssetTypes";
 
 export default function AssetsForm(props) {

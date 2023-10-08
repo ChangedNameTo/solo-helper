@@ -50,17 +50,17 @@ export interface IronswornCharacter {
     current: number;
     max: number;
   };
-  gauges: Array<Gauge>;
-  stats: Array<Stat>;
+  gauges: Map<string, Gauge>;
+  stats: Map<string, Stat>;
   vows: Map<string, Vow>;
   bonds: Map<string, Bond>;
-  conditions: Array<Condition>;
-  banes: Array<Bane>;
-  burdens: Array<Burden>;
-  companions: Array<Companion>;
-  paths: Array<Path>;
-  talents: Array<Talent>;
-  rituals: Array<Ritual>;
-  equipment: Array<Equipment>;
+  conditions: Map<string, Condition>;
+  banes: Map<string, Bane>;
+  burdens: Map<string, Burden>;
+  companions: Map<string, Companion>;
+  paths: Map<string, Path>;
+  talents: Map<string, Talent>;
+  rituals: Map<string, Ritual>;
+  equipment: Map<string, Equipment>;
   date: number;
 }

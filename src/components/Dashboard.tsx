@@ -35,12 +35,13 @@ export default function Dashboard() {
   const hasVows = () => currentCharacter?.vows.size > 0;
   const hasBonds = () => currentCharacter?.bonds.size > 0;
   const hasStatBonuses = () =>
-    currentCharacter.stats.filter((stat) => stat.value === 0).length === 0;
+    Array.from(currentCharacter.stats.values()).filter((stat) => stat.value === 0).length === 0;
+
   const hasAssets = () =>
-    currentCharacter.companions.length +
-      currentCharacter.paths.length +
-      currentCharacter.rituals.length +
-      currentCharacter.talents.length >
+    currentCharacter.companions.size +
+      currentCharacter.paths.size +
+      currentCharacter.rituals.size +
+      currentCharacter.talents.size >
     0;
 
   const hasEquipment = () => currentCharacter.equipment.length > 0;

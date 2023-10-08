@@ -1,25 +1,23 @@
 import { Companion, CompanionsAction } from "../Types/AssetTypes";
 
-export default function companionsReducer(companions: Array<Companion>, action: CompanionsAction) {
+export default function companionsReducer(
+  companions: Map<string, Companion>,
+  action: CompanionsAction
+) {
+  const payload = action.payload as Companion;
+
   switch (action.type) {
-    case "added_companion": {
-      return [...companions, action.payload]
+    case "added_companion":
+    case "updated_companion": {
+      return companions.set(payload.type, payload);
     }
     case "deleted_companion": {
-      return companions.filter((companion) => companion.type !== action.payload.type)
-    }
-    case "updated_companion": {
-      return companions.map((companion) => {
-        if (companion.type === action.payload.type) {
-          return action.payload
-        } else {
-          return companion
-        }
-      })
+      companions.delete(payload.type);
+      return companions;
     }
     default: {
-      console.warn(`Unknown action: ${action.type}`)
-      return companions
+      console.warn(`Unknown action: ${action.type}`);
+      return companions;
     }
   }
 }

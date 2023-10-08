@@ -8,10 +8,11 @@
         "target": "es2015",            // specify ECMAScript target version
         "allowJs": true,             // allow a partial TypeScript and JavaScript codebase
         "moduleResolution": "node",
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "strict": true
 
     },
     "include": [
         "./src/"
-    ]
+, "src/components/CharacterSheetComponents/SheetSectionRetracted/.tsx"    ]
 }

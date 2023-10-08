@@ -12,11 +12,13 @@ export interface AssetsAction extends CharactersAction {
 }
 
 export interface CompanionsAction {
+  type: any;
   payload: Partial<Companion>;
 }
 
 export interface PathsAction {
-  payload: Partial<Path>;
+  type: any;
+  payload: Path;
 }
 
 export interface TalentsAction {
