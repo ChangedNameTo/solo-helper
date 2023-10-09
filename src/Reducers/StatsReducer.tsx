@@ -7,7 +7,7 @@ export default function statsReducer(
 ): Game["stats"] {
   switch (action.type) {
     case "updated_stat": {
-      return stats.set(action.payload.name, {...action.payload, value: action.value});
+      return stats.set(action.payload.name, {...action.payload});
     }
     default: {
       return stats;

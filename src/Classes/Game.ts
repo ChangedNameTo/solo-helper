@@ -1,5 +1,5 @@
 import { testCharacter } from "../Characters/IronswornCharacter";
-import { Companion, Path, Talent, Ritual } from "../Types/AssetTypes";
+import { Companion, Path, Talent, Ritual, Asset } from "../Types/AssetTypes";
 import _ from "lodash";
 import { Bond } from "../Types/BondTypes";
 import {
@@ -11,6 +11,12 @@ import {
 } from "../Types/CharacterTypes";
 import { Stat } from "../Types/StatTypes";
 import { Vow } from "../Types/VowTypes";
+
+export interface GamesAction {
+  type: string;
+  gameID: string;
+  payload: any;
+}
 
 export class Game {
   id: string;
@@ -144,5 +150,15 @@ export class Game {
 
   getStatsArray(): Stat[] {
     return Array.from(this.stats.values());
+  }
+
+  getAssets(): Array<Asset> {
+    const assets = [
+      ...this.getPaths(),
+      ...this.getCompanions(),
+      ...this.getTalents(),
+      ...this.getRituals(),
+    ];
+    return assets;
   }
 }

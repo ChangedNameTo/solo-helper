@@ -4,7 +4,6 @@ import {
   GamesContext,
   GamesDispatchContext,
 } from "../../Contexts/GamesContext";
-import { StatsAction } from "../../Types/CharacterTypes";
 import { Stat } from "../../Types/StatTypes";
 
 interface StatFormTableRowProps {
@@ -26,15 +25,13 @@ export default function StatFormTableRow({
 
     const game = gamesContext.getGame();
 
-    const updateStat = (e, column: number) => {
+    const updateStat = (e:React.ChangeEvent<HTMLInputElement>, column: number) => {
       // Check if the stat is currently checked. If yes, we set the new value to 0
       const newStatValue = e.target.checked ? column : 0;
-
       gameDispatchContext({
         type: "updated_stat",
-        payload: stat,
+        payload: {...stat, value: newStatValue},
         gameID: game.id,
-        value:newStatValue
       });
     };
 

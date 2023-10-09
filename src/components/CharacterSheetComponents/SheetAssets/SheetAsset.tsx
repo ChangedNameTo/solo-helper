@@ -2,8 +2,6 @@ import * as React from "react";
 import {
   Ability,
   Asset,
-  AssetsAction,
-  RenderedAsset,
 } from "../../../Types/AssetTypes";
 import {
   GamesContext,
