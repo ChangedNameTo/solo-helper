@@ -5,8 +5,6 @@ import {
   AssetsAction,
   RenderedAsset,
 } from "../../../Types/AssetTypes";
-import { Switch } from "@headlessui/react";
-import { classNames } from "../../../assets/Helpers";
 import {
   GamesContext,
   GamesDispatchContext,
@@ -24,12 +22,12 @@ function SheetAssetFactory(asset: Asset) {
       return SheetCompanion({ companion: asset });
     case "Path":
       return SheetPath({ path: asset });
-    case "Talent":
+    case "Combat Talent":
       return SheetTalent({ talent: asset });
     case "Ritual":
       return SheetRitual({ ritual: asset });
     default:
-      throw new Error("Invalid Asset Type");
+      throw new Error("Invalid Asset Type:" + asset.class);
   }
 }
 

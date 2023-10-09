@@ -1,6 +1,6 @@
-import { CharactersAction } from "./CharacterTypes";
+import { GamesAction } from "./GameTypes";
 
-export interface BondsAction extends CharactersAction {
+export interface BondsAction extends GamesAction {
   bondID: string;
   payload:Partial<Bond>
 }

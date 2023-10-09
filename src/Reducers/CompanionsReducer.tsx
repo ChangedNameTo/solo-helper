@@ -1,7 +1,8 @@
 import { Companion, CompanionsAction } from "../Types/AssetTypes";
+import { IronswornCharacter } from "../Types/CharacterTypes";
 
 export default function companionsReducer(
-  companions: Map<string, Companion>,
+  companions: IronswornCharacter["companions"],
   action: CompanionsAction
 ) {
   const payload = action.payload as Companion;

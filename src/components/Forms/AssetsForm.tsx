@@ -81,7 +81,10 @@ export default function AssetsForm(props: AssetFormProps) {
     .map((asset) => {
       return {
         type: asset["Name"],
+        name: asset["Name"],
+        description: asset["Description"],
         active: false,
+        class: asset["Asset Type"],
         abilities: asset["Abilities"].map((ability) => {
           return {
             name: ability["Name"],
@@ -101,8 +104,10 @@ export default function AssetsForm(props: AssetFormProps) {
     .map((asset) => {
       return {
         type: asset["Name"],
+        name: asset["Name"],
         description: asset["Description"],
         active: false,
+        class: asset["Asset Type"],
         abilities: asset["Abilities"].map((ability) => {
           return {
             name: ability["Name"],
@@ -124,6 +129,7 @@ export default function AssetsForm(props: AssetFormProps) {
         type: asset["Name"],
         description: asset["Description"],
         active: false,
+        class: asset["Asset Type"],
         abilities: asset["Abilities"].map((ability) => {
           return {
             name: ability["Name"],
@@ -135,7 +141,7 @@ export default function AssetsForm(props: AssetFormProps) {
         level:1
       };
     })
-    .filter((asset) => currentCompanions.indexOf(asset.type) < 0);
+    .filter((asset) => currentCompanions.indexOf(asset.type) < 0) as Array<Ritual>;
 
   return (
     <>
@@ -187,13 +193,18 @@ export default function AssetsForm(props: AssetFormProps) {
                 >
                   <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
                     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                      {Array.from(game.paths.values())
-                        .filter(
-                          (path) => !currentPaths.includes(path)
-                        )
-                        .map((path:Path) => {
-                          return <SheetAsset key={path.type} passedAsset={path} />;
-                        })}
+                      {paths.reduce((acc:Array<any>, path) => {
+                        if (currentPaths.map((path) => path.type).indexOf(path.type) < 0) {
+                          return (
+                            [...acc, <SheetAsset
+                              key={path.type}
+                              passedAsset={path}
+                            />]
+                          )
+                        } else {
+                          return acc
+                        }
+                       },[])}
                     </ul>
                   </Disclosure.Panel>
                 </Transition>
@@ -231,19 +242,18 @@ export default function AssetsForm(props: AssetFormProps) {
                 >
                   <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
                     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                      {companions
-                        .filter(
-                          (companion) =>
-                            currentCompanions.indexOf(companion.type) !== 0
-                        )
-                        .map((companion:Companion) => {
+                      {companions.reduce((acc:Array<any>, companion) => {
+                        if (currentCompanions.map((companion) => companion.type).indexOf(companion.type) < 0) {
                           return (
-                            <SheetAsset
+                            [...acc, <SheetAsset
                               key={companion.type}
                               passedAsset={companion}
-                            />
-                          );
-                        })}
+                            />]
+                          )
+                        } else {
+                          return acc
+                        }
+                       },[])}
                     </ul>
                   </Disclosure.Panel>
                 </Transition>
@@ -280,15 +290,18 @@ export default function AssetsForm(props: AssetFormProps) {
                 >
                   <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
                     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                      {talents
-                        .filter(
-                          (talent) => currentTalents.indexOf(talent.type) !== 0
-                        )
-                        .map((talent:Talent) => {
+                      {talents.reduce((acc:Array<any>, talent) => {
+                        if (currentTalents.map((talent) => talent.type).indexOf(talent.type) < 0) {
                           return (
-                            <SheetAsset key={talent.type} passedAsset={talent} />
-                          );
-                        })}
+                            [...acc, <SheetAsset
+                              key={talent.type}
+                              passedAsset={talent}
+                            />]
+                          )
+                        } else {
+                          return acc
+                        }
+                       },[])}
                     </ul>
                   </Disclosure.Panel>
                 </Transition>

@@ -12,6 +12,7 @@ export default function ritualsReducer(rituals: IronswornCharacter["rituals"], a
       return rituals
     }
     default: {
+      console.warn(`Unknown action: ${action.type}`);
       return rituals
     }
   }

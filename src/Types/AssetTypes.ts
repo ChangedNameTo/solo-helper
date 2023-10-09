@@ -66,7 +66,7 @@ export interface Path extends Asset {
 }
 
 export interface Talent extends Asset {
-  class: "Talent";
+  class: "Combat Talent";
   requirement: string;
 }
 

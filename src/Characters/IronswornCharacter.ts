@@ -320,7 +320,7 @@ export const testCharacter: IronswornCharacter = {
         level: 1,
         description:
           "A warrior who wields a shield with skill and purpose, protecting their allies and then themselves.",
-        class: "Talent",
+        class: "Combat Talent",
         requirement: "Holding Shield",
         active: false,
         abilities: [
