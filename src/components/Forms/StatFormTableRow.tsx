@@ -5,21 +5,37 @@ import {
   GamesDispatchContext,
 } from "../../Contexts/GamesContext";
 import { StatsAction } from "../../Types/CharacterTypes";
+import { Stat } from "../../Types/StatTypes";
 
-export default function StatFormTableRow({ stat, disabled, game }) {
-  const checkboxes = (stat, column) => {
+interface StatFormTableRowProps {
+  stat: Stat;
+  disabled: {
+    1: boolean;
+    2: boolean;
+    3: boolean;
+  };
+}
+
+export default function StatFormTableRow({
+  stat,
+  disabled,
+}: StatFormTableRowProps) {
+  const checkboxes = (stat: Stat, column: number) => {
+    const gamesContext = React.useContext(GamesContext);
     const gameDispatchContext = React.useContext(GamesDispatchContext);
 
-    const updateStat = (e, column) => {
+    const game = gamesContext.getGame();
+
+    const updateStat = (e, column: number) => {
       // Check if the stat is currently checked. If yes, we set the new value to 0
       const newStatValue = e.target.checked ? column : 0;
 
       gameDispatchContext({
         type: "updated_stat",
+        payload: stat,
         gameID: game.id,
-        stat: stat,
-        value: newStatValue,
-      } as StatsAction);
+        value:newStatValue
+      });
     };
 
     return (
@@ -30,7 +46,10 @@ export default function StatFormTableRow({ stat, disabled, game }) {
             "h-4 w-4 rounded border-grey-300 text-indigo-600 focus:ring-indigo-600 disabled:opacity-30"
           )}
           checked={stat.value === column}
-          disabled={(stat.value !== column && stat.value !== 0) || (disabled[column] && stat.value !== column)}
+          disabled={
+            (stat.value !== column && stat.value !== 0) ||
+            (disabled[column as 1 | 2 | 3] && stat.value !== column)
+          }
           onChange={(e) => updateStat(e, column)}
         />
       </td>

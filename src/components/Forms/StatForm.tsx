@@ -1,18 +1,22 @@
 import { XCircleIcon } from "@heroicons/react/20/solid";
 import * as React from "react";
 import StatFormTableRow from "./StatFormTableRow";
+import { Game } from "../../Classes/Game";
 
-export default function StatForm({ game }) {
+interface StatFormProps {
+  game: Game;
+}
+
+export default function StatForm({ game }: StatFormProps) {
   const disabledColumns = () => {
     return {
-      1: game.stats.filter((stat) => stat.value === 1).length >= 2,
-      2: game.stats.filter((stat) => stat.value === 2).length >= 2,
-      3: game.stats.filter((stat) => stat.value === 3).length >= 1,
+      1: game.getNumberOfStatsWithValue(1) >= 2,
+      2: game.getNumberOfStatsWithValue(2) >= 2,
+      3: game.getNumberOfStatsWithValue(3) >= 1,
     };
   };
 
-  const statsNeedingValues = () =>
-    game.stats.filter((stat) => stat.value === 0).length;
+  const statsNeedingValues = () => game.getNumberOfStatsWithValue(0);
 
   const statAlertPane = () => {
     return (
@@ -26,12 +30,14 @@ export default function StatForm({ game }) {
           </div>
           <div className="ml-3">
             <h3 className="text-sm font-semibold text-indigo-800">
-              {statsNeedingValues()} { statsNeedingValues() > 1 ? "stats need values":"stat needs a value"}
+              {statsNeedingValues()}{" "}
+              {statsNeedingValues() > 1
+                ? "stats need values"
+                : "stat needs a value"}
             </h3>
             <div className="mt-2 text-sm text-indigo-700">
               <ul role="list" className="list-disc space-y-1 pl-5">
-                {game.stats
-                  .filter((stat) => stat.value === 0)
+                {game.getZeroValueStats()
                   .map((stat) => stat.name)
                   .map((stat) => {
                     return <li key={stat}>{stat}</li>;
@@ -102,8 +108,12 @@ export default function StatForm({ game }) {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {game.stats.map((stat) => (
-                <StatFormTableRow key={stat.initials} stat={stat} disabled={disabledColumns()} game={ game} />
+              {game.getStatsArray().map((stat) => (
+                <StatFormTableRow
+                  key={stat.initials}
+                  stat={stat}
+                  disabled={disabledColumns()}
+                />
               ))}
             </tbody>
           </table>

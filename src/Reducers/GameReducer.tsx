@@ -43,7 +43,7 @@ export default function gameReducer(
         return games;
       }
 
-      const updatedCharacter = characterReducer(character, action);
+      const updatedCharacter = characterReducer(character, action );
      
       return new GameEngine({
         gamesMap: games.gamesMap.set(action.gameID, updatedCharacter),

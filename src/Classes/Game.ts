@@ -126,4 +126,23 @@ export class Game {
   getRituals(): Ritual[] {
     return Array.from(this.rituals.values());
   }
+
+  getNumberOfStatsWithValue(value:number):number {
+    let count = 0;
+    this.stats.forEach((stat) => {
+      if (stat.value === value) {
+        count++;
+      }
+    });
+    return count;
+  }
+
+  getZeroValueStats(): Stat[] {
+    const stats = Array.from(this.stats.values());
+    return stats.filter((stat) => stat.value === 0);
+  }
+
+  getStatsArray(): Stat[] {
+    return Array.from(this.stats.values());
+  }
 }

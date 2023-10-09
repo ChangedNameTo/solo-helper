@@ -1,7 +1,6 @@
-import { CharactersAction } from "./CharacterTypes";
+import { GamesAction } from "./GameTypes";
 
-export interface StatsAction extends CharactersAction {
-  stat: Stat;
+export interface StatsAction extends GamesAction {
   value: number;
 }
 

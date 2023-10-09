@@ -1,26 +1,16 @@
-import { Stat, StatsAction } from "../Types/StatTypes"
+import { Game } from "../Classes/Game";
+import { Stat, StatsAction } from "../Types/StatTypes";
 
-export default function statsReducer(stats:Array<Stat>, action: StatsAction) {
+export default function statsReducer(
+  stats: Game["stats"],
+  action: StatsAction
+): Game["stats"] {
   switch (action.type) {
     case "updated_stat": {
-      // Type cast and extract values
-      const { stat, value } = action as StatsAction
-
-      // Look for our stat
-      const foundStatIndex = stats.findIndex((arrStats) => arrStats.initials === stat.initials)
-      const foundStat = stats[foundStatIndex]
-
-      // Update the object
-      const newStat = {
-        ...foundStat,
-        value:value
-      }
-
-      // Update the state
-      return stats.with(foundStatIndex, newStat)
+      return stats.set(action.payload.name, {...action.payload, value: action.value});
     }
     default: {
-      return stats
-      }
+      return stats;
+    }
   }
 }

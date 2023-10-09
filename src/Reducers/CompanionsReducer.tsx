@@ -5,7 +5,7 @@ export default function companionsReducer(
   companions: IronswornCharacter["companions"],
   action: CompanionsAction
 ):IronswornCharacter["companions"] {
-  const payload = action.payload as Companion;
+  const payload = action.payload;
 
   switch (action.type) {
     case "added_companion":
