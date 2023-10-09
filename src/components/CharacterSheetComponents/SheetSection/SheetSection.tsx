@@ -20,7 +20,8 @@ function SheetExpandedSectionFactory(section: SheetSectionLabels) {
     case "bonds":
       return (section: SheetSectionLabels) => SheetSectionExpanded(section);
     case "conditions":
-      return (section: SheetSectionLabels, iterable:SheetSectionIterable) => ToggleListItem(section, iterable);
+      return (section: SheetSectionLabels, iterable: SheetSectionIterable) =>
+        ToggleListItem(section, iterable);
     case "companions":
       return (section: SheetSectionLabels) => SheetAssetList(section);
     default:
@@ -53,7 +54,9 @@ export default function SheetSection({
   character,
 }: SheetSectionProps) {
   const [open, setOpen] = React.useState(false);
-  const iterableArray = Array.from(character[section.key].values()) as SheetSectionIterableArr;
+  const iterableArray = Array.from(
+    character[section.key].values()
+  ) as SheetSectionIterableArr;
   const ExpandedListItem = SheetExpandedSectionFactory(section);
   const RetractedListItem = SheetRetractedSectionFactory(section);
 
@@ -78,7 +81,11 @@ export default function SheetSection({
         <ul role="list" className="flex flex-col divide-y">
           {/* Expanded Container */}
           {iterableArray.map((iterable) => (
-            <ExpandedListItem section={section} iterable={iterable} />
+            <ExpandedListItem
+              section={section}
+              iterable={iterable}
+              key={iterable.name}
+            />
           ))}
         </ul>
       ) : (
@@ -86,7 +93,11 @@ export default function SheetSection({
           {/* Collapsed Container */}
           <span className="flex flex-row rounded-md shadow-sm">
             {iterableArray.map((iterable) => (
-              <RetractedListItem section={section} iterable={iterable} />
+              <RetractedListItem
+                section={section}
+                iterable={iterable}
+                key={iterable.name}
+              />
             ))}
           </span>
         </div>

@@ -6,12 +6,8 @@ export interface GamesAction {
   payload: any;
 }
 
-export interface Games {
-  gamesMap: Map<string, IronswornCharacter>;
-  selectedGame: string;
-}
-
 export interface Game {
   gameID: string;
+  system: string;
   name: string;
 }

@@ -32,7 +32,7 @@ function SheetAssetFactory(asset: Asset) {
 }
 
 export default function SheetAsset({ passedAsset }: { passedAsset: Asset }) {
-  const asset = SheetAssetFactory(passedAsset) as RenderedAsset;
+  const asset = SheetAssetFactory(passedAsset);
 
   const gamesContext = React.useContext(GamesContext);
   const gameDispatchContext = React.useContext(GamesDispatchContext);
@@ -41,21 +41,21 @@ export default function SheetAsset({ passedAsset }: { passedAsset: Asset }) {
     gameDispatchContext({
       ...asset.handleAddAssetPayload(),
       gameID: gamesContext.selectedGame,
-    } as AssetsAction);
+    });
   };
 
   const handleRemoveAsset = () => {
     gameDispatchContext({
       ...asset.handleRemoveAssetPayload(),
       gameID: gamesContext.selectedGame,
-    } as AssetsAction);
+    });
   };
 
   const handleUpdateAsset = (abilityDescription: Ability["description"]) => {
     gameDispatchContext({
       ...asset.handleUpdateAssetPayload(abilityDescription),
       gameID: gamesContext.selectedGame,
-    } as AssetsAction);
+    });
   };
 
   const actionButton = () => {
@@ -105,6 +105,7 @@ export default function SheetAsset({ passedAsset }: { passedAsset: Asset }) {
           {asset.abilities.map((ability) => (
             <ToggleListItem
               iterable={ability}
+              key={ability.name}
               handleUpdateAsset={handleUpdateAsset}
             />
           ))}

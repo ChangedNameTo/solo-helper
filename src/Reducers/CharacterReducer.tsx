@@ -1,6 +1,4 @@
-import { CompanionsAction, PathsAction, RitualsAction, TalentsAction } from "../Types/AssetTypes";
-import { BondsAction } from "../Types/BondTypes";
-import { IronswornCharacter } from "../Types/CharacterTypes";
+import { Game } from "../Classes/Game";
 import { GamesAction } from "../Types/GameTypes";
 import { StatsAction } from "../Types/StatTypes";
 import { VowsAction } from "../Types/VowTypes";
@@ -12,61 +10,85 @@ import statsReducer from "./StatsReducer";
 import talentsReducer from "./TalentsReducer";
 import vowsReducer from "./VowsReducer";
 
-export default function characterReducer(character:IronswornCharacter, action: GamesAction) {
+export default function characterReducer(
+  character: Game,
+  action: GamesAction
+): Game {
   switch (action.type) {
     case "updated_character": {
       const { payload } = action;
 
-      return {
+      return new Game({
         ...character,
         name: payload.name,
         worldName: payload.worldName,
         description: payload.description,
-      };
+      });
     }
-      
+
     case "added_companion":
     case "updated_companion":
     case "deleted_companion": {
-      return {...character, companions:companionsReducer(character.companions, action as CompanionsAction)}
+      return new Game({
+        ...character,
+        companions: companionsReducer(character.companions, action),
+      });
     }
-     
+
     case "added_path":
     case "updated_path":
     case "deleted_path": {
-      return {...character, paths:pathsReducer(character.paths, action as PathsAction)}
+      return new Game({
+        ...character,
+        paths: pathsReducer(character.paths, action),
+      });
     }
-    
+
     case "added_talent":
     case "updated_talent":
     case "deleted_talent": {
-      return {...character, talents:talentsReducer(character.talents, action as TalentsAction)}
+      return new Game({
+        ...character,
+        talents: talentsReducer(character.talents, action),
+      });
     }
-    
+
     case "added_ritual":
     case "updated_ritual":
     case "deleted_ritual": {
-      return {...character, rituals:ritualsReducer(character.rituals, action as RitualsAction)}
+      return new Game({
+        ...character,
+        rituals: ritualsReducer(character.rituals, action),
+      });
     }
-      
+
     case "added_bond":
     case "updated_bond":
     case "deleted_bond": {
-      return {...character, bonds:bondsReducer(character.bonds, action as BondsAction)}
+      return new Game({
+        ...character,
+        bonds: bondsReducer(character.bonds, action),
+      });
     }
 
     case "updated_stat": {
-      return { ...character, stats: statsReducer(character.stats, action as StatsAction) };
+      return new Game({
+        ...character,
+        stats: statsReducer(character.stats, action),
+      });
     }
 
     case "updated_vow":
     case "added_vow":
     case "deleted_vow": {
-      return { ...character, vows: vowsReducer(character.vows, action as VowsAction) };
+      return new Game({
+        ...character,
+        vows: vowsReducer(character.vows, action as VowsAction),
+      });
     }
 
     default: {
-      console.warn(`Unknown action: ${action.type}`)
+      console.warn(`Unknown action: ${action.type}`);
       return character;
     }
   }

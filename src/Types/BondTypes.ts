@@ -1,7 +1,6 @@
 import { GamesAction } from "./GameTypes";
 
 export interface BondsAction extends GamesAction {
-  bondID: string;
   payload:Partial<Bond>
 }
 

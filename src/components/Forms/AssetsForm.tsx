@@ -8,6 +8,8 @@ import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import SheetAsset from "../CharacterSheetComponents/SheetAssets/SheetAsset";
 import SheetAssetList from "../CharacterSheetComponents/SheetAssets/SheetAssetList";
 import { Companion, Path, Ritual, Talent } from "../../Types/AssetTypes";
+import { Game } from "../../Classes/Game";
+import { GameEngine } from "../../Classes/GameEngine";
 
 interface AssetFormProps {
   id: string;
@@ -18,32 +20,32 @@ export default function AssetsForm(props: AssetFormProps) {
   const formsContext = React.useContext(FormsContext);
   const gamesContext = React.useContext(GamesContext);
 
-  const game = gamesContext.gamesMap.get(gamesContext.selectedGame);
+  const game = gamesContext.getGame();
 
   if (!game) {
     formsContext.closeModal("ASSETS");
     return;
   }
 
-  let currentCompanions = Array.from(game.companions.values())
-  let currentPaths = Array.from(game.paths.values())
-  let currentTalents = Array.from(game.talents.values())
-  let currentRituals = Array.from(game.rituals.values())
+  let currentCompanions = game.getCompanions();
+  let currentPaths = game.getPaths();
+  let currentTalents = game.getTalents();
+  let currentRituals = game.getRituals();
 
   React.useEffect(() => {
-    currentCompanions = Array.from(game.companions.values())
+    currentCompanions = Array.from(game.companions.values());
   }, [game.companions]);
 
   React.useEffect(() => {
-    currentPaths = Array.from(game.paths.values())
+    currentPaths = Array.from(game.paths.values());
   }, [game.paths]);
 
   React.useEffect(() => {
-    currentTalents = Array.from(game.talents.values())
+    currentTalents = Array.from(game.talents.values());
   }, [game.talents]);
 
   React.useEffect(() => {
-    currentRituals = Array.from(game.rituals.values())
+    currentRituals = Array.from(game.rituals.values());
   }, [game.rituals]);
 
   const companions = _.filter(assetJSON, (asset) => {
@@ -54,7 +56,7 @@ export default function AssetsForm(props: AssetFormProps) {
         name: asset["Name"],
         type: asset["Name"],
         class: asset["Asset Type"],
-        level:1,
+        level: 1,
         description: asset["Description"],
         active: false,
         abilities: asset["Abilities"].map((ability) => {
@@ -93,7 +95,7 @@ export default function AssetsForm(props: AssetFormProps) {
             starting: ability["Enabled"] || false,
           };
         }),
-        level:1
+        level: 1,
       };
     })
     .filter((asset) => currentPaths.indexOf(asset.type) < 0);
@@ -116,7 +118,7 @@ export default function AssetsForm(props: AssetFormProps) {
             starting: ability["Enabled"] || false,
           };
         }),
-        level:1
+        level: 1,
       };
     })
     .filter((asset) => currentCompanions.indexOf(asset.type) < 0);
@@ -138,10 +140,12 @@ export default function AssetsForm(props: AssetFormProps) {
             starting: ability["Enabled"] || false,
           };
         }),
-        level:1
+        level: 1,
       };
     })
-    .filter((asset) => currentCompanions.indexOf(asset.type) < 0) as Array<Ritual>;
+    .filter(
+      (asset) => currentCompanions.indexOf(asset.type) < 0
+    ) as Array<Ritual>;
 
   return (
     <>
@@ -193,18 +197,20 @@ export default function AssetsForm(props: AssetFormProps) {
                 >
                   <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
                     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                      {paths.reduce((acc:Array<any>, path) => {
-                        if (currentPaths.map((path) => path.type).indexOf(path.type) < 0) {
-                          return (
-                            [...acc, <SheetAsset
-                              key={path.type}
-                              passedAsset={path}
-                            />]
-                          )
+                      {paths.reduce((acc: Array<any>, path) => {
+                        if (
+                          currentPaths
+                            .map((path) => path.type)
+                            .indexOf(path.type) < 0
+                        ) {
+                          return [
+                            ...acc,
+                            <SheetAsset key={path.type} passedAsset={path} />,
+                          ];
                         } else {
-                          return acc
+                          return acc;
                         }
-                       },[])}
+                      }, [])}
                     </ul>
                   </Disclosure.Panel>
                 </Transition>
@@ -242,18 +248,23 @@ export default function AssetsForm(props: AssetFormProps) {
                 >
                   <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
                     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                      {companions.reduce((acc:Array<any>, companion) => {
-                        if (currentCompanions.map((companion) => companion.type).indexOf(companion.type) < 0) {
-                          return (
-                            [...acc, <SheetAsset
+                      {companions.reduce((acc: Array<any>, companion) => {
+                        if (
+                          currentCompanions
+                            .map((companion) => companion.type)
+                            .indexOf(companion.type) < 0
+                        ) {
+                          return [
+                            ...acc,
+                            <SheetAsset
                               key={companion.type}
                               passedAsset={companion}
-                            />]
-                          )
+                            />,
+                          ];
                         } else {
-                          return acc
+                          return acc;
                         }
-                       },[])}
+                      }, [])}
                     </ul>
                   </Disclosure.Panel>
                 </Transition>
@@ -290,18 +301,23 @@ export default function AssetsForm(props: AssetFormProps) {
                 >
                   <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
                     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                      {talents.reduce((acc:Array<any>, talent) => {
-                        if (currentTalents.map((talent) => talent.type).indexOf(talent.type) < 0) {
-                          return (
-                            [...acc, <SheetAsset
+                      {talents.reduce((acc: Array<any>, talent) => {
+                        if (
+                          currentTalents
+                            .map((talent) => talent.type)
+                            .indexOf(talent.type) < 0
+                        ) {
+                          return [
+                            ...acc,
+                            <SheetAsset
                               key={talent.type}
                               passedAsset={talent}
-                            />]
-                          )
+                            />,
+                          ];
                         } else {
-                          return acc
+                          return acc;
                         }
-                       },[])}
+                      }, [])}
                     </ul>
                   </Disclosure.Panel>
                 </Transition>
@@ -342,9 +358,12 @@ export default function AssetsForm(props: AssetFormProps) {
                         .filter(
                           (ritual) => currentRituals.indexOf(ritual.type) !== 0
                         )
-                        .map((ritual:Ritual) => {
+                        .map((ritual: Ritual) => {
                           return (
-                            <SheetAsset key={ritual.type} passedAsset={ritual} />
+                            <SheetAsset
+                              key={ritual.type}
+                              passedAsset={ritual}
+                            />
                           );
                         })}
                     </ul>

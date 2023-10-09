@@ -2,59 +2,19 @@ import * as React from "react";
 import "./App.css";
 
 import Dashboard from "./components/Dashboard";
-
-import gameReducer from "./Reducers/GameReducer";
-
-import { testCharacter } from "./Characters/IronswornCharacter";
 import GamesList from "./components/GameList/GamesList";
 import { GamesContext, GamesDispatchContext } from "./Contexts/GamesContext";
 import { FormsContext } from "./Contexts/FormContexts";
-import { Games } from "./Types/GameTypes";
+import { GameEngine } from "./Classes/GameEngine";
 
 function App() {
-  const replacer = (key, value) => {
-      if(value instanceof Map) {
-    return {
-      dataType: 'Map',
-      value: Array.from(value.entries()), // or with spread: value: [...value]
-    };
-  } else {
-    return value;
-  }
-  }
+  const gameEngine = new GameEngine()
 
-  const reviver = (key, value) => {
-  if(typeof value === 'object' && value !== null) {
-    if (value.dataType === 'Map') {
-      return new Map(value.value);
-    }
-  }
-  return value;
-}
-
-  const seedGames = () => {
-    const savedGames = window.localStorage.getItem('games')
-    // Is this the first load? If so, seed the map. If not, load.
-    if (savedGames) {
-      const games = JSON.parse(savedGames, reviver)
-
-      return {
-        selectedGame: "",
-        gamesMap: games["gamesMap"]
-      };
-    } else {
-      return {
-        selectedGame: "",
-        gamesMap: new Map([[testCharacter.id, testCharacter]]),
-      };
-    }
-  };
-
-  const [games, gamesDispatch] = React.useReducer(gameReducer, seedGames());
+  const [games, gamesDispatch] = gameEngine.getAppValues()
 
   React.useEffect(() => {
-    window.localStorage.setItem('games', JSON.stringify(games, replacer))
-  },[games])
+    gameEngine.saveGame(games)
+  }, [games]);
 
   const display = () => {
     if (games.selectedGame) {
@@ -97,7 +57,7 @@ function App() {
   // TODO: Migrate this into the FormContext folder
 
   return (
-    <GamesContext.Provider value={games as Games}>
+    <GamesContext.Provider value={games}>
       <GamesDispatchContext.Provider value={gamesDispatch}>
         <FormsContext.Provider value={generateFormContext()}>
           {display()}

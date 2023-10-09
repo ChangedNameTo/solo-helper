@@ -4,7 +4,7 @@ import { IronswornCharacter } from "../Types/CharacterTypes";
 export default function companionsReducer(
   companions: IronswornCharacter["companions"],
   action: CompanionsAction
-) {
+):IronswornCharacter["companions"] {
   const payload = action.payload as Companion;
 
   switch (action.type) {

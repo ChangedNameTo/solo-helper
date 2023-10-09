@@ -66,7 +66,7 @@ export default function Dashboard() {
         max: 40,
         current: 0,
       },
-    } as VowsAction);
+    });
 
     formsContext.openModal(newID);
   };
@@ -84,7 +84,7 @@ export default function Dashboard() {
         description:
           "What places do you return to? When your journey is too much to bear, to whom do you turn?",
       },
-    } as BondsAction);
+    });
 
     formsContext.openModal(newID);
   };
