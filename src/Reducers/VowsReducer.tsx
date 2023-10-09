@@ -1,7 +1,8 @@
+import { IronswornCharacter } from "../Types/CharacterTypes";
 import { Vow, VowsAction } from "../Types/VowTypes";
 
 export default function vowsReducer(
-  vows: Map<string, Vow>,
+  vows: IronswornCharacter["vows"],
   action: VowsAction
 ) {
   const { vowID, payload } = action as VowsAction;

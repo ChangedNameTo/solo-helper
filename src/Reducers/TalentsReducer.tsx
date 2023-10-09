@@ -1,24 +1,21 @@
 import { Talent, TalentsAction } from "../Types/AssetTypes";
+import { IronswornCharacter } from "../Types/CharacterTypes";
 
-export default function talentsReducer(talents: Array<Talent>, action: TalentsAction) {
+export default function talentsReducer(
+  talents: IronswornCharacter["talents"],
+  action: TalentsAction
+) {
   switch (action.type) {
-    case "added_talent": {
-      return [...talents, action.payload]
+    case "added_talent": 
+    case "updated_talent": {
+      return talents.set(action.payload.type, action.payload)
     }
     case "deleted_talent": {
-      return talents.filter((talent) => talent.type !== action.payload.type)
-    }
-    case "updated_talent": {
-      const returnVal = talents.map((talent) => {
-        if (talent.type === action.payload.type) {
-          return action.payload
-        }
-        return talent
-      })
-      return returnVal
+      talents.delete(action.payload.type);
+      return talents;
     }
     default: {
-      return talents
+      return talents;
     }
   }
 }

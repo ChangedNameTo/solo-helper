@@ -1,23 +1,21 @@
 import { Path, PathsAction } from "../Types/AssetTypes";
+import { IronswornCharacter } from "../Types/CharacterTypes";
 
-export default function pathsReducer(paths: Array<Path>, action: PathsAction) {
+export default function pathsReducer(
+  paths: IronswornCharacter["paths"],
+  action: PathsAction
+) {
   switch (action.type) {
-    case "added_path": {
-      return [...paths, action.payload]
+    case "added_path":
+    case "updated_path": {
+      return paths.set(action.payload.type, action.payload);
     }
     case "deleted_path": {
-      return paths.filter((path) => path.type !== action.payload.type)
-    }
-    case "updated_path": {
-      return paths.map((path) => {
-        if (path.type === action.payload.type) {
-          return action.payload
-        }
-        return path
-      })
+      paths.delete(action.payload.type);
+      return paths;
     }
     default: {
-      return paths
+      return paths;
     }
   }
 }

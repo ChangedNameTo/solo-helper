@@ -1,6 +1,7 @@
 import { CompanionsAction, PathsAction, RitualsAction, TalentsAction } from "../Types/AssetTypes";
 import { BondsAction } from "../Types/BondTypes";
-import { CharactersAction } from "../Types/CharacterTypes";
+import { IronswornCharacter } from "../Types/CharacterTypes";
+import { GamesAction } from "../Types/GameTypes";
 import { StatsAction } from "../Types/StatTypes";
 import { VowsAction } from "../Types/VowTypes";
 import bondsReducer from "./BondsReducer";
@@ -11,7 +12,7 @@ import statsReducer from "./StatsReducer";
 import talentsReducer from "./TalentsReducer";
 import vowsReducer from "./VowsReducer";
 
-export default function characterReducer(character, action: CharactersAction) {
+export default function characterReducer(character:IronswornCharacter, action: GamesAction) {
   switch (action.type) {
     case "updated_character": {
       const { payload } = action;

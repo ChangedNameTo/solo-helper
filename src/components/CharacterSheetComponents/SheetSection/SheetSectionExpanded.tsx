@@ -9,23 +9,24 @@ import { FormsContext } from "../../../Contexts/FormContexts";
 import FormModal from "../../Forms/FormModal";
 import SheetBond from "../SheetBond";
 import SheetCondition from "../SheetCondition";
+import { SheetSectionIterable, SheetSectionLabels, SheetSectionProps, SheetSubSectionProps } from "../../../Types/SheetSectionTypes";
+import { Vow } from "../../../Types/VowTypes";
+import { Condition, Gauge } from "../../../Types/CharacterTypes";
+import { Stat } from "../../../Types/StatTypes";
 
 function SheetSectionExpandedFactory(
-  section: {
-    name: string;
-    key: string;
-  },
-  iterable: any
+  section:SheetSectionLabels,
+  iterable:SheetSectionIterable
 ) {
   switch (section.key) {
     case "stats": {
-      return SheetStat(iterable);
+      return SheetStat(iterable as Stat);
     }
     case "gauges": {
-      return SheetGauge(iterable);
+      return SheetGauge(iterable as Gauge);
     }
     case "vows": {
-      return SheetVow(iterable);
+      return SheetVow(iterable as Vow);
     }
     case "bonds": {
       return SheetBond(iterable);
@@ -33,7 +34,7 @@ function SheetSectionExpandedFactory(
     case "conditions": 
     case "banes": 
     case "burdens": {
-      return SheetCondition(iterable);
+      return SheetCondition(iterable as Condition);
     }
     case "default": {
       throw new Error("Invalid Section Type");
@@ -41,7 +42,7 @@ function SheetSectionExpandedFactory(
   }
 }
 
-export default function SheetSectionExpanded({ section, iterable }) {
+export default function SheetSectionExpanded({ section, iterable }:SheetSubSectionProps) {
   const dispatch = React.useContext(MessagesDispatchContext);
   const sectionValues = SheetSectionExpandedFactory(section, iterable);
   const formsContext = React.useContext(FormsContext);

@@ -1,17 +1,23 @@
 import { Companion, Path, Ritual, Talent } from "./AssetTypes";
 import { Bond } from "./BondTypes";
-import { IronswornCharacter } from "./CharacterTypes";
+import { Gauge, IronswornCharacter } from "./CharacterTypes";
 import { Stat } from "./StatTypes";
 import { Vow } from "./VowTypes";
 
-type SheetSectionIterable = Vow | Stat | Bond | Companion | Path | Ritual | Talent;
+export type SheetSectionIterable = Vow | Stat | Bond | Companion | Path | Ritual | Talent | Gauge;
+export type SheetSectionIterableArr = Array<SheetSectionIterable>;
 
-interface SheetSectionLabels {
+export interface SheetSectionLabels {
     name: string;
     key: string;
 }
 
-interface SheetSectionProps {
+export interface SheetSectionProps {
   section: SheetSectionLabels
   character: IronswornCharacter;
+}
+
+export interface SheetSubSectionProps {
+  section: SheetSectionLabels
+  iterable: SheetSectionIterable;
 }

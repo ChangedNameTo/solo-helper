@@ -9,7 +9,11 @@ import SheetAsset from "../CharacterSheetComponents/SheetAssets/SheetAsset";
 import SheetAssetList from "../CharacterSheetComponents/SheetAssets/SheetAssetList";
 import { Companion, Path, Ritual, Talent } from "../../Types/AssetTypes";
 
-export default function AssetsForm(props) {
+interface AssetFormProps {
+  id: string;
+}
+
+export default function AssetsForm(props: AssetFormProps) {
   // Import our contexts
   const formsContext = React.useContext(FormsContext);
   const gamesContext = React.useContext(GamesContext);
@@ -21,25 +25,25 @@ export default function AssetsForm(props) {
     return;
   }
 
-  let currentCompanions = game.companions.map((companion) => companion.type);
-  let currentPaths = game.paths.map((path) => path.type);
-  let currentTalents = game.talents.map((talent) => talent.type);
-  let currentRituals = game.rituals.map((ritual) => ritual.type);
+  let currentCompanions = Array.from(game.companions.values())
+  let currentPaths = Array.from(game.paths.values())
+  let currentTalents = Array.from(game.talents.values())
+  let currentRituals = Array.from(game.rituals.values())
 
   React.useEffect(() => {
-    currentCompanions = game.companions.map((companion) => companion.type);
+    currentCompanions = Array.from(game.companions.values())
   }, [game.companions]);
 
   React.useEffect(() => {
-    currentPaths = game.paths.map((path) => path.type);
+    currentPaths = Array.from(game.paths.values())
   }, [game.paths]);
 
   React.useEffect(() => {
-    currentTalents = game.talents.map((talent) => talent.type);
+    currentTalents = Array.from(game.talents.values())
   }, [game.talents]);
 
   React.useEffect(() => {
-    currentRituals = game.rituals.map((ritual) => ritual.type);
+    currentRituals = Array.from(game.rituals.values())
   }, [game.rituals]);
 
   const companions = _.filter(assetJSON, (asset) => {
@@ -183,9 +187,9 @@ export default function AssetsForm(props) {
                 >
                   <Disclosure.Panel className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
                     <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 col-span-2">
-                      {paths
+                      {Array.from(game.paths.values())
                         .filter(
-                          (path) => currentCompanions.indexOf(path.type) !== 0
+                          (path) => !currentPaths.includes(path)
                         )
                         .map((path:Path) => {
                           return <SheetAsset key={path.type} passedAsset={path} />;

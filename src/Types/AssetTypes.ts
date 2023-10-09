@@ -1,4 +1,4 @@
-import { CharactersAction } from "./CharacterTypes";
+import { GamesAction } from "./GameTypes";
 
 export type AssetActionTypes =
   | AssetsAction
@@ -7,26 +7,24 @@ export type AssetActionTypes =
   | TalentsAction
   | RitualsAction;
 
-export interface AssetsAction extends CharactersAction {
+export interface AssetsAction extends GamesAction {
   gameID: string;
 }
 
-export interface CompanionsAction {
-  type: any;
-  payload: Partial<Companion>;
+export interface CompanionsAction extends AssetsAction {
+  payload: Companion
 }
 
-export interface PathsAction {
-  type: any;
+export interface PathsAction extends AssetsAction{
   payload: Path;
 }
 
-export interface TalentsAction {
-  payload: Partial<Talent>;
+export interface TalentsAction extends AssetsAction{
+  payload: Talent;
 }
 
-export interface RitualsAction {
-  payload: Partial<Ritual>;
+export interface RitualsAction extends AssetsAction{
+  payload: Ritual;
 }
 
 export interface Asset {

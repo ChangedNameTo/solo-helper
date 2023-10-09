@@ -2,7 +2,7 @@ import { GamesAction } from "./GameTypes";
 
 export interface VowsAction extends GamesAction {
   vowID: string;
-  payload: Partial<Vow>;
+  payload: Vow;
 }
 
 export enum VowTier {

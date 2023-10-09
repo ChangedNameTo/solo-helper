@@ -2,52 +2,58 @@ import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import * as React from "react";
 import SheetSectionExpanded from "./SheetSectionExpanded";
 import SheetAssetList from "../SheetAssets/SheetAssetList";
-import { IronswornCharacter } from "../../../Types/CharacterTypes";
 import RetractedButtonSection from "./RetractedButtonSection";
 
-// Create a typescript interface that pulls in the Bond, Asset, Vow, Gauage, and Stat types
-import { Vow } from "../../../Types/VowTypes";
-import { Stat } from "../../../Types/StatTypes";
-import { Bond } from "../../../Types/BondTypes";
-import { Companion, Path, Ritual, Talent } from "../../../Types/AssetTypes";
+import {
+  SheetSectionIterable,
+  SheetSectionIterableArr,
+  SheetSectionLabels,
+  SheetSectionProps,
+} from "../../../Types/SheetSectionTypes";
+import ToggleListItem from "../ToggleListItem";
 
-
-function SheetExpandedSectionFactory(section: { name?: string; key: any; }) {
+function SheetExpandedSectionFactory(section: SheetSectionLabels) {
   switch (section.key) {
     case "stats":
     case "gauges":
     case "vows":
     case "bonds":
+      return (section: SheetSectionLabels) => SheetSectionExpanded(section);
     case "conditions":
-      return (section) => SheetSectionExpanded(section);
+      return (section: SheetSectionLabels, iterable:SheetSectionIterable) => ToggleListItem(section, iterable);
     case "companions":
-      return (section) => SheetAssetList(section);
+      return (section: SheetSectionLabels) => SheetAssetList(section);
     default:
       throw new Error("Invalid Section Type");
   }
 }
 
-function SheetRetractedSectionFactory(section:SheetSectionLabels ) {
+function SheetRetractedSectionFactory(section: SheetSectionLabels) {
   switch (section.key) {
     case "stats":
     case "gauges":
     case "vows":
     case "bonds":
-      return (section:SheetSectionLabels, iterable:SheetSectionIterable) => RetractedButtonSection(section, iterable);
+      return (section: SheetSectionLabels, iterable: SheetSectionIterable) =>
+        RetractedButtonSection(section, iterable);
     case "companions":
-      return (section:SheetSectionLabels, iterable:SheetSectionIterable) => RetractedButtonSection(section, iterable);
+      return (section: SheetSectionLabels, iterable: SheetSectionIterable) =>
+        RetractedButtonSection(section, iterable);
     case "conditions":
-      return (section:SheetSectionLabels, iterable:SheetSectionIterable) => RetractedButtonSection(section, iterable);
+      return (section: SheetSectionLabels, iterable: SheetSectionIterable) =>
+        RetractedButtonSection(section, iterable);
     default:
       throw new Error("Invalid Section Type");
   }
 }
-
 
 // TODO: Add logic to create a plus button
-export default function SheetSection({ section, character }: SheetSectionProps) {
+export default function SheetSection({
+  section,
+  character,
+}: SheetSectionProps) {
   const [open, setOpen] = React.useState(false);
-  const iterableArray = Array.from(character[section.key].values());
+  const iterableArray = Array.from(character[section.key].values()) as SheetSectionIterableArr;
   const ExpandedListItem = SheetExpandedSectionFactory(section);
   const RetractedListItem = SheetRetractedSectionFactory(section);
 
@@ -69,7 +75,7 @@ export default function SheetSection({ section, character }: SheetSectionProps) 
         </div>
       </div>
       {open ? (
-        <ul role="list" className="flex flex-col">
+        <ul role="list" className="flex flex-col divide-y">
           {/* Expanded Container */}
           {iterableArray.map((iterable) => (
             <ExpandedListItem section={section} iterable={iterable} />

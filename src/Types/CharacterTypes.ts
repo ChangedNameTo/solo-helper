@@ -4,11 +4,6 @@ import { Stat } from "./StatTypes";
 import { Bond } from "./BondTypes";
 import { Companion, Path, Ritual, Talent } from "./AssetTypes";
 
-export interface CharactersAction extends GamesAction{
-  type: string;
-  payload: Partial<any>;
-}
-
 export interface Gauge {
   name: string;
   description: string;

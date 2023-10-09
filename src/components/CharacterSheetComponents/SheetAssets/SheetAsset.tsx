@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  Ability,
   Asset,
   AssetsAction,
   RenderedAsset,
@@ -15,8 +16,9 @@ import SheetCompanion from "./SheetCompanion";
 import SheetPath from "./SheetPath";
 import SheetRitual from "./SheetRitual";
 import SheetTalent from "./SheetTalent";
+import ToggleListItem from "../ToggleListItem";
 
-function SheetAssetFactory(asset) {
+function SheetAssetFactory(asset: Asset) {
   switch (asset.class) {
     case "Companion":
       return SheetCompanion({ companion: asset });
@@ -51,7 +53,7 @@ export default function SheetAsset({ passedAsset }: { passedAsset: Asset }) {
     } as AssetsAction);
   };
 
-  const handleUpdateAsset = (abilityDescription) => {
+  const handleUpdateAsset = (abilityDescription: Ability["description"]) => {
     gameDispatchContext({
       ...asset.handleUpdateAssetPayload(abilityDescription),
       gameID: gamesContext.selectedGame,
@@ -103,34 +105,10 @@ export default function SheetAsset({ passedAsset }: { passedAsset: Asset }) {
       {asset?.abilities?.length > 0 && (
         <div className="divide-y">
           {asset.abilities.map((ability) => (
-            <Switch.Group
-              key={ability.name}
-              as="div"
-              className="flex items-center py-2 px-2"
-            >
-              <Switch
-                checked={ability.active}
-                onChange={() => handleUpdateAsset(ability.description)}
-                className={classNames(
-                  ability.active ? "bg-indigo-600" : "bg-gray-200",
-                  "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
-                )}
-              >
-                <span
-                  aria-hidden="true"
-                  className={classNames(
-                    ability.active ? "translate-x-5" : "translate-x-0",
-                    "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                  )}
-                />
-              </Switch>
-              <Switch.Label as="span" className="ml-3 text-sm">
-                <span className="font-semibold text-gray-900">
-                  {ability.name}
-                </span>{" "}
-                <span className="text-gray-500">{ability.description}</span>
-              </Switch.Label>
-            </Switch.Group>
+            <ToggleListItem
+              iterable={ability}
+              handleUpdateAsset={handleUpdateAsset}
+            />
           ))}
         </div>
       )}

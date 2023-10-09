@@ -1,21 +1,15 @@
 import { Ritual, RitualsAction } from "../Types/AssetTypes";
+import { IronswornCharacter } from "../Types/CharacterTypes";
 
-export default function ritualsReducer(rituals: Array<Ritual>, action: RitualsAction) {
+export default function ritualsReducer(rituals: IronswornCharacter["rituals"], action: RitualsAction):IronswornCharacter["rituals"] {
   switch (action.type) {
-    case "added_ritual": {
-      return [...rituals, action.payload]
+    case "added_ritual": 
+    case "updated_ritual": {
+      return rituals.set(action.payload.type, action.payload)
     }
     case "deleted_ritual": {
-      return rituals.filter((ritual) => ritual.type !== action.payload.type)
-    }
-    case "updated_ritual": {
-      const returnVal = rituals.map((ritual) => {
-        if (ritual.type === action.payload.type) {
-          return action.payload
-        }
-        return ritual
-      })
-      return returnVal
+      rituals.delete(action.payload.type)
+      return rituals
     }
     default: {
       return rituals
