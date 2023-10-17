@@ -1,9 +1,11 @@
-import _, { get } from "lodash";
+import _ from "lodash";
 import game_names from "../assets/game_names.json";
+import { GameSystem } from "./GameSystem";
 
 export class Game {
   id: string;
   name: string;
+  system: GameSystem | undefined;
 
   constructor(name: string) {
     this.id = _.uniqueId("game_");
@@ -16,6 +18,10 @@ export class Game {
 
   getName(): string {
     return this.name;
+  }
+
+  getSystemName(): string {
+    return this.system?.getName() || "No system selected";
   }
 
   private getRandomName(): string {

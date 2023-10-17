@@ -16,7 +16,7 @@ describe("Tests GameList functions", () => {
   }
 
   const deleteGame = () => {
-    cy.get("[data-testid=delete-game-button]").click();
+    cy.get("[data-testid=delete-game-button]").eq(0).click();
   }
 
   it("See's no games on initial load", () => {
@@ -43,4 +43,25 @@ describe("Tests GameList functions", () => {
     deleteGame()
     hasRows(0)
   });
+
+  it("Deletes two games", () => {
+    hasNoRows()
+    addGame()
+    addGame()
+    hasRows(2)
+    deleteGame()
+    hasRows(1)
+    deleteGame()
+    hasRows(0)
+  })
+
+  it("Adds a game, deletes it, then adds another", () => {
+    hasNoRows()
+    addGame()
+    hasRows(1)
+    deleteGame()
+    hasRows(0)
+    addGame()
+    hasRows(1)
+  })
 });

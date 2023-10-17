@@ -36,6 +36,7 @@ export default function GameList() {
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Name</th>
+              <th scope="col">System</th>
               <th scope="col">
                 <span>Actions</span>
               </th>

@@ -18,6 +18,7 @@ export default function GameListItem({ game }: { game: Game }) {
     >
       <td>{game.getID()}</td>
       <td>{game.getName()}</td>
+      <td>{game.getSystemName()}</td>
       <td>
         <button
           className="button"
