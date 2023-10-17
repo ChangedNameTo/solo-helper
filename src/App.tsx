@@ -15,19 +15,33 @@ function App() {
   );
 
   React.useEffect(() => {
+    console.log(gameEngine)
     // gameEngine.saveGame(gameEngine);
   }, [gameEngine]);
+
+  const content = () => {
+    if (gameEngine.isGameSelected()) {
+      return (
+        <div>
+          <h1>Game Selected</h1>
+        </div>
+      );
+    } else {
+      return (
+        <>
+          <GameList />
+          <AddGames />
+        </>
+      );
+    }
+  };
 
   const render = () => {
     return (
       <GameEngineContext.Provider value={[gameEngine, gamesDispatch]}>
         <div className="App">
           <Header />
-          <div
-          className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <GameList />
-            <AddGames />
-          </div>
+          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">{content()}</div>
         </div>
       </GameEngineContext.Provider>
     );

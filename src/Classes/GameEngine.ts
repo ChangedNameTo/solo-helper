@@ -4,8 +4,12 @@ export class GameEngine {
   gamesMap: Map<string, Game>;
   selectedGame: string | undefined;
 
-  constructor({ gamesMap = new Map() }: Partial<GameEngine> = {}) {
+  constructor({
+    gamesMap = new Map(),
+    selectedGame = undefined,
+  }: Partial<GameEngine> = {}) {
     this.gamesMap = gamesMap;
+    this.selectedGame = selectedGame;
   }
 
   saveGame(games: GameEngine): any {
@@ -62,5 +66,9 @@ export class GameEngine {
 
   getGamesArray() {
     return Array.from(this.gamesMap.values());
+  }
+
+  isGameSelected(): boolean {
+    return this.selectedGame !== undefined;
   }
 }
