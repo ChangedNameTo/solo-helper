@@ -29,6 +29,13 @@ describe("Tests GameList functions", () => {
     hasRows(1)
   });
   
+  it("Adds a game, then verifies that there's a deletion button", () => {
+    hasNoRows()
+    addGame()
+    hasRows(1)
+    cy.get("[data-testid=delete-game-button]").should("exist")
+  })
+  
   it("Adds two games", () => {
     hasNoRows()
     addGame()
@@ -63,5 +70,14 @@ describe("Tests GameList functions", () => {
     hasRows(0)
     addGame()
     hasRows(1)
+  })
+
+  it("Adds a game, deletes it, then verifies that there's no deletion button", () => {
+    hasNoRows()
+    addGame()
+    hasRows(1)
+    deleteGame()
+    hasRows(0)
+    cy.get("[data-testid=delete-game-button]").should("not.exist")
   })
 });
