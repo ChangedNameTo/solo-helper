@@ -15,7 +15,10 @@ function App() {
   );
 
   React.useEffect(() => {
-    console.log(gameEngine)
+    if (process.env.NODE_ENV === "development") {
+      console.log(gameEngine);
+    }
+
     // gameEngine.saveGame(gameEngine);
   }, [gameEngine]);
 
