@@ -11,8 +11,9 @@ export default function AddGames() {
   }
 
   return (
-    <button className="bg-gray-500" data-testid="add-game-button"
-    onClick={() => addNewGame()}>
+    <button className="button" data-testid="add-game-button"
+      onClick={() => addNewGame()}
+    >
       Add Game
     </button>
   );

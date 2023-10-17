@@ -10,22 +10,40 @@ export default function GameList() {
 
   const renderGameList = () => {
     if (gameEngine.getGamesArray().length === 0) {
-      return <li data-testid={testid}>No games added yet</li>;
-    } else {
       return (
-        <li data-testid={testid}>
-          {gameEngine.getGamesArray().map((game: Game) => {
-            return <GameListItem game={game} />;
-          })}
-        </li>
+        <tr data-testid="no-games-list-item">
+          <td colSpan={3}>No games added yet</td>
+        </tr>
       );
+    } else {
+      return gameEngine.getGamesArray().map((game: Game) => {
+        return <GameListItem game={game} key={game.getID()} />;
+      });
     }
   };
 
   return (
     <div>
-      <h1>Game List</h1>
-      {renderGameList()}
+      <div>
+        <div>
+          <h1>Games</h1>
+          <p>A list of all of the games on your current engine.</p>
+        </div>
+      </div>
+      <div>
+        <table className="table-auto">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">
+                <span>Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-testid={testid}>{renderGameList()}</tbody>
+        </table>
+      </div>
     </div>
   );
 }

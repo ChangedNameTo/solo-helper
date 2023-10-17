@@ -3,33 +3,44 @@ describe("Tests GameList functions", () => {
     cy.visit("/");
   });
 
+  const addGame = () => {
+    cy.get("[data-testid=add-game-button]").click();
+  }
+
+  const hasNoRows = () => {
+    cy.get("[data-testid=no-games-list-item]").should("exist")
+  }
+
+  const hasRows = (numberRows: number) => {
+    cy.get("[data-testid=games-list-item]").should("have.length", numberRows);
+  }
+
+  const deleteGame = () => {
+    cy.get("[data-testid=delete-game-button]").click();
+  }
+
   it("See's no games on initial load", () => {
-    cy.get("[data-testid=game-list]").children().should("have.length", 0);
+    hasNoRows()
   });
 
   it("Adds a game", () => {
-    cy.get("[data-testid=game-list]").children().should("have.length", 0);
-
-    cy.get("[data-testid=add-game-button]").click();
-
-    cy.get("[data-testid=game-list]").children().should("have.length", 1);
+    hasNoRows()
+    addGame()
+    hasRows(1)
   });
   
   it("Adds two games", () => {
-    cy.get("[data-testid=game-list]").children().should("have.length", 0);
-
-    cy.get("[data-testid=add-game-button]").click();
-    cy.get("[data-testid=add-game-button]").click();
-
-    cy.get("[data-testid=game-list]").children().should("have.length", 2);
+    hasNoRows()
+    addGame()
+    addGame()
+    hasRows(2)
   });
 
   it("Deletes a game", () => {
-    cy.get("[data-testid=game-list]").children().should("have.length", 0);
-    cy.get("[data-testid=add-game-button]").click();
-    cy.get("[data-testid=game-list]").children().should("have.length", 1);
-
-    cy.get("[data-testid=delete-game-button]").click();
-    cy.get("[data-testid=game-list]").children().should("have.length", 0);
+    hasNoRows()
+    addGame()
+    hasRows(1)
+    deleteGame()
+    hasRows(0)
   });
 });

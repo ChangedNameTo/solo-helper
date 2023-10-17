@@ -23,8 +23,11 @@ function App() {
       <GameEngineContext.Provider value={[gameEngine, gamesDispatch]}>
         <div className="App">
           <Header />
-          <GameList />
-          <AddGames />
+          <div
+          className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <GameList />
+            <AddGames />
+          </div>
         </div>
       </GameEngineContext.Provider>
     );

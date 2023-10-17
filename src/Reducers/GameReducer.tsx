@@ -3,6 +3,7 @@ import { GameEngine } from "../Classes/GameEngine";
 
 export interface GameAction {
   type: string;
+  payload?: any;
 }
 
 export default function gameReducer(
@@ -15,6 +16,12 @@ export default function gameReducer(
 
       const newMap = new Map(games.gamesMap);
       newMap.set(newGame.getID(), newGame);
+
+      return new GameEngine({ gamesMap: newMap});
+    }
+    case "delete_game": {
+      const newMap = new Map(games.gamesMap);
+      newMap.delete(action.payload);
 
       return new GameEngine({ gamesMap: newMap});
     }
