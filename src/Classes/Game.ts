@@ -1,18 +1,18 @@
 import _ from "lodash";
-export interface GamesAction {
-  type: string;
-  gameID: string;
-  payload: any;
-}
-
 export class Game {
   id: string;
+  name: string;
 
-  constructor() {
+  constructor(name: string) {
     this.id = _.uniqueId("game_");
+    this.name = name;
   }
 
   getID(): string {
     return this.id;
+  }
+
+  getName(): string {
+    return this.name;
   }
 }

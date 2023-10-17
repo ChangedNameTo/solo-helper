@@ -1,30 +1,21 @@
-import * as React from "react";
-import { Game, GamesAction } from "./Game";
-import gameReducer from "../Reducers/GameReducer";
+import { Game } from "./Game";
 
 export class GameEngine {
   gamesMap: Map<string, Game>;
-  selectedGame: string;
+  selectedGame: string | undefined;
 
   constructor({
     gamesMap = new Map(),
-    selectedGame = "",
   }: Partial<GameEngine> = {}) {
+    console.log(gamesMap)
     this.gamesMap = gamesMap;
-    this.selectedGame = selectedGame;
   }
-
-  getAppValues(): [GameEngine, React.Dispatch<GamesAction>] {
-    return React.useReducer(gameReducer, this.seedGames());
-  }
-
-  loadSaveGames(): any {}
 
   saveGame(games: GameEngine): any {
     window.localStorage.setItem("games", JSON.stringify(games, this.replacer));
   }
 
-  replacer(key, value): any {
+  replacer(key:any, value:any): any {
     if (value instanceof Map) {
       return {
         dataType: "Map",
@@ -35,7 +26,7 @@ export class GameEngine {
     }
   }
 
-  reviver(key, value): any {
+  reviver(key:string, value:any): any {
     if (typeof value === "object" && value !== null) {
       if (value.dataType === "Map") {
         return new Map(value.value);
@@ -45,19 +36,19 @@ export class GameEngine {
   }
 
   seedGames(): GameEngine {
-    const savedGames = window.localStorage.getItem("games");
-    // const savedGames = false;
+    // const savedGames = window.localStorage.getItem("games");
+    const savedGames = false;
 
     // Is this the first load? If so, seed the map. If not, load.
     if (savedGames) {
       const games = JSON.parse(savedGames, this.reviver);
-      this.selectedGame = games.selectedGame
+      this.selectedGame = games.selectedGame;
 
-      Array.from(games["gamesMap"].values()).forEach((game) => { 
-        const newGame = new Game(game);
+      Array.from(games["gamesMap"].values()).forEach((game) => {
+        const newGame = new Game(game.name);
         this.gamesMap = this.gamesMap.set(newGame.id, newGame);
       });
-    } 
+    }
 
     return this;
   }
@@ -67,7 +58,11 @@ export class GameEngine {
     return game;
   }
 
-  getGamesMap():Map<string, Game> {
+  getGamesMap(): Map<string, Game> {
     return this.gamesMap;
+  }
+
+  getGamesArray() {
+    return Array.from(this.gamesMap.values());
   }
 }

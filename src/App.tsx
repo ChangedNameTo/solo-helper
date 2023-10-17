@@ -1,28 +1,30 @@
 import * as React from "react";
 import "./App.css";
 
-import { GameEngine } from "./Classes/GameEngine";
 import Header from "./Views/Header";
 import GameList from "./Views/GameList";
 import { GameEngineContext } from "./Contexts/GameEngineContext";
 import AddGames from "./Views/AddGames";
+import gameReducer from "./Reducers/GameReducer";
+import { GameEngine } from "./Classes/GameEngine";
 
 function App() {
-  const gameEngine = new GameEngine();
-
-  const [games, gamesDispatch] = gameEngine.getAppValues();
+  const [gameEngine, gamesDispatch] = React.useReducer(
+    gameReducer,
+    new GameEngine()
+  );
 
   React.useEffect(() => {
-    gameEngine.saveGame(games);
-  }, [games]);
+    // gameEngine.saveGame(gameEngine);
+  }, [gameEngine]);
 
   const render = () => {
     return (
-      <GameEngineContext.Provider value={{ games, gamesDispatch }}>
+      <GameEngineContext.Provider value={[gameEngine, gamesDispatch]}>
         <div className="App">
           <Header />
           <GameList />
-          <AddGames/>
+          <AddGames />
         </div>
       </GameEngineContext.Provider>
     );
