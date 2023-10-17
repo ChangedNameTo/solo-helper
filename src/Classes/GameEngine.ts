@@ -4,10 +4,7 @@ export class GameEngine {
   gamesMap: Map<string, Game>;
   selectedGame: string | undefined;
 
-  constructor({
-    gamesMap = new Map(),
-  }: Partial<GameEngine> = {}) {
-    console.log(gamesMap)
+  constructor({ gamesMap = new Map() }: Partial<GameEngine> = {}) {
     this.gamesMap = gamesMap;
   }
 
@@ -15,7 +12,7 @@ export class GameEngine {
     window.localStorage.setItem("games", JSON.stringify(games, this.replacer));
   }
 
-  replacer(key:any, value:any): any {
+  replacer(key: any, value: any): any {
     if (value instanceof Map) {
       return {
         dataType: "Map",
@@ -26,7 +23,7 @@ export class GameEngine {
     }
   }
 
-  reviver(key:string, value:any): any {
+  reviver(key: string, value: any): any {
     if (typeof value === "object" && value !== null) {
       if (value.dataType === "Map") {
         return new Map(value.value);
@@ -54,8 +51,9 @@ export class GameEngine {
   }
 
   getGame(): Game | undefined {
-    const game = this.gamesMap.get(this.selectedGame);
-    return game;
+    if (!this.selectedGame) return undefined;
+
+    return this.gamesMap.get(this.selectedGame);
   }
 
   getGamesMap(): Map<string, Game> {

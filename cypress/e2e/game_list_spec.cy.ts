@@ -23,4 +23,13 @@ describe("Tests GameList functions", () => {
 
     cy.get("[data-testid=game-list]").children().should("have.length", 2);
   });
+
+  it("Deletes a game", () => {
+    cy.get("[data-testid=game-list]").children().should("have.length", 0);
+    cy.get("[data-testid=add-game-button]").click();
+    cy.get("[data-testid=game-list]").children().should("have.length", 1);
+
+    cy.get("[data-testid=delete-game-button]").click();
+    cy.get("[data-testid=game-list]").children().should("have.length", 0);
+  });
 });

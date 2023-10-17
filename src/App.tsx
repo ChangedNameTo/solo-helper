@@ -2,7 +2,7 @@ import * as React from "react";
 import "./App.css";
 
 import Header from "./Views/Header";
-import GameList from "./Views/GameList";
+import GameList from "./Views/GameList/GameList";
 import { GameEngineContext } from "./Contexts/GameEngineContext";
 import AddGames from "./Views/AddGames";
 import gameReducer from "./Reducers/GameReducer";
