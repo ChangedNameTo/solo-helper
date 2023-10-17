@@ -14,5 +14,5 @@
     },
     "include": [
         "./src/"
-, "src/components/CharacterSheetComponents/SheetSectionRetracted/.tsx"    ]
+, "src/Views/CharacterSheetComponents/SheetSectionRetracted/.tsx"    ]
 }

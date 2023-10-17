@@ -1,9 +1,6 @@
 import * as React from "react";
-import { testCharacter } from "../Characters/IronswornCharacter";
+import { Game, GamesAction } from "./Game";
 import gameReducer from "../Reducers/GameReducer";
-import { IronswornCharacter } from "../Types/CharacterTypes";
-import { Game } from "./Game";
-import { GamesAction } from "../Types/GameTypes";
 
 export class GameEngine {
   gamesMap: Map<string, Game>;
@@ -60,11 +57,7 @@ export class GameEngine {
         const newGame = new Game(game);
         this.gamesMap = this.gamesMap.set(newGame.id, newGame);
       });
-    } else {
-      const newCharacter = new Game();
-      newCharacter.loadTestCharacter();
-      this.gamesMap = this.gamesMap.set(newCharacter.id, newCharacter);
-    }
+    } 
 
     return this;
   }
@@ -72,5 +65,9 @@ export class GameEngine {
   getGame(): Game | undefined {
     const game = this.gamesMap.get(this.selectedGame);
     return game;
+  }
+
+  getGamesMap():Map<string, Game> {
+    return this.gamesMap;
   }
 }
