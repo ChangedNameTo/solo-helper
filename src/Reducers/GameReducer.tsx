@@ -12,7 +12,7 @@ export default function gameReducer(
 ): GameEngine {
   switch (action.type) {
     case "add_game": {
-      const newGame = new Game("Placeholder");
+      const newGame = new Game();
 
       const newMap = new Map(gameEngine.gamesMap);
       newMap.set(newGame.getID(), newGame);

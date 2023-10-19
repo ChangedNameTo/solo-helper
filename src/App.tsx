@@ -11,7 +11,7 @@ import { GameEngine } from "./Classes/GameEngine";
 function App() {
   const [gameEngine, gamesDispatch] = React.useReducer(
     gameReducer,
-    new GameEngine()
+    new GameEngine({}, true)
   );
 
   React.useEffect(() => {
@@ -19,7 +19,7 @@ function App() {
       console.log(gameEngine);
     }
 
-    // gameEngine.saveGame(gameEngine);
+    gameEngine.saveGame(gameEngine);
   }, [gameEngine]);
 
   const content = () => {

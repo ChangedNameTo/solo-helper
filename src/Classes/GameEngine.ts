@@ -7,9 +7,13 @@ export class GameEngine {
   constructor({
     gamesMap = new Map(),
     selectedGame = undefined,
-  }: Partial<GameEngine> = {}) {
+  }, initialLoad = false) {
     this.gamesMap = gamesMap;
     this.selectedGame = selectedGame;
+
+    if (initialLoad) {
+      this.seedGames();
+    }
   }
 
   saveGame(games: GameEngine): any {
@@ -36,9 +40,9 @@ export class GameEngine {
     return value;
   }
 
-  seedGames(): GameEngine {
-    // const savedGames = window.localStorage.getItem("games");
-    const savedGames = false;
+  seedGames(): void {
+    const savedGames = window.localStorage.getItem("games");
+    // const savedGames = false;
 
     // Is this the first load? If so, seed the map. If not, load.
     if (savedGames) {
@@ -50,21 +54,9 @@ export class GameEngine {
         this.gamesMap = this.gamesMap.set(newGame.id, newGame);
       });
     }
-
-    return this;
   }
 
-  getGame(): Game | undefined {
-    if (!this.selectedGame) return undefined;
-
-    return this.gamesMap.get(this.selectedGame);
-  }
-
-  getGamesMap(): Map<string, Game> {
-    return this.gamesMap;
-  }
-
-  getGamesArray() {
+  getGamesArray() : Game[] {
     return Array.from(this.gamesMap.values());
   }
 

@@ -7,9 +7,9 @@ export class Game {
   name: string;
   system: GameSystem | undefined;
 
-  constructor(name: string) {
+  constructor(name?: string) {
     this.id = _.uniqueId("game_");
-    this.name = this.getRandomName();
+    this.name = name || this.getRandomName();
   }
 
   getID(): string {
