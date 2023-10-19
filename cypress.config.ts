@@ -14,4 +14,5 @@ export default defineConfig({
     },
     baseUrl: "http://localhost:5173/solo-scribe/",
   },
+  projectId: "b4vijo"
 });
