@@ -5,8 +5,9 @@ import Header from "./Views/Header";
 import GameList from "./Views/GameList/GameList";
 import { GameEngineContext } from "./Contexts/GameEngineContext";
 import AddGames from "./Views/AddGames";
-import gameReducer from "./Reducers/GameReducer";
+import gameReducer from "./Reducers/GameEngineReducer";
 import { GameEngine } from "./Classes/GameEngine";
+import Dashboard from "./Views/Dashboard";
 
 function App() {
   const [gameEngine, gamesDispatch] = React.useReducer(
@@ -15,19 +16,13 @@ function App() {
   );
 
   React.useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      console.log(gameEngine);
-    }
-
     gameEngine.saveGame(gameEngine);
   }, [gameEngine]);
 
   const content = () => {
     if (gameEngine.isGameSelected()) {
       return (
-        <div>
-          <h1>Game Selected</h1>
-        </div>
+        <Dashboard />
       );
     } else {
       return (

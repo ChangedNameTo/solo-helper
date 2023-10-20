@@ -1,5 +1,6 @@
 import { defineConfig } from "cypress";
 import codeCoverageTask from "@cypress/code-coverage/task";
+import viteConfig from "./vite.config";
 
 export default defineConfig({
   e2e: {
@@ -10,9 +11,19 @@ export default defineConfig({
       // It's IMPORTANT to return the config object
       // with any changed environment variables
       codeCoverageTask(on, config);
-      return config
+      return config;
     },
     baseUrl: "http://localhost:5173/solo-scribe/",
   },
-  projectId: "b4vijo"
+
+  projectId: "b4vijo",
+
+  component: {
+    devServer: {
+      framework: 'react',
+      bundler: 'vite',
+      // optionally pass in vite config
+      viteConfig: viteConfig,
+    },
+  },
 });

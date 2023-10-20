@@ -2,14 +2,21 @@ import _ from "lodash";
 import game_names from "../assets/game_names.json";
 import { GameSystem } from "./GameSystem";
 
+interface GameData {
+  id?: string;
+  name?: string;
+  system?: GameSystem;
+}
+
 export class Game {
   id: string;
   name: string;
   system: GameSystem | undefined;
 
-  constructor(name?: string) {
-    this.id = _.uniqueId("game_");
-    this.name = name || this.getRandomName();
+  constructor(data: GameData) {
+    this.id = data.id || _.uniqueId("game_");
+    this.name = data.name || this.getRandomName();
+    this.system = data.system;
   }
 
   getID(): string {
@@ -18,6 +25,10 @@ export class Game {
 
   getName(): string {
     return this.name;
+  }
+
+  getSystem(): GameSystem | undefined {
+    return this.system;
   }
 
   getSystemName(): string {
