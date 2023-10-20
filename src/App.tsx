@@ -1,70 +1,51 @@
 import * as React from "react";
 import "./App.css";
 
-import Dashboard from "./components/Dashboard";
-import GamesList from "./components/GameList/GamesList";
-import { GamesContext, GamesDispatchContext } from "./Contexts/GamesContext";
-import { FormsContext } from "./Contexts/FormContexts";
+import Header from "./Views/Header";
+import GameList from "./Views/GameList/GameList";
+import { GameEngineContext } from "./Contexts/GameEngineContext";
+import AddGames from "./Views/AddGames";
+import gameReducer from "./Reducers/GameEngineReducer";
 import { GameEngine } from "./Classes/GameEngine";
+import Dashboard from "./Views/Dashboard";
 
 function App() {
-  const gameEngine = new GameEngine()
-
-  const [games, gamesDispatch] = gameEngine.getAppValues()
+  const [gameEngine, gamesDispatch] = React.useReducer(
+    gameReducer,
+    new GameEngine({}, true)
+  );
 
   React.useEffect(() => {
-    gameEngine.saveGame(games)
-  }, [games]);
+    gameEngine.saveGame(gameEngine);
+  }, [gameEngine]);
 
-  const display = () => {
-    if (games.selectedGame) {
-      return <Dashboard />;
+  const content = () => {
+    if (gameEngine.isGameSelected()) {
+      return (
+        <Dashboard />
+      );
     } else {
-      return <GamesList />;
+      return (
+        <>
+          <GameList />
+          <AddGames />
+        </>
+      );
     }
   };
 
-  const generateFormContext = () => {
-    const [openForms, setOpenForms] = React.useState(new Map());
-
-    const isOpen = (objectID: string): boolean => {
-      return openForms[objectID] || false;
-    };
-
-    const openModal = (objectID: string): void => {
-      setOpenForms((prevOpenForms) => ({
-        ...prevOpenForms,
-        [objectID]: true,
-      }));
-    };
-
-    const closeModal = (objectID: string): void => {
-      setOpenForms((prevOpenForms) => ({
-        ...prevOpenForms,
-        [objectID]: false,
-      }));
-    };
-
-    return {
-      openForms: openForms,
-      isOpen: isOpen,
-      setOpenForms: setOpenForms,
-      closeModal: closeModal,
-      openModal: openModal,
-    };
+  const render = () => {
+    return (
+      <GameEngineContext.Provider value={[gameEngine, gamesDispatch]}>
+        <div className="App">
+          <Header />
+          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">{content()}</div>
+        </div>
+      </GameEngineContext.Provider>
+    );
   };
 
-  // TODO: Migrate this into the FormContext folder
-
-  return (
-    <GamesContext.Provider value={games}>
-      <GamesDispatchContext.Provider value={gamesDispatch}>
-        <FormsContext.Provider value={generateFormContext()}>
-          {display()}
-        </FormsContext.Provider>
-      </GamesDispatchContext.Provider>
-    </GamesContext.Provider>
-  );
+  return render();
 }
 
 export default App;

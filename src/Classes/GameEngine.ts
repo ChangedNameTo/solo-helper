@@ -1,44 +1,48 @@
-import * as React from "react";
-import { testCharacter } from "../Characters/IronswornCharacter";
-import gameReducer from "../Reducers/GameReducer";
-import { IronswornCharacter } from "../Types/CharacterTypes";
+import { Ironsworn } from "../Systems/Ironsworn";
+import { Pathbound } from "../Systems/Pathbound";
+import { Radiant } from "../Systems/Radiant";
 import { Game } from "./Game";
-import { GamesAction } from "../Types/GameTypes";
+import { GameSystem } from "./GameSystem";
+
+interface GameEngineData {
+  gamesMap?: Map<string, Game>;
+  gameSystems?: Map<string, GameSystem>;
+  selectedGame?: string;
+}
 
 export class GameEngine {
-  gamesMap: Map<string, Game>;
-  selectedGame: string;
+  private gamesMap: Map<string, Game>;
+  private gameSystems: Map<string, GameSystem>;
+  private selectedGame?: string;
 
-  constructor({
-    gamesMap = new Map(),
-    selectedGame = "",
-  }: Partial<GameEngine> = {}) {
-    this.gamesMap = gamesMap;
-    this.selectedGame = selectedGame;
+  constructor(data: GameEngineData, initialLoad = false) {
+    this.gamesMap = data.gamesMap || new Map<string, Game>();
+    this.selectedGame = data.selectedGame;
+    this.gameSystems = data.gameSystems || new Map<string, GameSystem>();
+
+    if (initialLoad) {
+      this.seedGames();
+    }
+
+    this.seedSystems();
   }
-
-  getAppValues(): [GameEngine, React.Dispatch<GamesAction>] {
-    return React.useReducer(gameReducer, this.seedGames());
-  }
-
-  loadSaveGames(): any {}
 
   saveGame(games: GameEngine): any {
     window.localStorage.setItem("games", JSON.stringify(games, this.replacer));
   }
 
-  replacer(key, value): any {
+  replacer(key: any, value: any): any {
     if (value instanceof Map) {
       return {
         dataType: "Map",
-        value: Array.from(value.entries()), // or with spread: value: [...value]
+        value: Array.from(value.entries()),
       };
     } else {
       return value;
     }
   }
 
-  reviver(key, value): any {
+  reviver(key: string, value: any): any {
     if (typeof value === "object" && value !== null) {
       if (value.dataType === "Map") {
         return new Map(value.value);
@@ -47,30 +51,54 @@ export class GameEngine {
     return value;
   }
 
-  seedGames(): GameEngine {
+  seedGames(): void {
     const savedGames = window.localStorage.getItem("games");
-    // const savedGames = false;
-
-    // Is this the first load? If so, seed the map. If not, load.
     if (savedGames) {
       const games = JSON.parse(savedGames, this.reviver);
-      this.selectedGame = games.selectedGame
+      this.selectedGame = games.selectedGame;
 
-      Array.from(games["gamesMap"].values()).forEach((game) => { 
-        const newGame = new Game(game);
+      Array.from(games["gamesMap"].values()).forEach((game) => {
+        const castGame = game as Game;
+
+        const newGame = new Game({ name: castGame.name });
         this.gamesMap = this.gamesMap.set(newGame.id, newGame);
       });
-    } else {
-      const newCharacter = new Game();
-      newCharacter.loadTestCharacter();
-      this.gamesMap = this.gamesMap.set(newCharacter.id, newCharacter);
     }
-
-    return this;
   }
 
-  getGame(): Game | undefined {
-    const game = this.gamesMap.get(this.selectedGame);
-    return game;
+  seedSystems(): void {
+    const ironsworn = new Ironsworn();
+    const radiant = new Radiant();
+    const pathbound = new Pathbound();
+
+    this.gameSystems.set(ironsworn.getName(), ironsworn);
+    this.gameSystems.set(radiant.getName(), radiant);
+    this.gameSystems.set(pathbound.getName(), pathbound);
+  }
+
+  getGamesMap(): Map<string, Game> {
+    return this.gamesMap;
+  }
+
+  getGamesArray(): Game[] {
+    return Array.from(this.gamesMap.values());
+  }
+
+  isGameSelected(): boolean {
+    return this.selectedGame !== undefined;
+  }
+
+  getSystemsArray(): GameSystem[] {
+    return Array.from(this.gameSystems.values());
+  }
+
+  getSystemByName(name: string): GameSystem | undefined {
+    return this.gameSystems.get(name);
+  }
+
+  getSelectedGame(): Game | undefined {
+    if (this.selectedGame) {
+      return this.gamesMap.get(this.selectedGame);
+    }
   }
 }

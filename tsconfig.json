@@ -1,18 +1,19 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist/",        // path to output directory
-        "sourceMap": true,          // allow sourcemap support
-        "strictNullChecks": true,   // enable strict null checks as a best practice
-        "module": "es6",            // specify module code generation
-        "jsx": "react",             // use typescript to transpile jsx to js
-        "target": "es2015",            // specify ECMAScript target version
-        "allowJs": true,             // allow a partial TypeScript and JavaScript codebase
-        "moduleResolution": "node",
-        "allowSyntheticDefaultImports": true,
-        "strict": true
-
-    },
-    "include": [
-        "./src/"
-, "src/components/CharacterSheetComponents/SheetSectionRetracted/.tsx"    ]
+  "compilerOptions": {
+    "outDir": "./dist/", // path to output directory
+    "strictNullChecks": true, // enable strict null checks as a best practice
+    "module": "es6", // specify module code generation
+    "jsx": "react", // use typescript to transpile jsx to js
+    "target": "es2015", // specify ECMAScript target version
+    "allowJs": true, // allow a partial TypeScript and JavaScript codebase
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "sourceMap": false,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "./src/",
+    "cypress.d.ts"
+, "cypress/components/GameList.cy.tsx"  ]
 }
