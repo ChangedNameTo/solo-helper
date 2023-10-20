@@ -13,7 +13,7 @@ export default defineConfig({
       codeCoverageTask(on, config);
       return config;
     },
-    baseUrl: "http://localhost:5173/solo-scribe/",
+    baseUrl: "http://localhost:4173/solo-scribe/",
   },
 
   projectId: "b4vijo",
