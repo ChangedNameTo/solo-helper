@@ -7,7 +7,7 @@ export default function GameList() {
   const [gameEngine, gamesDispatch] = useContext(GameEngineContext);
 
   const testid = "game-list";
-
+  
   const renderGameList = () => {
     if (gameEngine.getGamesArray().length === 0) {
       return (

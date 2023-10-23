@@ -52,7 +52,7 @@ describe("Tests selecting game systems from the system selection list", () => {
     noSystemWarning()
     selectFirstSystem()
     deselectGame()
-    cy.contains("Radiant")
+    cy.contains("Ironsworn")
   })
 
   it("Selects a system and no longer sees the 'No System Selected' warning", () => {
@@ -65,5 +65,20 @@ describe("Tests selecting game systems from the system selection list", () => {
     noSystemWarning()
     cy.reload()
     noSystemWarning()
+  })
+  
+  it("Selects a system, refreshes the page and still sees they have a system selected", () => {
+    noSystemWarning()
+    selectFirstSystem()
+    cy.reload()
+    cy.get("[data-testid=no-system-warning]").should("not.exist")
+  })
+  
+  it("Selects a system, refreshes the page and still sees they have a system selected", () => {
+    noSystemWarning()
+    selectFirstSystem()
+    cy.reload()
+    deselectGame()
+    cy.contains("Ironsworn")
   })
 });

@@ -8,27 +8,33 @@ interface GameEngineData {
   gamesMap?: Map<string, Game>;
   gameSystems?: Map<string, GameSystem>;
   selectedGame?: string;
+  modified?:string
 }
 
 export class GameEngine {
   private gamesMap: Map<string, Game>;
   private gameSystems: Map<string, GameSystem>;
   private selectedGame?: string;
+  private modified: string;
 
   constructor(data: GameEngineData, initialLoad = false) {
     this.gamesMap = data.gamesMap || new Map<string, Game>();
     this.selectedGame = data.selectedGame;
     this.gameSystems = data.gameSystems || new Map<string, GameSystem>();
-
-    if (initialLoad) {
-      this.seedGames();
-    }
-
-    this.seedSystems();
+    
+    this.modified = new Date().toLocaleString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    })
   }
 
-  saveGame(games: GameEngine): any {
-    window.localStorage.setItem("games", JSON.stringify(games, this.replacer));
+  saveGame(): any {
+    console.log(this)
+    console.log(JSON.stringify(this, this.replacer))
+    window.localStorage.setItem("games", JSON.stringify(this, this.replacer));
   }
 
   replacer(key: any, value: any): any {
@@ -37,9 +43,8 @@ export class GameEngine {
         dataType: "Map",
         value: Array.from(value.entries()),
       };
-    } else {
-      return value;
-    }
+    } 
+    return value;
   }
 
   reviver(key: string, value: any): any {
@@ -52,15 +57,16 @@ export class GameEngine {
   }
 
   seedGames(): void {
+    console.log("Seeding games");
     const savedGames = window.localStorage.getItem("games");
     if (savedGames) {
       const games = JSON.parse(savedGames, this.reviver);
       this.selectedGame = games.selectedGame;
 
       Array.from(games["gamesMap"].values()).forEach((game) => {
+        console.log(game)
         const castGame = game as Game;
-
-        const newGame = new Game({ name: castGame.name });
+        const newGame = new Game({ ...castGame});
         this.gamesMap = this.gamesMap.set(newGame.id, newGame);
       });
     }
@@ -71,8 +77,8 @@ export class GameEngine {
     const radiant = new Radiant();
     const pathbound = new Pathbound();
 
-    this.gameSystems.set(ironsworn.getName(), ironsworn);
     this.gameSystems.set(radiant.getName(), radiant);
+    this.gameSystems.set(ironsworn.getName(), ironsworn);
     this.gameSystems.set(pathbound.getName(), pathbound);
   }
 

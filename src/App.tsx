@@ -9,16 +9,20 @@ import gameReducer from "./Reducers/GameEngineReducer";
 import { GameEngine } from "./Classes/GameEngine";
 import Dashboard from "./Views/Dashboard";
 
+function initialRender(gameEngine: GameEngine) {
+  console.log('hi')
+  gameEngine.seedGames()
+  gameEngine.seedSystems()
+  return gameEngine;
+}
+
 function App() {
   const [gameEngine, gamesDispatch] = React.useReducer(
     gameReducer,
-    new GameEngine({}, true)
+    new GameEngine({}),
+    initialRender
   );
-
-  React.useEffect(() => {
-    gameEngine.saveGame(gameEngine);
-  }, [gameEngine]);
-
+  
   const content = () => {
     if (gameEngine.isGameSelected()) {
       return (

@@ -1,5 +1,6 @@
-import _ from "lodash";
 import game_names from "../assets/game_names.json";
+import _ from "lodash";
+import {v4 as uuidv4} from "uuid";
 import { GameSystem } from "./GameSystem";
 
 interface GameData {
@@ -14,9 +15,18 @@ export class Game {
   system: GameSystem | undefined;
 
   constructor(data: GameData) {
-    this.id = data.id || _.uniqueId("game_");
+    // this.id = data.id || uuidv4()
+    this.id = data.id || this.getUniqueID()
+    console.log("Game ID: " + this.id);
+
     this.name = data.name || this.getRandomName();
     this.system = data.system;
+  }
+
+  getUniqueID(): string {
+    console.log('Getting unique ID')
+    let id = _.uniqueId("game_");
+    return id
   }
 
   getID(): string {

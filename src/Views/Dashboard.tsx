@@ -2,17 +2,18 @@ import * as React from "react";
 import { GameEngineContext } from "../Contexts/GameEngineContext";
 import SystemListItem from "./SystemList/SystemListItem";
 import SystemList from "./SystemList/SystemList";
+import CharacterSheet from "./CharacterSheet";
 
 export default function Dashboard() {
   const [gameEngine, gamesDispatch] = React.useContext(GameEngineContext);
   const game = gameEngine.getSelectedGame();
   const gameSystem = game?.getSystem();
+  console.log(gameSystem)
 
   const noSystemWarning =
     "Your game does not have a system. This is the very first thing you must select.";
 
   const leftColumn = () => {
-
     if (gameSystem === undefined) {
       return (
         <div className="bg-gray-100 h-full space-y-2">
@@ -20,7 +21,7 @@ export default function Dashboard() {
         </div>
       );
     } else {
-      return <div>{gameSystem.getName()}</div>;
+      return <CharacterSheet />;
     }
   };
 
@@ -55,11 +56,12 @@ export default function Dashboard() {
           "Before you get started, there are still several things you must do",
           "get-started-warning"
         )}
-        {gameSystem === undefined && centerCard(
-          "No System Detected",
-          "no-system-warning",
-          "This is the very first thing you must do."
-        )}
+        {gameSystem === undefined &&
+          centerCard(
+            "No System Detected",
+            "no-system-warning",
+            "This is the very first thing you must do."
+          )}
       </div>
     );
   };

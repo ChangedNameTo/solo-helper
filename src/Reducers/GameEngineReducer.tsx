@@ -7,18 +7,21 @@ export interface GameEngineAction {
   payload?: any;
 }
 
-export default function gameEngineReducer(
+function gameEngineReducer(
   gameEngine: GameEngine,
   action: GameEngineAction
 ): GameEngine {
   switch (action.type) {
     case "add_game": {
       const newGame = new Game({});
+      console.log(newGame)
 
       const newMap = new Map(gameEngine.getGamesMap());
       newMap.set(newGame.getID(), newGame);
 
-      return new GameEngine({ ...gameEngine, gamesMap: newMap });
+      const newEngine = new GameEngine({ ...gameEngine, gamesMap: newMap });
+
+      return newEngine
     }
     case "delete_game": {
       const newMap = new Map(gameEngine.getGamesMap());
@@ -31,9 +34,7 @@ export default function gameEngineReducer(
     }
     case "select_game": {
       if (gameEngine.getGamesMap().has(action.payload)) {
-        const data = { ...gameEngine, selectedGame: action.payload };
-
-        return new GameEngine(data);
+        return new GameEngine({ ...gameEngine, selectedGame: action.payload });
       }
       throw new Error("Game not found");
     }
@@ -66,4 +67,11 @@ export default function gameEngineReducer(
       return gameEngine;
     }
   }
+}
+
+
+export default function gameEngineReducerWrapper(gameEngine: GameEngine, action: GameEngineAction) {
+  const newGameEngine = gameEngineReducer(gameEngine, action);
+  newGameEngine.saveGame()
+  return newGameEngine;
 }
