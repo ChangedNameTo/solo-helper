@@ -1,18 +1,12 @@
 import React from "react";
-import { GameEngineContext } from "../Contexts/GameEngineContext";
+import useGameEngineStore from "../Store";
 
 export default function AddGames() {
-  const [gameEngine, gamesDispatch] = React.useContext(GameEngineContext);
-
-  const addNewGame = () => {
-    gamesDispatch({
-      type: "add_game",
-    });
-  }
+  const addGame = useGameEngineStore((state) => state.addGame);
 
   return (
     <button className="button" data-testid="add-game-button"
-      onClick={() => addNewGame()}
+      onClick={addGame}
     >
       Add Game
     </button>

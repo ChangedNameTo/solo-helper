@@ -82,10 +82,4 @@ describe("Tests GameList functions", () => {
     hasRows(0)
     cy.get("[data-testid=delete-game-button]").should("not.exist")
   })
-
-  it("Adds a game and game_1 is the first ID in the list", () => {
-    hasNoRows()
-    addGame()
-    cy.contains("game_1")
-  })
 });

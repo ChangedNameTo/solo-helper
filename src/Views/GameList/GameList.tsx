@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { GameEngineContext } from "../../Contexts/GameEngineContext";
-import { Game } from "../../Classes/Game";
 import GameListItem from "./GameListItem";
+import useGameEngineStore from "../../Store";
+import Game from "../../Types/Game";
 
 export default function GameList() {
-  const [gameEngine, gamesDispatch] = useContext(GameEngineContext);
+  const gameEngine = useGameEngineStore()
 
   const testid = "game-list";
   
@@ -17,7 +17,7 @@ export default function GameList() {
       );
     } else {
       return gameEngine.getGamesArray().map((game: Game) => {
-        return <GameListItem game={game} key={game.getID()} />;
+        return <GameListItem game={game} key={gameEngine.getGameID(game)} />;
       });
     }
   };

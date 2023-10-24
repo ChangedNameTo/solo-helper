@@ -1,9 +1,9 @@
 import React from "react";
-import { GameEngineContext } from "../../Contexts/GameEngineContext";
 import SystemListItem from "./SystemListItem";
+import useGameEngineStore from "../../Store";
 
 export default function SystemList() {
-  const [gameEngine, gamesDispatch] = React.useContext(GameEngineContext);
+  const gameEngine = useGameEngineStore();
   const systemSelectRef = React.useRef<HTMLInputElement>(null);
 
   const systems = gameEngine.getSystemsArray();
@@ -17,7 +17,7 @@ export default function SystemList() {
       ) as HTMLInputElement
     )?.value;
 
-    gamesDispatch({ type: "select_system", payload: selectedSystem });
+    gameEngine.selectSystem(selectedSystem)
   };
 
   return (
@@ -40,7 +40,7 @@ export default function SystemList() {
           ref={systemSelectRef}
         >
           {systems.map((system) => {
-            return <SystemListItem system={system} key={system.getName()} />;
+            return <SystemListItem system={system} key={system.id} />;
           })}
         </div>
         <button

@@ -1,14 +1,12 @@
 import React from "react";
-import { GameEngineContext } from "../Contexts/GameEngineContext";
+import useGameEngineStore from "../Store";
 
 export default function CharacterSheet() {
-  const [gameEngine, gamesDispatch] = React.useContext(GameEngineContext);
-  const game = gameEngine.getSelectedGame();
-  const gameSystem = game?.getSystem();
+  const gameEngine = useGameEngineStore();
 
   return (
     <div>
-      {gameSystem.getName()}
+      {gameEngine.getCurrentSystemName() || "No system selected"}
     </div>
   )
 }

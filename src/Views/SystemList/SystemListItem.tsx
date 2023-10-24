@@ -1,5 +1,5 @@
 import React from "react";
-import { GameSystem } from "../../Classes/GameSystem";
+import GameSystem from "../../Types/GameSystem";
 
 export default function SystemListItem({ system }: { system: GameSystem }) {
   return (
@@ -9,8 +9,8 @@ export default function SystemListItem({ system }: { system: GameSystem }) {
         name="notification-method"
         type="radio"
         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-        data-testid={system.getName() + "-radio"}
-        value={system.getName()}
+        data-testid={system.name + "-radio"}
+        value={system.id}
       />
       <label
         htmlFor={system.name}

@@ -1,41 +1,29 @@
 import * as React from "react";
-import { Game } from "../../Classes/Game";
-import { GameEngineContext } from "../../Contexts/GameEngineContext";
+import Game from "../../Types/Game";
+import useGameEngineStore from "../../Store";
 
 export default function GameListItem({ game }: { game: Game }) {
-  const [gameEngine, gamesDispatch] = React.useContext(GameEngineContext);
-
-  const deleteGame = () => {
-    gamesDispatch({
-      type: "delete_game",
-      payload: game.getID(),
-    });
-  };
-
-  const selectGame = () => {
-    gamesDispatch({
-      type: "select_game",
-      payload: game.getID(),
-    });
-  }
+  const selectGame = useGameEngineStore((state) => state.selectGame);
+  const deleteGame = useGameEngineStore((state) => state.deleteGame);
 
   return (
     <tr data-testid="games-list-item">
-      <td>{game.getID()}</td>
-      <td>{game.getName()}</td>
-      <td>{game.getSystemName()}</td>
+      <td>{game.id}</td>
+      <td>{game.name}</td>
+      <td>{game.system?.name}</td>
+      <td>{""}</td>
       <td>
         <button
           className="button"
           data-testid="select-game-button"
-          onClick={() => selectGame()}
+          onClick={() => selectGame(game.id)}
         >
           Select
         </button>
         <button
           className="button"
           data-testid="delete-game-button"
-          onClick={() => deleteGame()}
+          onClick={() => deleteGame(game.id)}
         >
           Delete
         </button>

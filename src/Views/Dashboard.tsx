@@ -1,14 +1,11 @@
 import * as React from "react";
-import { GameEngineContext } from "../Contexts/GameEngineContext";
-import SystemListItem from "./SystemList/SystemListItem";
 import SystemList from "./SystemList/SystemList";
 import CharacterSheet from "./CharacterSheet";
+import useGameEngineStore from "../Store";
 
 export default function Dashboard() {
-  const [gameEngine, gamesDispatch] = React.useContext(GameEngineContext);
-  const game = gameEngine.getSelectedGame();
-  const gameSystem = game?.getSystem();
-  console.log(gameSystem)
+  const gameEngine = useGameEngineStore();
+  const gameSystem = gameEngine.getCurrentSystemName()
 
   const noSystemWarning =
     "Your game does not have a system. This is the very first thing you must select.";

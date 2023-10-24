@@ -15,5 +15,5 @@
   "include": [
     "./src/",
     "cypress.d.ts"
-, "cypress/components/GameList.cy.tsx"  ]
+, "cypress/components/GameList.cy.tsx", "src/Types/GameSystem.ts"  ]
 }
