@@ -12,7 +12,7 @@
     "preview": "vite preview",
     "cypress:open": "cypress open",
     "testing:dev": "cypress open --config baseUrl=http://localhost:5173/solo-scribe/",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run --config baseUrl=http://localhost:5173/solo-scribe/"
   },
   "dependencies": {
     "@dice-roller/rpg-dice-roller": "^5.4.1",

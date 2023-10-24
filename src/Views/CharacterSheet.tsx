@@ -5,7 +5,9 @@ export default function CharacterSheet() {
   const gameEngine = useGameEngineStore();
 
   return (
-    <div>
+    <div
+      data-testid="character-sheet"
+    >
       {gameEngine.getCurrentSystemName() || "No system selected"}
     </div>
   )
