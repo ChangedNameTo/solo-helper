@@ -36,7 +36,7 @@ type GameEngineState = {
 const initialGameEngineState = () => {
   const gameSystems = new Map<string, GameSystem>();
 
-  systems.forEach((system: SystemData) => {
+  systems.forEach((system) => {
     gameSystems.set(system.id, system);
   });
 
