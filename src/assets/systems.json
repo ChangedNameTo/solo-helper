@@ -2,16 +2,19 @@
   {
     "id": "1",
     "name": "Radiant",
-    "description": "Swear again the ancient oaths..."
+    "description": "Swear again the ancient oaths...",
+    "requirements": [{ "type": "Name", "description": "Character name is required" }]
   },
   {
     "id": "2",
     "name": "Ironsworn",
-    "description": "Swear again the ancient oaths..."
+    "description": "Swear again the ancient oaths...",
+    "requirements": [{ "type": "Name", "description": "Character name is required", "id":"no-name-warning"}]
   },
   {
     "id": "3",
     "name": "Pathbound",
-    "description": "There are a million paths, but any sage can tell you they all gather down to one command: improve yourself."
+    "description": "There are a million paths, but any sage can tell you they all gather down to one command: improve yourself.",
+    "requirements": [{ "type": "Name", "description": "Character name is required" }]
   }
 ]

@@ -1,5 +1,5 @@
 
-describe("Tests selecting game systems from the system selection list", () => {
+describe("Tests what characters look like by default", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.get("[data-testid=add-game-button]").click();
@@ -18,5 +18,10 @@ describe("Tests selecting game systems from the system selection list", () => {
   
   it("Selects a system and sees the to-do list", () => {
     cy.get("[data-testid=get-started-warning]").should("exist")
+  })
+  
+  it("Should see that Name is blank, and that the Name warning exists", () => {
+    cy.get('[data-testid=character-sheet-name]').should("have.value", "")
+    cy.get("[data-testid=no-name-warning]").should("exist")
   })
 });

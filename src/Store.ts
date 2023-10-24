@@ -1,22 +1,22 @@
 import _ from "lodash";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 import { persist, StorageValue } from "zustand/middleware";
 import { produce } from "immer";
 
 import systems from "./assets/systems.json";
 import Game from "./Types/Game";
-import GameSystem from "./Types/GameSystem";
+import Character from "./Types/Character";
 
 type GameEngineState = {
   games: Map<string, Game>;
   selectedGame: string | undefined;
   gameSystems: Map<string, GameSystem>;
+
   getGameById: (id: string) => Game | undefined;
   isGameSelected: () => boolean;
   getSelectedGame: () => Game | undefined;
   getGamesArray: () => Game[];
-  getGameID: (game: Game) => string | undefined;
   getCurrentSystemName: () => string | undefined;
   selectGame: (gameID: string) => void;
   deselectGame: () => void;
@@ -24,26 +24,40 @@ type GameEngineState = {
   deleteGame: (gameID: string) => void;
   getSystemsArray: () => GameSystem[];
   selectSystem: (systemID: string) => void;
+  getCurrentSystemRequirements: () => Requirement[];
+  getSystemRequirements: (systemID: string) => Requirement[];
+  isCharacterValid: (gameID: string) => boolean;
+  meetsRequirement: (requirement: Requirement) => boolean;
+  getCharacter: (gameID: string) => Character | undefined;
+  getCurrentCharacter: () => Character | undefined;
+  clearAll: () => void;
+};
+
+const initialGameEngineState = () => {
+  const gameSystems = new Map<string, GameSystem>();
+
+  systems.forEach((system: SystemData) => {
+    gameSystems.set(system.id, system);
+  });
+
+  return {
+    games: new Map<string, Game>(),
+    selectedGame: undefined,
+    gameSystems: gameSystems,
+  };
 };
 
 const useGameEngineStore = create<GameEngineState>()(
   persist(
     (set, get) => ({
-      games: new Map<string, Game>(),
-      selectedGame: undefined,
-      gameSystems: new Map<string, GameSystem>(),
-
+      ...initialGameEngineState(),
       getGameById: (id: string) => get().games.get(id),
       isGameSelected: () => get().selectedGame !== undefined,
       getSelectedGame: () => {
         if (!get().selectedGame) return undefined;
-        console.log(get().games);
         return get().games.get(get().selectedGame!);
       },
       getGamesArray: () => Array.from(get().games.values()),
-      getGameID: (game: Game) => {
-        return get().games.get(game.id)?.id;
-      },
       getCurrentSystemName: () => {
         const selectedGame = get().getSelectedGame();
 
@@ -59,9 +73,13 @@ const useGameEngineStore = create<GameEngineState>()(
         set((state) =>
           produce(state, (draft) => {
             const game = {
-              id:uuidv4(),
+              id: uuidv4(),
               name: "New Game",
               system: undefined,
+              character: {
+                name: "",
+                description: "",
+              },
             };
 
             draft.games.set(game.id, game);
@@ -83,14 +101,55 @@ const useGameEngineStore = create<GameEngineState>()(
             if (!selectedGame) return;
             const game = draft.games.get(selectedGame.id);
             if (!game) return;
-            console.log(state.gameSystems);
-            console.log(systemID);
-            const system = state.gameSystems.get(systemID)
-            console.log(system);
+            const system = state.gameSystems.get(systemID);
             game.system = system;
           })
         );
       },
+
+      getCurrentSystemRequirements: () => {
+        return get().getSelectedGame()?.system?.requirements || [];
+      },
+
+      getSystemRequirements(systemID: string) {
+        return get().gameSystems.get(systemID)?.requirements || [];
+      },
+
+      isCharacterValid(gameID: string) {
+        const game = get().games.get(gameID);
+        if (!game) return false;
+        const system = get().gameSystems.get(game.system?.id || "");
+        if (!system) return false;
+
+        const requirements = system.requirements;
+        const character = game.character;
+
+        return false;
+      },
+
+      meetsRequirement(requirement: Requirement) {
+        const game = get().getSelectedGame();
+
+        switch (requirement.type) {
+          case "Name": {
+            return game?.character?.name !== "";
+          }
+          default: {
+            throw new Error(`Unknown requirement type: ${requirement.type}`);
+          }
+        }
+      },
+
+      getCurrentCharacter() {
+        const game = get().getSelectedGame();
+        return game?.character;
+      },
+
+      getCharacter(gameID) {
+        const game = get().games.get(gameID);
+        return game?.character;
+      },
+      clearAll: () => set(initialGameEngineState),
     }),
     {
       name: "game-engine-storage", // name of the item in the storage (must be unique)
@@ -125,19 +184,24 @@ const useGameEngineStore = create<GameEngineState>()(
   )
 );
 
+interface Requirement {
+  id: string;
+  type: string;
+  description: string;
+}
+
 interface SystemData {
   id: string;
   name: string;
   description: string;
+  requirements: Requirement[];
 }
 
-useGameEngineStore.setState((state) => {
-  const gameSystems = new Map<string, GameSystem>();
-  
-  systems.forEach((system:SystemData) => {
-    gameSystems.set(system.id, system);
-  });
-  return { ...state, gameSystems };
-})
+export interface GameSystem {
+  id: string;
+  name: string;
+  description: string;
+  requirements: Requirement[];
+}
 
 export default useGameEngineStore;

@@ -17,7 +17,7 @@ export default function GameList() {
       );
     } else {
       return gameEngine.getGamesArray().map((game: Game) => {
-        return <GameListItem game={game} key={gameEngine.getGameID(game)} />;
+        return <GameListItem game={game} key={game.id} />;
       });
     }
   };

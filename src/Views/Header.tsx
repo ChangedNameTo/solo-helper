@@ -1,9 +1,11 @@
 import * as React from "react";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import useGameEngineStore from "../Store";
+import { use } from "chai";
 
 export default function Header() {
   const deselectGame = useGameEngineStore((state) => state.deselectGame)
+  const clearAll = useGameEngineStore((state) => state.clearAll)
 
   return (
     <div className="shrink-0 bg-gray-900">
@@ -15,7 +17,7 @@ export default function Header() {
             alt="Your Company"
           />
         </button>
-        <button onClick={() => {}}>
+        <button onClick={clearAll}>
           <TrashIcon className="h-8 w-auto text-indigo-500" />
         </button>
       </div>

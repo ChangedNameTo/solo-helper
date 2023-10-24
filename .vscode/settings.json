@@ -1,3 +1,17 @@
 {
-  "npm-scripts.showStartNotification": false
+  "npm-scripts.showStartNotification": false,
+  "search.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/*.js.map": true,
+    "**/.vite": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/coverage": true,
+    "**/lib": true,
+    "**/out": true,
+    "**/typings": true,
+    "**/.vite/deps": true
+  }
 }
